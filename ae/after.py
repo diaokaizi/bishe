@@ -132,7 +132,7 @@ model = Autoencoder(input_dim=feature_count, hidden_dim=int(feature_count/2))
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-num_epochs = 250
+num_epochs = 100
 for epoch in range(num_epochs):
     for data in dataloader:
         inputs, _ = data

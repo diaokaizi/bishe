@@ -35,10 +35,10 @@ def visual(name, labels, anomaly_score):
     optimal_threshold = thresholds[optimal_idx] + 0.005
     print(optimal_threshold)
 
-    precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
-    f1_scores = 2 * (precision * recall) / (precision + recall)
-    optimal_idx = np.argmax(f1_scores)
-    optimal_threshold = thresholds[optimal_idx]
+    # precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
+    # f1_scores = 2 * (precision * recall) / (precision + recall)
+    # optimal_idx = np.argmax(f1_scores)
+    # optimal_threshold = thresholds[optimal_idx]
 
     print(optimal_threshold)
 
@@ -87,18 +87,20 @@ def visual(name, labels, anomaly_score):
     plt.savefig("Discrete distributions of anomaly scores.png")
 
 
-def load_after():
-    scaler = StandardScaler()
-    raw_x_train = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
-    x_train = scaler.fit_transform(raw_x_train.values)
-    x_train = torch.from_numpy(x_train).float()
+def load_UGR16():
+    raw_x_train = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
+    x_train = torch.from_numpy(raw_x_train.values).float()
     y_train = torch.zeros(len(x_train))
 
 
-    raw_x_test = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
-    x_test = scaler.fit_transform(raw_x_test.values)
-    x_test = torch.from_numpy(x_test).float()
-    y_test = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
+    raw_x_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
+    x_test = torch.from_numpy(raw_x_test.values).float()
+    y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
     y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
     return (x_train, y_train), (x_test, y_test)
 
+
+
+(x_train, y_train), (x_test, y_test) = load_UGR16()
+mse_losses = np.loadtxt("after.txt")
+visual("after", y_test, mse_losses)
