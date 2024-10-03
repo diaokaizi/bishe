@@ -8,12 +8,7 @@ from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEnco
 from visual import visual
 from torch.utils.model_zoo import tqdm
 import matplotlib.pyplot as plt
-def fix_name():
-    return ["sportsocks", "sportprivate", "dportirc", "sporttelnet", "sportrapservice", "dporthttp",
-            "sportsyslog", "sportreserved", "dportkpasswd", "tcpflagsACK", "npacketsmedium",
-            "sportcups", "dporttelnet", "sportldaps", "tcpflagsPSH", "dportoracle"]
 def load_UGR16():
-    selected_feature_names = fix_name()
     raw_x_train = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
     # raw_x_train = raw_x_train[selected_feature_names]
     x_train = torch.from_numpy(raw_x_train.values).float()
@@ -90,7 +85,7 @@ print("验证集样本数:", len(val_dataset))
 
 # 定义模型参数
 num_features = x_train_sequences.shape[2]
-hidden_dim = 8
+hidden_dim = 64
 num_layers = 1
 
 model = LSTMAutoencoder(num_features=num_features, hidden_dim=hidden_dim, num_layers=num_layers)

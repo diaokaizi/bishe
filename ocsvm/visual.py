@@ -4,13 +4,7 @@ import pandas as pd
 import random
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
 # df = pd.read_csv("results/score.csv")
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
-import numpy as np
-import pandas as pd
-from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEncoder
+
 
 
 
@@ -28,13 +22,15 @@ from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEnco
 
 def visual(name, labels, anomaly_score):
     ########################################
-    # 计算 ROC 曲线
-    fpr, tpr, thresholds = roc_curve(labels, anomaly_score)
-#     找到最优阈值
-    optimal_idx = np.argmax(tpr - fpr)
-    optimal_threshold = thresholds[optimal_idx] + 0.005
-    print(optimal_threshold)
+    # # 计算 ROC 曲线
+    # fpr, tpr, thresholds = roc_curve(labels, img_distance)
+    # # 找到最优阈值
+    # optimal_idx = np.argmax(tpr - fpr)
+    # optimal_threshold = thresholds[optimal_idx] + 0.005
+    # print(optimal_threshold)
 
+    # # 使用最优阈值来生成预测标签
+    # predicted_labels = np.where(img_distance >= optimal_threshold, 1, 0)
     precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
     f1_scores = 2 * (precision * recall) / (precision + recall)
     optimal_idx = np.argmax(f1_scores)
@@ -85,22 +81,3 @@ def visual(name, labels, anomaly_score):
     plt.ylabel("h")
     plt.legend()
     plt.savefig("Discrete distributions of anomaly scores.png")
-
-
-def load_after():
-    scaler = StandardScaler()
-    raw_x_train = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
-    x_train = scaler.fit_transform(raw_x_train.values)
-    x_train = torch.from_numpy(x_train).float()
-    y_train = torch.zeros(len(x_train))
-
-
-    raw_x_test = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
-    x_test = scaler.fit_transform(raw_x_test.values)
-    x_test = torch.from_numpy(x_test).float()
-    y_test = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
-    y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
-    return (x_train, y_train), (x_test, y_test)
-(x_train, y_train), (x_test, y_test) = load_after()
-mse_losses = np.loadtxt("after.txt")
-visual("after", y_test, mse_losses)
