@@ -100,10 +100,10 @@ def train_wgangp(opt, generator, discriminator,
                       f"[D loss: {d_loss.item():3f}] "
                       f"[G loss: {g_loss.item():3f}]")
 
-                if batches_done % opt.sample_interval == 0:
-                    save_image(fake_imgs.data[:25],
-                               f"results/images/{batches_done:06}.png",
-                               nrow=5, normalize=True)
+                # if batches_done % opt.sample_interval == 0:
+                #     save_image(fake_imgs.data[:25],
+                #                f"results/images/{batches_done:06}.png",
+                #                nrow=5, normalize=True)
 
                 batches_done += opt.n_critic
 

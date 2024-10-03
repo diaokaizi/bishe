@@ -72,9 +72,7 @@ class Encoder(nn.Module):
         self.latent_dim = latent_dim
 
         self.model = nn.Sequential(
-            nn.Linear(self.input_dim, 75),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(130, 120),
+            nn.Linear(self.input_dim, 120),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(120, 110),
             nn.LeakyReLU(0.2, inplace=True),

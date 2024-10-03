@@ -69,12 +69,12 @@ def train_encoder_izif(opt, generator, discriminator, encoder,
                       f"[Batch {i:{padding_i}}/{len(dataloader)}] "
                       f"[E loss: {e_loss.item():3f}]")
 
-                if batches_done % opt.sample_interval == 0:
-                    fake_z = encoder(fake_imgs)
-                    reconfiguration_imgs = generator(fake_z)
-                    save_image(reconfiguration_imgs.data[:25],
-                               f"results/images_e/{batches_done:06}.png",
-                               nrow=5, normalize=True)
+                # if batches_done % opt.sample_interval == 0:
+                #     fake_z = encoder(fake_imgs)
+                #     reconfiguration_imgs = generator(fake_z)
+                #     save_image(reconfiguration_imgs.data[:25],
+                #                f"results/images_e/{batches_done:06}.png",
+                #                nrow=5, normalize=True)
 
                 batches_done += opt.n_critic
         torch.save(encoder.state_dict(), "results/encoder")
