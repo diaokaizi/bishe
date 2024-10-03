@@ -24,7 +24,7 @@ def load_after():
 
 
     raw_x_test = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
-    x_test = scaler.fit_transform(raw_x_test.values)
+    x_test = scaler.transform(raw_x_test.values)
     x_test = torch.from_numpy(x_test).float()
     y_test = pd.read_csv("/root/faac-compare/data/after/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
     print(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).value_counts())
