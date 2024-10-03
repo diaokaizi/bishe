@@ -99,11 +99,22 @@ def load_UNSW_Flow():
     print(y_test)
     return (x_train, y_train), (x_test, y_test)
 
+def load_UGR16():
+    raw_x_train = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
+    x_train = torch.from_numpy(raw_x_train.values).float()
+    y_train = torch.zeros(len(x_train))
+
+
+    raw_x_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
+    x_test = torch.from_numpy(raw_x_test.values).float()
+    y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
+    y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
+    return (x_train, y_train), (x_test, y_test)
 
 
 
 name = "after"
-(x_train, y_train), (x_test, y_test) = load_UNSW_Flow()
+(x_train, y_train), (x_test, y_test) = load_UGR16()
 
 
 
