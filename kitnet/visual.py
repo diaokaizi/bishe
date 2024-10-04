@@ -4,10 +4,9 @@ import numpy as np
 from sklearn.linear_model import Lasso
 from sklearn.preprocessing import StandardScaler    
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
-test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_use.csv")
-labels = test['binary_label_attack'].apply(lambda x: 0 if x == 0 else 1).values
-
-img_distance = pd.read_csv("/root/bishe/kitnet/result/RMSEs.csv")["score"].values
+y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
+labels = y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values
+img_distance = pd.read_csv("RMSEs.csv")["remse"].values
 
 
 ########################################
@@ -55,7 +54,7 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 plt.legend()
-plt.savefig("/root/bishe/kitnet/result/ROC-AUC.png")
+plt.savefig("ROC-AUC.png")
 
 plt.clf()
 plt.plot(recall, precision, label=f"PR = {pr_auc:3f}")
@@ -63,7 +62,7 @@ plt.title("PR-AUC")
 plt.xlabel("Recall")
 plt.ylabel("Pecision")
 plt.legend()
-plt.savefig("/root/bishe/kitnet/result/PR-AUC.png")
+plt.savefig("PR-AUC.png")
 
 # plt.clf()
 
