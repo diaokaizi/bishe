@@ -102,3 +102,23 @@ def load_after():
     y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
     return (x_train, y_train), (x_test, y_test)
 
+# 准备数据
+def load_UGR16():
+    raw_x_train = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
+    x_train = torch.from_numpy(raw_x_train.values).float()
+    y_train = torch.zeros(len(x_train))
+    
+    raw_x_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
+    x_test = torch.from_numpy(raw_x_test.values).float()
+    y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(
+        columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], 
+        axis=1
+    )
+    y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
+    print("测试集标签分布：")
+    print(y_test.bincount())
+    return (x_train, y_train), (x_test, y_test)
+
+# (x_train, y_train), (x_test, y_test) = load_UGR16()
+# reconstruction_errors = np.loadtxt("/root/bishe/vae/after.txt")
+# visual("after", y_test, reconstruction_errors)
