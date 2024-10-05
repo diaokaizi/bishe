@@ -94,6 +94,7 @@ plt.ylabel("True Positive Rate")
 
 fgan("/root/bishe/MAE-ANOGAN/results/score.csv", "MAE-ANOGAN")
 fgan("/root/bishe/f-anogan/results/score.csv", "f-anogan")
+fgan("/root/bishe/f-anogan_16/results/score.csv", "f-anogan-16")
 kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
 txt("/root/bishe/ae/after.txt", "ae")
 txt("/root/bishe/vae/after.txt", "vae")

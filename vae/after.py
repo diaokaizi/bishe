@@ -153,8 +153,8 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # 训练模型
 num_epochs = 250
-model.train()
 for epoch in range(num_epochs):
+    model.train()
     train_loss = 0
     for data in train_loader:
         inputs, _ = data
@@ -169,29 +169,28 @@ for epoch in range(num_epochs):
     average_loss = train_loss / len(train_loader)
     if (epoch + 1) % 10 == 0 or epoch == 0:
         print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {average_loss:.4f}')
+        # 评估模型
+        model.eval()
+        test_dataset = SimpleDataset(x_test, y_test, transform=normalize)
+        test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
 
-# 评估模型
-model.eval()
-test_dataset = SimpleDataset(x_test, y_test, transform=normalize)
-test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
+        reconstruction_errors = []
+        with torch.no_grad():
+            for idx, data in enumerate(test_loader):
+                inputs, labels = data
+                inputs = inputs.to(device)
+                recon_batch, mu, logvar = model(inputs)
+                # 计算重构误差
+                loss = nn.functional.mse_loss(recon_batch, inputs, reduction='mean').item()
+                reconstruction_errors.append(loss)
+                if (idx + 1) % 1000 == 0 or idx == 0:
+                    print(f"Processed {idx+1}/{len(test_loader)} samples")
 
-reconstruction_errors = []
-with torch.no_grad():
-    for idx, data in enumerate(test_loader):
-        inputs, labels = data
-        inputs = inputs.to(device)
-        recon_batch, mu, logvar = model(inputs)
-        # 计算重构误差
-        loss = nn.functional.mse_loss(recon_batch, inputs, reduction='mean').item()
-        reconstruction_errors.append(loss)
-        if (idx + 1) % 1000 == 0 or idx == 0:
-            print(f"Processed {idx+1}/{len(test_loader)} samples")
+        # 转换为NumPy数组
+        reconstruction_errors = np.array(reconstruction_errors)
 
-# 转换为NumPy数组
-reconstruction_errors = np.array(reconstruction_errors)
+        # 保存重构误差
+        np.savetxt(f"{name}_{epoch}.txt", reconstruction_errors)
 
-# 保存重构误差
-np.savetxt(f"{name}.txt", reconstruction_errors)
-
-# 可视化结果
-visual(name, y_test, reconstruction_errors)
+        # 可视化结果
+        visual(name, y_test, reconstruction_errors)
