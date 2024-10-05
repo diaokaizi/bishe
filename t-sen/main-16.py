@@ -10,9 +10,16 @@ from sklearn.preprocessing import StandardScaler
 # y = ... # 对应的标签数据
 
 # 1. 数据标准化
+
+def fix_name():
+    return ["sportsocks", "sportprivate", "dportirc", "sporttelnet", "sportrapservice", "dporthttp",
+            "sportsyslog", "sportreserved", "dportkpasswd", "tcpflagsACK", "npacketsmedium",
+            "sportcups", "dporttelnet", "sportldaps", "tcpflagsPSH", "dportoracle"]
+
 scaler = StandardScaler()
-X = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtest.csv").drop(columns=['Row'], axis=1).values
+X = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtest.csv").drop(columns=['Row'], axis=1)[fix_name()].values
 X_scaled = scaler.fit_transform(X)
+
 
 # 2. 使用 t-SNE 降维至2维
 tsne = TSNE(n_components=2, random_state=42)
@@ -46,7 +53,7 @@ plt.legend()
 plt.title('t-SNE Visualization')
 plt.xlabel('t-SNE Feature 1')
 plt.ylabel('t-SNE Feature 2')
-plt.savefig("ok2.png")
+plt.savefig("ok3.png")
 
 
 # y_test = pd.read_csv("/root/KitNET-py/UGR16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
