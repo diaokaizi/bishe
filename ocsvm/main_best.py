@@ -76,47 +76,9 @@ param_combinations = [dict(zip(keys, v)) for v in product(*values)]
 print(f"总共需要测试的参数组合数量：{len(param_combinations)}")
 
 # 初始化变量以记录最佳参数和最佳得分
-best_params = None
-best_roc_auc = -np.inf
-best_pr_auc = -np.inf
-
-# 遍历所有参数组合
-for idx, params in enumerate(param_combinations, 1):
-    print(f"正在测试第 {idx}/{len(param_combinations)} 组参数：{params}")
-    try:
-        # 初始化One-Class SVM模型
-        ocsvm = OneClassSVM(
-            kernel=params['kernel'],
-            gamma=params['gamma'],
-            nu=params['nu']
-        )
-        
-        # 训练模型
-        ocsvm.fit(x_train_np)
-        
-        # 获取异常分数
-        decision_scores = ocsvm.decision_function(x_test_np)
-        anomaly_scores = -decision_scores  # 值越高表示越异常
-        
-        # 对异常分数进行归一化
-        scaler_minmax = MinMaxScaler()
-        anomaly_scores_normalized = scaler_minmax.fit_transform(anomaly_scores.reshape(-1, 1)).flatten()
-        
-        # 计算评估指标
-        roc_auc = roc_auc_score(y_test_np, anomaly_scores_normalized)
-        precision, recall, _ = precision_recall_curve(y_test_np, anomaly_scores_normalized)
-        pr_auc = auc(recall, precision)
-        
-        print(f"当前参数组合的ROC AUC: {roc_auc:.4f}, PR AUC: {pr_auc:.4f}")
-        
-        # 更新最佳参数
-        if roc_auc > best_roc_auc:
-            best_roc_auc = roc_auc
-            best_pr_auc = pr_auc
-            best_params = params
-    except Exception as e:
-        print(f"参数组合 {params} 运行失败，错误信息：{e}")
-        continue
+best_params = 'rbf'
+best_roc_auc = 0.1
+best_pr_auc = 0.05
 
 # 输出最优参数组合及其评估指标
 print("\n最优参数组合及其评估指标：")
@@ -128,9 +90,9 @@ print(f"PR AUC: {best_pr_auc:.4f}")
 if best_params is not None:
     print("\n使用最优参数重新训练模型并保存结果...")
     ocsvm_best = OneClassSVM(
-        kernel=best_params['kernel'],
-        gamma=best_params['gamma'],
-        nu=best_params['nu']
+        kernel='rbf',
+        gamma=0.1,
+        nu=0.05
     )
     
     # 训练模型
@@ -156,8 +118,6 @@ if best_params is not None:
     pr_auc_best = auc(recall_best, precision_best)
     print(f"最优参数组合的ROC AUC: {roc_auc_best:.4f}")
     print(f"最优参数组合的PR AUC: {pr_auc_best:.4f}")
-else:
-    print("未找到最佳参数组合。")
 
 
 
