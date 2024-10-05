@@ -134,7 +134,7 @@ train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 # 模型参数
 input_dim = x_train.shape[1]
 hidden_dim = 10
-latent_dim = 5
+latent_dim = int(x_train.shape[1]/ 2)
 
 # 初始化模型、损失函数和优化器
 model = VAE(input_dim=input_dim, hidden_dim=hidden_dim, latent_dim=latent_dim)
@@ -149,7 +149,7 @@ def loss_function(recon_x, x, mu, logvar):
     kl_loss = -0.5 * torch.mean(1 + logvar - mu.pow(2) - logvar.exp())
     return recon_loss + kl_loss
 
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 # 训练模型
 num_epochs = 250

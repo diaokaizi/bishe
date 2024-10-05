@@ -35,10 +35,10 @@ def visual(name, labels, anomaly_score):
     optimal_threshold = thresholds[optimal_idx] + 0.005
     print(optimal_threshold)
 
-    precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
-    f1_scores = 2 * (precision * recall) / (precision + recall)
-    optimal_idx = np.argmax(f1_scores)
-    optimal_threshold = thresholds[optimal_idx]
+    # precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
+    # f1_scores = 2 * (precision * recall) / (precision + recall)
+    # optimal_idx = np.argmax(f1_scores)
+    # optimal_threshold = thresholds[optimal_idx]
 
     print(optimal_threshold)
 
@@ -119,6 +119,6 @@ def load_UGR16():
     print(y_test.bincount())
     return (x_train, y_train), (x_test, y_test)
 
-# (x_train, y_train), (x_test, y_test) = load_UGR16()
-# reconstruction_errors = np.loadtxt("/root/bishe/vae/after.txt")
-# visual("after", y_test, reconstruction_errors)
+(x_train, y_train), (x_test, y_test) = load_UGR16()
+reconstruction_errors = np.loadtxt("/root/bishe/vae/after.txt")
+visual("after", y_test, reconstruction_errors)
