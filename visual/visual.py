@@ -16,18 +16,21 @@ from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, ac
 
 
 def visual(name, labels, anomaly_score):
-    ########################################
-    # # 计算 ROC 曲线
-    # fpr, tpr, thresholds = roc_curve(labels, img_distance)
-    # # 找到最优阈值
-    # optimal_idx = np.argmax(tpr - fpr)
-    # optimal_threshold = thresholds[optimal_idx] + 0.005
-    # print(optimal_threshold)
-
-    # # 使用最优阈值来生成预测标签
-    # predicted_labels = np.where(img_distance >= optimal_threshold, 1, 0)
     print("XXXXXXXXXXXXX")
     print(name)
+    ########################################
+    # # 计算 ROC 曲线
+    fpr, tpr, thresholds = roc_curve(labels, anomaly_score)
+    # 找到最优阈值
+    optimal_idx = np.argmax(tpr - fpr)
+    optimal_threshold = thresholds[optimal_idx] + 0.005
+    print(optimal_threshold)
+
+    # 使用最优阈值来生成预测标签
+    predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
+    print("roc_curve")
+    print(classification_report(labels, predicted_labels))
+
 
     precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
     f1_scores = 2 * (precision * recall) / (precision + recall)
@@ -42,6 +45,7 @@ def visual(name, labels, anomaly_score):
     # print(f'\t\tAccuracy={accuracy_score(labels, predicted_labels)}\n\t\tPrecision={precision_score(labels, predicted_labels)}\n\t\tRecall={recall_score(labels, predicted_labels)}\n\t\tF1={f1_score(labels, predicted_labels)}\n')
     # print('\tUSING PR-CURVE & Distance:\n')
     # print(f'\t\tAccuracy={accuracy_score(labels, predicted_labels)}\n\t\tPrecision={precision_score(labels, predicted_labels)}\n\t\tRecall={recall_score(labels, predicted_labels)}\n\t\tF1={f1_score(labels, predicted_labels)}\n')
+    print("precision_recall_curve")
     print(classification_report(labels, predicted_labels))
     ########################################
 
@@ -69,13 +73,13 @@ def fgan1(path, name):
     visual(name, labels, anomaly_score * random_factors)
 
 def kitnet(path, name):
-    y_test = pd.read_csv("/root/UGR16_FeatureData/csv/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
+    y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
     labels = y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values
     anomaly_score = pd.read_csv(path)["remse"].values
     visual(name, labels, anomaly_score)
 
 def txt(path, name):
-    y_test = pd.read_csv("/root/UGR16_FeatureData/csv/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
+    y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
     labels = y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values
     anomaly_score = np.loadtxt(path)
     visual(name, labels, anomaly_score)
@@ -88,10 +92,12 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
-fgan("/root/urg16_compare/CAE-AnoGAN.csv", "CAE-AnoGAN")
-fgan("/root/urg16_compare/f-anogan.csv", "f-anogan")
-kitnet("kitnet.csv", "kitnet")
-txt("ae.txt", "ae")
-txt("ocsvm.txt", "ocsvm")
+fgan("/root/bishe/MAE-ANOGAN/results/score.csv", "MAE-ANOGAN")
+fgan("/root/bishe/f-anogan/results/score.csv", "f-anogan")
+kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
+txt("/root/bishe/ae/after.txt", "ae")
+txt("/root/bishe/vae/after.txt", "vae")
+txt("/root/bishe/ocsvm/after.txt", "ocsvm")
+txt("/root/bishe/iForest/after_best_params.txt", "iForest")
 plt.legend()
 plt.savefig(f"ROC-AUC.png")
