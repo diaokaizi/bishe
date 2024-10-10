@@ -45,6 +45,9 @@ def main(opt):
     gsa = torch.cat([gsa, a], dim=1)
     print(gsa.shape)
     y_train = torch.zeros(len(gsa))
+    mean = gsa.mean(axis=0)  # Mean of each feature
+    std = gsa.std(axis=0)
+    normalize = NormalizeTransform(mean, std)
     train_mnist = SimpleDataset(gsa, y_train,transform=normalize)
     train_dataloader = DataLoader(train_mnist, batch_size=opt.batch_size,shuffle=True)
     gan_input_dim = gsa.shape[1]

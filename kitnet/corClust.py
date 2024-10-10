@@ -48,10 +48,6 @@ class corClust:
         if maxClust > self.n:
             maxClust = self.n
         map = self.__breakClust__(to_tree(Z),maxClust)
-        # 初步选择k值
-        # initial_k = 30  # 根据经验或评估指标选择
-        # clusters = fcluster(Z, initial_k, criterion='maxclust')
-        # print(list(clusters))
         return map
 
     # a recursive helper function which breaks down the dendrogram branches until all clusters have no more than maxClust elements
