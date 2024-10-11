@@ -1,0 +1,348 @@
+Training set shape: torch.Size([69267, 139]), Labels: tensor([0.])
+Test set shape: torch.Size([16096, 139]), Labels: tensor([0, 1])
+总共需要测试的参数组合数量：162
+正在测试第 1/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9552, PR AUC: 0.2326
+正在测试第 2/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9553, PR AUC: 0.2337
+正在测试第 3/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9552, PR AUC: 0.2326
+正在测试第 4/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9553, PR AUC: 0.2337
+正在测试第 5/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9552, PR AUC: 0.2326
+正在测试第 6/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9553, PR AUC: 0.2337
+正在测试第 7/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9458, PR AUC: 0.1969
+正在测试第 8/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9452, PR AUC: 0.1981
+正在测试第 9/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9458, PR AUC: 0.1969
+正在测试第 10/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9452, PR AUC: 0.1981
+正在测试第 11/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9458, PR AUC: 0.1969
+正在测试第 12/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9452, PR AUC: 0.1981
+正在测试第 13/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9868, PR AUC: 0.5175
+正在测试第 14/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9868, PR AUC: 0.5200
+正在测试第 15/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9868, PR AUC: 0.5175
+正在测试第 16/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9868, PR AUC: 0.5200
+正在测试第 17/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9868, PR AUC: 0.5175
+正在测试第 18/162 组参数：{'n_estimators': 100, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9868, PR AUC: 0.5200
+正在测试第 19/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9932, PR AUC: 0.8706
+正在测试第 20/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9948, PR AUC: 0.8939
+正在测试第 21/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9932, PR AUC: 0.8706
+正在测试第 22/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9948, PR AUC: 0.8939
+正在测试第 23/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9932, PR AUC: 0.8706
+正在测试第 24/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9948, PR AUC: 0.8939
+正在测试第 25/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9927, PR AUC: 0.6888
+正在测试第 26/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9874, PR AUC: 0.5333
+正在测试第 27/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9927, PR AUC: 0.6888
+正在测试第 28/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9874, PR AUC: 0.5333
+正在测试第 29/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9927, PR AUC: 0.6888
+正在测试第 30/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9874, PR AUC: 0.5333
+正在测试第 31/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9977, PR AUC: 0.9449
+正在测试第 32/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9954, PR AUC: 0.8734
+正在测试第 33/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9977, PR AUC: 0.9449
+正在测试第 34/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9954, PR AUC: 0.8734
+正在测试第 35/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9977, PR AUC: 0.9449
+正在测试第 36/162 组参数：{'n_estimators': 100, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9954, PR AUC: 0.8734
+正在测试第 37/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9952, PR AUC: 0.9250
+正在测试第 38/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9946, PR AUC: 0.9142
+正在测试第 39/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9952, PR AUC: 0.9250
+正在测试第 40/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9946, PR AUC: 0.9142
+正在测试第 41/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9952, PR AUC: 0.9250
+正在测试第 42/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9946, PR AUC: 0.9142
+正在测试第 43/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9941, PR AUC: 0.7446
+正在测试第 44/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9947, PR AUC: 0.7208
+正在测试第 45/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9941, PR AUC: 0.7446
+正在测试第 46/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9947, PR AUC: 0.7208
+正在测试第 47/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9941, PR AUC: 0.7446
+正在测试第 48/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9947, PR AUC: 0.7208
+正在测试第 49/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9984, PR AUC: 0.9546
+正在测试第 50/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9982, PR AUC: 0.9477
+正在测试第 51/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9984, PR AUC: 0.9546
+正在测试第 52/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9982, PR AUC: 0.9477
+正在测试第 53/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9984, PR AUC: 0.9546
+正在测试第 54/162 组参数：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9982, PR AUC: 0.9477
+正在测试第 55/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9624, PR AUC: 0.2559
+正在测试第 56/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9624, PR AUC: 0.2562
+正在测试第 57/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9624, PR AUC: 0.2559
+正在测试第 58/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9624, PR AUC: 0.2562
+正在测试第 59/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9624, PR AUC: 0.2559
+正在测试第 60/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9624, PR AUC: 0.2562
+正在测试第 61/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9584, PR AUC: 0.2354
+正在测试第 62/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9558, PR AUC: 0.2226
+正在测试第 63/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9584, PR AUC: 0.2354
+正在测试第 64/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9558, PR AUC: 0.2226
+正在测试第 65/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9584, PR AUC: 0.2354
+正在测试第 66/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9558, PR AUC: 0.2226
+正在测试第 67/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9825, PR AUC: 0.4656
+正在测试第 68/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9819, PR AUC: 0.4549
+正在测试第 69/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9825, PR AUC: 0.4656
+正在测试第 70/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9819, PR AUC: 0.4549
+正在测试第 71/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9825, PR AUC: 0.4656
+正在测试第 72/162 组参数：{'n_estimators': 200, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9819, PR AUC: 0.4549
+正在测试第 73/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9952, PR AUC: 0.8886
+正在测试第 74/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9957, PR AUC: 0.9152
+正在测试第 75/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9952, PR AUC: 0.8886
+正在测试第 76/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9957, PR AUC: 0.9152
+正在测试第 77/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9952, PR AUC: 0.8886
+正在测试第 78/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9957, PR AUC: 0.9152
+正在测试第 79/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9927, PR AUC: 0.7155
+正在测试第 80/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9931, PR AUC: 0.6947
+正在测试第 81/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9927, PR AUC: 0.7155
+正在测试第 82/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9931, PR AUC: 0.6947
+正在测试第 83/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9927, PR AUC: 0.7155
+正在测试第 84/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9931, PR AUC: 0.6947
+正在测试第 85/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9980, PR AUC: 0.9469
+正在测试第 86/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9963, PR AUC: 0.8925
+正在测试第 87/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9980, PR AUC: 0.9469
+正在测试第 88/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9963, PR AUC: 0.8925
+正在测试第 89/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9980, PR AUC: 0.9469
+正在测试第 90/162 组参数：{'n_estimators': 200, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9963, PR AUC: 0.8925
+正在测试第 91/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9959, PR AUC: 0.9229
+正在测试第 92/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9961, PR AUC: 0.9271
+正在测试第 93/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9959, PR AUC: 0.9229
+正在测试第 94/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9961, PR AUC: 0.9271
+正在测试第 95/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9959, PR AUC: 0.9229
+正在测试第 96/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9961, PR AUC: 0.9271
+正在测试第 97/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9945, PR AUC: 0.7969
+正在测试第 98/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9951, PR AUC: 0.7704
+正在测试第 99/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9945, PR AUC: 0.7969
+正在测试第 100/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9951, PR AUC: 0.7704
+正在测试第 101/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9945, PR AUC: 0.7969
+正在测试第 102/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9951, PR AUC: 0.7704
+正在测试第 103/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9976, PR AUC: 0.9403
+正在测试第 104/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9972, PR AUC: 0.9239
+正在测试第 105/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9976, PR AUC: 0.9403
+正在测试第 106/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9972, PR AUC: 0.9239
+正在测试第 107/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9976, PR AUC: 0.9403
+正在测试第 108/162 组参数：{'n_estimators': 200, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9972, PR AUC: 0.9239
+正在测试第 109/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9666, PR AUC: 0.2820
+正在测试第 110/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9665, PR AUC: 0.2808
+正在测试第 111/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9666, PR AUC: 0.2820
+正在测试第 112/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9665, PR AUC: 0.2808
+正在测试第 113/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9666, PR AUC: 0.2820
+正在测试第 114/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9665, PR AUC: 0.2808
+正在测试第 115/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9601, PR AUC: 0.2403
+正在测试第 116/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9585, PR AUC: 0.2317
+正在测试第 117/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9601, PR AUC: 0.2403
+正在测试第 118/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9585, PR AUC: 0.2317
+正在测试第 119/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9601, PR AUC: 0.2403
+正在测试第 120/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9585, PR AUC: 0.2317
+正在测试第 121/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9809, PR AUC: 0.4229
+正在测试第 122/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9797, PR AUC: 0.4055
+正在测试第 123/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9809, PR AUC: 0.4229
+正在测试第 124/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9797, PR AUC: 0.4055
+正在测试第 125/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9809, PR AUC: 0.4229
+正在测试第 126/162 组参数：{'n_estimators': 300, 'max_samples': 'auto', 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9797, PR AUC: 0.4055
+正在测试第 127/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9960, PR AUC: 0.8671
+正在测试第 128/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9954, PR AUC: 0.8969
+正在测试第 129/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9960, PR AUC: 0.8671
+正在测试第 130/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9954, PR AUC: 0.8969
+正在测试第 131/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9960, PR AUC: 0.8671
+正在测试第 132/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9954, PR AUC: 0.8969
+正在测试第 133/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9963, PR AUC: 0.8681
+正在测试第 134/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9964, PR AUC: 0.8705
+正在测试第 135/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9963, PR AUC: 0.8681
+正在测试第 136/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9964, PR AUC: 0.8705
+正在测试第 137/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9963, PR AUC: 0.8681
+正在测试第 138/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9964, PR AUC: 0.8705
+正在测试第 139/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9973, PR AUC: 0.9329
+正在测试第 140/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.8898
+正在测试第 141/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9973, PR AUC: 0.9329
+正在测试第 142/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.8898
+正在测试第 143/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9973, PR AUC: 0.9329
+正在测试第 144/162 组参数：{'n_estimators': 300, 'max_samples': 0.75, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.8898
+正在测试第 145/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.9149
+正在测试第 146/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9964, PR AUC: 0.9025
+正在测试第 147/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.9149
+正在测试第 148/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9964, PR AUC: 0.9025
+正在测试第 149/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.9149
+正在测试第 150/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 1.0, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9964, PR AUC: 0.9025
+正在测试第 151/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.8974
+正在测试第 152/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9973, PR AUC: 0.9156
+正在测试第 153/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.8974
+正在测试第 154/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9973, PR AUC: 0.9156
+正在测试第 155/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.8974
+正在测试第 156/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.8, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9973, PR AUC: 0.9156
+正在测试第 157/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9971, PR AUC: 0.9337
+正在测试第 158/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9970, PR AUC: 0.9198
+正在测试第 159/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9971, PR AUC: 0.9337
+正在测试第 160/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.02, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9970, PR AUC: 0.9198
+正在测试第 161/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': False}
+当前参数组合的ROC AUC: 0.9971, PR AUC: 0.9337
+正在测试第 162/162 组参数：{'n_estimators': 300, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.05, 'bootstrap': True}
+当前参数组合的ROC AUC: 0.9970, PR AUC: 0.9198
+
+最优参数组合及其评估指标：
+参数组合：{'n_estimators': 100, 'max_samples': 0.85, 'max_features': 0.9, 'contamination': 0.01, 'bootstrap': False}
+ROC AUC: 0.9984
+PR AUC: 0.9546
+
+使用最优参数重新训练模型并保存结果...
+0.7726829259150305
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     15673
+           1       0.95      0.85      0.90       423
+
+    accuracy                           0.99     16096
+   macro avg       0.98      0.92      0.95     16096
+weighted avg       0.99      0.99      0.99     16096
+
+0.9983524089175357
+0.9545843022730041
+最优参数组合的ROC AUC: 0.9984
+最优参数组合的PR AUC: 0.9546

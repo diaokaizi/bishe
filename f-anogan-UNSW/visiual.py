@@ -50,7 +50,7 @@ z_distance = df["z_distance"].values
 # predicted_labels = np.where(img_distance >= optimal_threshold, 1, 0)
 
 precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
-f1_scores = 2 * (precision * recall) / (precision + recall)
+f1_scores = np.where((precision + recall) == 0, 0, 2 * (precision * recall) / (precision + recall))
 optimal_idx = np.argmax(f1_scores)
 optimal_threshold = thresholds[optimal_idx]
 
