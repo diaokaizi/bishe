@@ -1,0 +1,216 @@
+Training set shape: torch.Size([69267, 139]), Labels: tensor([0.])
+Test set shape: torch.Size([16096, 139]), Labels: tensor([0, 1])
+总共需要测试的参数组合数量：96
+正在测试第 1/96 组参数：{'kernel': 'rbf', 'gamma': 'scale', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9818
+正在测试第 2/96 组参数：{'kernel': 'rbf', 'gamma': 'scale', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.9991, PR AUC: 0.9811
+正在测试第 3/96 组参数：{'kernel': 'rbf', 'gamma': 'scale', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9832
+正在测试第 4/96 组参数：{'kernel': 'rbf', 'gamma': 'scale', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9843
+正在测试第 5/96 组参数：{'kernel': 'rbf', 'gamma': 'auto', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.9993, PR AUC: 0.9859
+正在测试第 6/96 组参数：{'kernel': 'rbf', 'gamma': 'auto', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.9995, PR AUC: 0.9888
+正在测试第 7/96 组参数：{'kernel': 'rbf', 'gamma': 'auto', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.9994, PR AUC: 0.9881
+正在测试第 8/96 组参数：{'kernel': 'rbf', 'gamma': 'auto', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9831
+正在测试第 9/96 组参数：{'kernel': 'rbf', 'gamma': 0.001, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.9994, PR AUC: 0.9863
+正在测试第 10/96 组参数：{'kernel': 'rbf', 'gamma': 0.001, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.9995, PR AUC: 0.9894
+正在测试第 11/96 组参数：{'kernel': 'rbf', 'gamma': 0.001, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.9994, PR AUC: 0.9880
+正在测试第 12/96 组参数：{'kernel': 'rbf', 'gamma': 0.001, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9826
+正在测试第 13/96 组参数：{'kernel': 'rbf', 'gamma': 0.01, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.9993, PR AUC: 0.9857
+正在测试第 14/96 组参数：{'kernel': 'rbf', 'gamma': 0.01, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.9995, PR AUC: 0.9886
+正在测试第 15/96 组参数：{'kernel': 'rbf', 'gamma': 0.01, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.9994, PR AUC: 0.9882
+正在测试第 16/96 组参数：{'kernel': 'rbf', 'gamma': 0.01, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9833
+正在测试第 17/96 组参数：{'kernel': 'rbf', 'gamma': 0.1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9828
+正在测试第 18/96 组参数：{'kernel': 'rbf', 'gamma': 0.1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.9992, PR AUC: 0.9822
+正在测试第 19/96 组参数：{'kernel': 'rbf', 'gamma': 0.1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.9994, PR AUC: 0.9873
+正在测试第 20/96 组参数：{'kernel': 'rbf', 'gamma': 0.1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.9993, PR AUC: 0.9851
+正在测试第 21/96 组参数：{'kernel': 'rbf', 'gamma': 1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.9962, PR AUC: 0.9348
+正在测试第 22/96 组参数：{'kernel': 'rbf', 'gamma': 1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.9970, PR AUC: 0.9452
+正在测试第 23/96 组参数：{'kernel': 'rbf', 'gamma': 1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.9975, PR AUC: 0.9553
+正在测试第 24/96 组参数：{'kernel': 'rbf', 'gamma': 1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.9978, PR AUC: 0.9605
+正在测试第 25/96 组参数：{'kernel': 'linear', 'gamma': 'scale', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 26/96 组参数：{'kernel': 'linear', 'gamma': 'scale', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 27/96 组参数：{'kernel': 'linear', 'gamma': 'scale', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 28/96 组参数：{'kernel': 'linear', 'gamma': 'scale', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 29/96 组参数：{'kernel': 'linear', 'gamma': 'auto', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 30/96 组参数：{'kernel': 'linear', 'gamma': 'auto', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 31/96 组参数：{'kernel': 'linear', 'gamma': 'auto', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 32/96 组参数：{'kernel': 'linear', 'gamma': 'auto', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 33/96 组参数：{'kernel': 'linear', 'gamma': 0.001, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 34/96 组参数：{'kernel': 'linear', 'gamma': 0.001, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 35/96 组参数：{'kernel': 'linear', 'gamma': 0.001, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 36/96 组参数：{'kernel': 'linear', 'gamma': 0.001, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 37/96 组参数：{'kernel': 'linear', 'gamma': 0.01, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 38/96 组参数：{'kernel': 'linear', 'gamma': 0.01, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 39/96 组参数：{'kernel': 'linear', 'gamma': 0.01, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 40/96 组参数：{'kernel': 'linear', 'gamma': 0.01, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 41/96 组参数：{'kernel': 'linear', 'gamma': 0.1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 42/96 组参数：{'kernel': 'linear', 'gamma': 0.1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 43/96 组参数：{'kernel': 'linear', 'gamma': 0.1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 44/96 组参数：{'kernel': 'linear', 'gamma': 0.1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 45/96 组参数：{'kernel': 'linear', 'gamma': 1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 46/96 组参数：{'kernel': 'linear', 'gamma': 1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 47/96 组参数：{'kernel': 'linear', 'gamma': 1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 48/96 组参数：{'kernel': 'linear', 'gamma': 1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 49/96 组参数：{'kernel': 'poly', 'gamma': 'scale', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0025, PR AUC: 0.0133
+正在测试第 50/96 组参数：{'kernel': 'poly', 'gamma': 'scale', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0074, PR AUC: 0.0133
+正在测试第 51/96 组参数：{'kernel': 'poly', 'gamma': 'scale', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0129, PR AUC: 0.0133
+正在测试第 52/96 组参数：{'kernel': 'poly', 'gamma': 'scale', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0127, PR AUC: 0.0133
+正在测试第 53/96 组参数：{'kernel': 'poly', 'gamma': 'auto', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0087, PR AUC: 0.0133
+正在测试第 54/96 组参数：{'kernel': 'poly', 'gamma': 'auto', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0074, PR AUC: 0.0133
+正在测试第 55/96 组参数：{'kernel': 'poly', 'gamma': 'auto', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0129, PR AUC: 0.0133
+正在测试第 56/96 组参数：{'kernel': 'poly', 'gamma': 'auto', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0127, PR AUC: 0.0133
+正在测试第 57/96 组参数：{'kernel': 'poly', 'gamma': 0.001, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0135, PR AUC: 0.0133
+正在测试第 58/96 组参数：{'kernel': 'poly', 'gamma': 0.001, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0090, PR AUC: 0.0133
+正在测试第 59/96 组参数：{'kernel': 'poly', 'gamma': 0.001, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0046, PR AUC: 0.0133
+正在测试第 60/96 组参数：{'kernel': 'poly', 'gamma': 0.001, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0061, PR AUC: 0.0133
+正在测试第 61/96 组参数：{'kernel': 'poly', 'gamma': 0.01, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0060, PR AUC: 0.0133
+正在测试第 62/96 组参数：{'kernel': 'poly', 'gamma': 0.01, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0074, PR AUC: 0.0133
+正在测试第 63/96 组参数：{'kernel': 'poly', 'gamma': 0.01, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0129, PR AUC: 0.0133
+正在测试第 64/96 组参数：{'kernel': 'poly', 'gamma': 0.01, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0127, PR AUC: 0.0133
+正在测试第 65/96 组参数：{'kernel': 'poly', 'gamma': 0.1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0025, PR AUC: 0.0133
+正在测试第 66/96 组参数：{'kernel': 'poly', 'gamma': 0.1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0074, PR AUC: 0.0133
+正在测试第 67/96 组参数：{'kernel': 'poly', 'gamma': 0.1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0129, PR AUC: 0.0133
+正在测试第 68/96 组参数：{'kernel': 'poly', 'gamma': 0.1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0127, PR AUC: 0.0133
+正在测试第 69/96 组参数：{'kernel': 'poly', 'gamma': 1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0025, PR AUC: 0.0133
+正在测试第 70/96 组参数：{'kernel': 'poly', 'gamma': 1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0074, PR AUC: 0.0133
+正在测试第 71/96 组参数：{'kernel': 'poly', 'gamma': 1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0129, PR AUC: 0.0133
+正在测试第 72/96 组参数：{'kernel': 'poly', 'gamma': 1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0127, PR AUC: 0.0133
+正在测试第 73/96 组参数：{'kernel': 'sigmoid', 'gamma': 'scale', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0070, PR AUC: 0.0133
+正在测试第 74/96 组参数：{'kernel': 'sigmoid', 'gamma': 'scale', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0023, PR AUC: 0.0133
+正在测试第 75/96 组参数：{'kernel': 'sigmoid', 'gamma': 'scale', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0049, PR AUC: 0.0133
+正在测试第 76/96 组参数：{'kernel': 'sigmoid', 'gamma': 'scale', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0080, PR AUC: 0.0133
+正在测试第 77/96 组参数：{'kernel': 'sigmoid', 'gamma': 'auto', 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 78/96 组参数：{'kernel': 'sigmoid', 'gamma': 'auto', 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 79/96 组参数：{'kernel': 'sigmoid', 'gamma': 'auto', 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 80/96 组参数：{'kernel': 'sigmoid', 'gamma': 'auto', 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 81/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.001, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 82/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.001, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 83/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.001, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 84/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.001, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 85/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.01, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0053, PR AUC: 0.0133
+正在测试第 86/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.01, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 87/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.01, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0091, PR AUC: 0.0133
+正在测试第 88/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.01, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0110, PR AUC: 0.0133
+正在测试第 89/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0056, PR AUC: 0.0133
+正在测试第 90/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0018, PR AUC: 0.0133
+正在测试第 91/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0081, PR AUC: 0.0133
+正在测试第 92/96 组参数：{'kernel': 'sigmoid', 'gamma': 0.1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0104, PR AUC: 0.0133
+正在测试第 93/96 组参数：{'kernel': 'sigmoid', 'gamma': 1, 'nu': 0.01}
+当前参数组合的ROC AUC: 0.0243, PR AUC: 0.0133
+正在测试第 94/96 组参数：{'kernel': 'sigmoid', 'gamma': 1, 'nu': 0.02}
+当前参数组合的ROC AUC: 0.0242, PR AUC: 0.0133
+正在测试第 95/96 组参数：{'kernel': 'sigmoid', 'gamma': 1, 'nu': 0.05}
+当前参数组合的ROC AUC: 0.0231, PR AUC: 0.0133
+正在测试第 96/96 组参数：{'kernel': 'sigmoid', 'gamma': 1, 'nu': 0.1}
+当前参数组合的ROC AUC: 0.0230, PR AUC: 0.0133
+
+最优参数组合及其评估指标：
+参数组合：{'kernel': 'rbf', 'gamma': 0.001, 'nu': 0.02}
+ROC AUC: 0.9995
+PR AUC: 0.9894
+
+使用最优参数重新训练模型并保存结果...
+0.05687077003035547
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     15673
+           1       1.00      0.95      0.97       423
+
+    accuracy                           1.00     16096
+   macro avg       1.00      0.98      0.99     16096
+weighted avg       1.00      1.00      1.00     16096
+
+0.9995170203564908
+0.9893743129166278
+最优参数组合的ROC AUC: 0.9995
+最优参数组合的PR AUC: 0.9894

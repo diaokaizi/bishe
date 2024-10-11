@@ -20,20 +20,20 @@ def visual(name, labels, anomaly_score):
     print(name)
     ########################################
     # # 计算 ROC 曲线
-    fpr, tpr, thresholds = roc_curve(labels, anomaly_score)
-    # 找到最优阈值
-    optimal_idx = np.argmax(tpr - fpr)
-    optimal_threshold = thresholds[optimal_idx] + 0.005
-    print(optimal_threshold)
+    # fpr, tpr, thresholds = roc_curve(labels, anomaly_score)
+    # # 找到最优阈值
+    # optimal_idx = np.argmax(tpr - fpr)
+    # optimal_threshold = thresholds[optimal_idx]
+    # print(optimal_threshold)
 
-    # 使用最优阈值来生成预测标签
-    predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
-    print("roc_curve")
-    print(classification_report(labels, predicted_labels))
+    # # 使用最优阈值来生成预测标签
+    # predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
+    # print("roc_curve")
+    # print(classification_report(labels, predicted_labels))
 
 
     precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
-    f1_scores = 2 * (precision * recall) / (precision + recall)
+    f1_scores = np.where((precision + recall) == 0, 0, 2 * (precision * recall) / (precision + recall))
     optimal_idx = np.argmax(f1_scores)
     optimal_threshold = thresholds[optimal_idx]
     print(optimal_threshold)
@@ -52,6 +52,7 @@ def visual(name, labels, anomaly_score):
     fpr, tpr, _ = roc_curve(labels, anomaly_score)
     precision, recall, _ = precision_recall_curve(labels, anomaly_score)
     roc_auc = auc(fpr, tpr)
+    print(roc_auc)
     plt.plot(fpr, tpr, label=f"{name} = {roc_auc:3f}")
 
 
@@ -93,16 +94,25 @@ plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
 # fgan("/root/bishe/MAE-ANOGAN/results/score.csv", "MAE-ANOGAN")
-fgan("f-gan.csv", "MAE-ANOGAN")
-fgan("/root/bishe/f-anogan/results/score.csv", "f-anogan")
-# fgan("/root/bishe/f-anogan_16/results/score.csv", "f-anogan-16")
+fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAE-ANOGAN")
+# fgan("/root/bishe/f-anogan/results/score.csv", "f-anogan")
 kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
-txt("/root/bishe/ae/after.txt", "ae")
+fgan("/root/bishe/f-anogan_16/results/score.csv", "f-anogan-16")
+txt("/root/bishe/ae/after_UGR16.txt", "ae") ###########需要调整
 # txt("/root/bishe/vae/after.txt", "vae")
-txt("/root/bishe/ocsvm/after.txt", "ocsvm")
+txt("/root/bishe/ocsvm/after_best_params.txt", "ocsvm")
 txt("/root/bishe/iForest/after_best_params.txt", "iForest")
 # txt("RCA_config6_run1.txt", "RCA")
 txt("DeepSVDD_config6_run1.txt", "DeepSVDD")
 txt("SLAD_config12_run1_fake.txt", "SLAD")
+
+
+# kitnet("/root/bishe/kitnet-fm/RMSEs_raw.csv", "RMSEs_raw")
+# kitnet("/root/bishe/kitnet-fm/RMSEs10.csv", "RMSEs10")
+# kitnet("/root/bishe/kitnet-fm/RMSEs.csv", "kitnet")
+# kitnet("/root/bishe/kitnet-fm/RMSEs copy.csv", "copy")
+
+
+
 plt.legend()
 plt.savefig(f"ROC-AUC.png")
