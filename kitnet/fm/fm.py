@@ -26,7 +26,7 @@ FMgrace = int(train.shape[0] * 0.1) #the number of instances taken to learn the 
 ADgrace = train.shape[0] - FMgrace #the number of instances used to train the anomaly detector (ensemble itself)
 print(FMgrace, ADgrace)
 # Build KitNET
-K = kit.KitNET(train.shape[1],maxAE,FMgrace,ADgrace)
+K = kit.KitNET(train.shape[1],maxAE,train.shape[0] - 1,ADgrace)
 
 print("Running KitNET:")
 start = time.time()

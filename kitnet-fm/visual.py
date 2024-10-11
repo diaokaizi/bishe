@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
 y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
 labels = y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values
-img_distance = pd.read_csv("RMSEs_raw.csv")["remse"].values
+img_distance = pd.read_csv("RMSEs.csv")["remse"].values
 
 
 ########################################

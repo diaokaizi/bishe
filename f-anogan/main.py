@@ -6,7 +6,7 @@ import torchvision.transforms as transforms
 from fanogan_muti.train_wgangp import train_wgangp
 from fanogan_muti.train_encoder_izif import train_encoder_izif
 from model import Generator, Discriminator, Encoder
-from tools import SimpleDataset, load_UGR16, NormalizeTransform
+from tools import SimpleDataset, load_UGR16_StandardScaler, NormalizeTransform
 import numpy as np
 import pandas as pd
 from fanogan_muti.test_anomaly_detection import test_anomaly_detection
@@ -15,7 +15,7 @@ def main(opt):
         torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     
-    (x_train, y_train), (x_test, y_test) = load_UGR16()
+    (x_train, y_train), (x_test, y_test) = load_UGR16_StandardScaler()
     
     mean = x_train.mean(axis=0)  # Mean of each feature
     std = x_train.std(axis=0)
