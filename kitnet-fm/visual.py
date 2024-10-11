@@ -6,19 +6,22 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
 y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
 labels = y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values
-img_distance = pd.read_csv("RMSEs copy.csv")["remse"].values
+img_distance = pd.read_csv("RMSEs_raw.csv")["remse"].values
 
 
 ########################################
-# # 计算 ROC 曲线
-# fpr, tpr, thresholds = roc_curve(labels, img_distance)
-# # 找到最优阈值
-# optimal_idx = np.argmax(tpr - fpr)
-# optimal_threshold = thresholds[optimal_idx]
-# print(optimal_threshold)
+# 计算 ROC 曲线
+fpr, tpr, thresholds = roc_curve(labels, img_distance)
+# 找到最优阈值
+optimal_idx = np.argmax(tpr - fpr)
+optimal_threshold = thresholds[optimal_idx]
+print(optimal_threshold)
 
-# # 使用最优阈值来生成预测标签
-# predicted_labels = np.where(img_distance >= optimal_threshold, 1, 0)
+# 使用最优阈值来生成预测标签
+predicted_labels = np.where(img_distance >= optimal_threshold, 1, 0)
+print(classification_report(labels, predicted_labels))
+
+
 
 precision, recall, thresholds = precision_recall_curve(labels, img_distance)
 f1_scores = np.where((precision + recall) == 0, 0, 2 * (precision * recall) / (precision + recall))
