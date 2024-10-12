@@ -4,7 +4,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEncoder
+from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEncoder, MinMaxScaler
 from visual import visual
 class NormalizeTransform:
     """ Normalize features with mean and standard deviation. """
@@ -87,17 +87,6 @@ def load_UNSW_Flow():
     x_train = torch.from_numpy(train).float()
     y_train = torch.zeros(len(x_train))
 
-    test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_use.csv")
-    y_test = torch.from_numpy(test['binary_label_attack'].apply(lambda x: 0 if x == 0 else 1).values)
-    x_test = test.drop(columns=['timestamp', 'label_background','label_exploits','label_fuzzers','label_reconnaissance','label_dos','label_analysis','label_backdoor','label_shellcode','label_worms','label_other','binary_label_normal','binary_label_attack'], axis=1).values #an m-by-n dataset with m observations
-    x_test = torch.from_numpy(x_test).float()
-    print(x_train)
-    print(x_train.shape)
-    print(y_train)
-    print(x_test)
-    print(x_test.shape)
-    print(y_test)
-    return (x_train, y_train), (x_test, y_test)
 
 def load_UGR16():
     raw_x_train = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
@@ -111,17 +100,64 @@ def load_UGR16():
     y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
     return (x_train, y_train), (x_test, y_test)
 
+def load_UNSW():
+    # 先进行标准化
+    # 加载训练数据
+    train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
+    
+    # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
+    train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
+    train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
+    train = train[train['anomaly_ratio'] < 0.1]  # 只保留 anomaly_ratio < 0.15 的样本
+
+    # 删除不需要的列
+    raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
+                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
+                                       'label_backdoor', 'label_shellcode', 'label_worms', 
+                                       'label_other', 'binary_label_normal', 'binary_label_attack', 
+                                       'total_records', 'anomaly_ratio'], axis=1)
+
+    # 加载测试数据
+    raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv").drop(columns=['timestamp', 
+                                       'label_background', 'label_exploits', 'label_fuzzers', 
+                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
+                                       'label_backdoor', 'label_shellcode', 'label_worms', 
+                                       'label_other', 'binary_label_normal', 'binary_label_attack'], axis=1)
+
+    # 接下来进行归一化
+    minmax_scaler = MinMaxScaler()
+    
+    # 对标准化后的训练数据进行归一化
+    x_train_normalized = minmax_scaler.fit_transform(raw_x_train.values)  # 仅在训练数据上拟合
+    x_train_normalized = torch.from_numpy(x_train_normalized).float()
+    
+    # 对标准化后的测试数据进行归一化
+    x_test_normalized = minmax_scaler.transform(raw_x_test.values)  # 使用相同的缩放器进行转换
+    x_test_normalized = torch.from_numpy(x_test_normalized).float()
+    
+    # 加载并处理测试标签
+    y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
+    y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
+    y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
+    
+    # 根据 anomaly_ratio 生成测试标签
+    y_test = torch.from_numpy((y_test['anomaly_ratio'] > 0.1).astype(int).to_numpy())
+    
+    # 假设训练数据全部为正常数据
+    y_train = torch.zeros(len(x_train_normalized))
+
+    # 输出训练和测试集的形状
+    print(f"Training set shape: {x_train_normalized.shape}, Labels: {y_train.unique()}")
+    print(f"Test set shape: {x_test_normalized.shape}, Labels: {y_test.unique()}")
+    return (x_train_normalized, y_train), (x_test_normalized, y_test)
 
 
-name = "after"
-(x_train, y_train), (x_test, y_test) = load_UGR16()
+name = "UNSW"
+(x_train, y_train), (x_test, y_test) = load_UNSW()
 
 
-
-mean = x_train.mean(axis=0)  # Mean of each feature
-std = x_train.std(axis=0)
-normalize = NormalizeTransform(mean, std)
-train_mnist = SimpleDataset(x_train, y_train,transform=normalize)
+y_train = torch.zeros(len(x_train))
+train_mnist = SimpleDataset(x_train, y_train)
 dataloader = DataLoader(train_mnist, batch_size=10,
                                 shuffle=True)
 
@@ -147,10 +183,7 @@ for epoch in range(num_epochs):
 
 criterion = nn.MSELoss()
 
-mean = x_test.mean(axis=0)  # Mean of each feature
-std = x_test.std(axis=0)
-normalize = NormalizeTransform(mean, std)
-test_mnist = SimpleDataset(x_test, y_test,transform=normalize)
+test_mnist = SimpleDataset(x_test, y_test)
 test_dataloader = DataLoader(test_mnist, batch_size=1,
                                 shuffle=False)
 model.eval()
@@ -159,13 +192,7 @@ for idx, data in enumerate(test_dataloader):
     inputs, _ = data
     outputs = model(inputs)
     loss = criterion(outputs, inputs)
-
-    # 打印每个样本的损失
-    print(f"Sample {idx}: Loss = {loss.item()}")
-
-    # 记录 RMSE（可选）
     RMSEs[idx] = loss.item()
-
-# 检测异常
 np.savetxt(f"{name}.txt", RMSEs)
 visual(name, y_test, RMSEs)
+

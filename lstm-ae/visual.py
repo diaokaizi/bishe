@@ -36,7 +36,7 @@ def visual(name, labels, anomaly_score):
     print(optimal_threshold)
 
     precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
-    f1_scores = 2 * (precision * recall) / (precision + recall)
+    f1_scores = np.where((precision + recall) == 0, 0, 2 * (precision * recall) / (precision + recall))
     optimal_idx = np.argmax(f1_scores)
     optimal_threshold = thresholds[optimal_idx]
 
@@ -101,6 +101,54 @@ def load_UGR16():
     y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
     return (x_train, y_train), (x_test, y_test)
 
-(x_train, y_train), (x_test, y_test) = load_UGR16()
-mse_losses = np.loadtxt("after.txt")
-visual("after", y_test, mse_losses)
+def load_UNSW():
+    
+    # 加载训练数据
+    train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
+    
+    # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
+    train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
+    train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
+    train = train[train['anomaly_ratio'] < 0.15]  # 只保留 anomaly_ratio < 0.15 的样本
+
+    # 删除不需要的列
+    raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
+                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
+                                       'label_backdoor', 'label_shellcode', 'label_worms', 
+                                       'label_other', 'binary_label_normal', 'binary_label_attack', 
+                                       'total_records', 'anomaly_ratio'], axis=1)
+
+    # 标准化
+    x_train_standardized = torch.from_numpy(raw_x_train.values).float()  # 仅在训练数据上拟合
+    
+    # 加载测试数据
+    raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv").drop(columns=['timestamp', 
+                                       'label_background', 'label_exploits', 'label_fuzzers', 
+                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
+                                       'label_backdoor', 'label_shellcode', 'label_worms', 
+                                       'label_other', 'binary_label_normal', 'binary_label_attack'], axis=1)
+
+    # 对测试数据进行标准化
+    x_test_standardized = torch.from_numpy(raw_x_test.values).float()  # 使用相同的缩放器进行转换
+
+    
+    # 加载并处理测试标签
+    y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
+    y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
+    y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
+    
+    # 根据 anomaly_ratio 生成测试标签
+    y_test = torch.from_numpy((y_test['anomaly_ratio'] > 0.15).astype(int).to_numpy())
+    
+    # 假设训练数据全部为正常数据
+    y_train = torch.zeros(len(x_train_standardized))
+
+    # 输出训练和测试集的形状
+    print(f"Training set shape: {x_train_standardized.shape}, Labels: {y_train.unique()}")
+    print(f"Test set shape: {x_train_standardized.shape}, Labels: {y_test.unique()}")
+    return (x_train_standardized, y_train), (x_test_standardized, y_test)
+
+
+(x_train, y_train), (x_test, y_test) = load_UNSW()
+mse_losses = np.loadtxt("/root/bishe/lstm-ae/UNSW.txt")
+visual("UNSW", y_test, mse_losses)
