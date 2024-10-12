@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import random
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
-df = pd.read_csv("results/score_UNSW.csv")
+df = pd.read_csv("results/score.csv")
 print(df)
 
 """
@@ -94,4 +94,3 @@ plt.legend()
 plt.savefig("PR-AUC.png")
 
 plt.clf()
-

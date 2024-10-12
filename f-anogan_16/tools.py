@@ -9,7 +9,7 @@ class NormalizeTransform:
     """ Normalize features with mean and standard deviation. """
     def __init__(self, mean, std):
         self.mean = mean
-        self.std = std
+        self.std = std + 1e-8
 
     def __call__(self, sample):
         return (sample - self.mean) / self.std
