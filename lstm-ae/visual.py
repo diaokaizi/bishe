@@ -150,5 +150,5 @@ def load_UNSW():
 
 
 (x_train, y_train), (x_test, y_test) = load_UNSW()
-mse_losses = np.loadtxt("UNSW.txt")
+mse_losses = np.loadtxt("/root/bishe/lstm-ae/UNSW.txt")
 visual("UNSW", y_test, mse_losses)

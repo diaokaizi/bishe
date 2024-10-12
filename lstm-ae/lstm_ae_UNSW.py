@@ -4,11 +4,13 @@ import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset, Dataset
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEncoder
+from sklearn.preprocessing import StandardScaler, QuantileTransformer, LabelEncoder, MinMaxScaler
 from visual import visual
 from torch.utils.model_zoo import tqdm
 import matplotlib.pyplot as plt
 def load_UNSW():
+    # 先进行标准化
+    standard_scaler = StandardScaler()
     
     # 加载训练数据
     train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
@@ -26,8 +28,8 @@ def load_UNSW():
                                        'total_records', 'anomaly_ratio'], axis=1)
 
     # 标准化
-    x_train_standardized = torch.from_numpy(raw_x_train.values).float()  # 仅在训练数据上拟合
-    
+    x_train_standardized = standard_scaler.fit_transform(raw_x_train.values)  # 仅在训练数据上拟合
+
     # 加载测试数据
     raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv").drop(columns=['timestamp', 
                                        'label_background', 'label_exploits', 'label_fuzzers', 
@@ -36,8 +38,18 @@ def load_UNSW():
                                        'label_other', 'binary_label_normal', 'binary_label_attack'], axis=1)
 
     # 对测试数据进行标准化
-    x_test_standardized = torch.from_numpy(raw_x_test.values).float()  # 使用相同的缩放器进行转换
+    x_test_standardized = standard_scaler.transform(raw_x_test.values)  # 使用相同的缩放器进行转换
 
+    # 接下来进行归一化
+    minmax_scaler = MinMaxScaler()
+    
+    # 对标准化后的训练数据进行归一化
+    x_train_normalized = minmax_scaler.fit_transform(x_train_standardized)  # 仅在训练数据上拟合
+    x_train_normalized = torch.from_numpy(x_train_normalized).float()
+    
+    # 对标准化后的测试数据进行归一化
+    x_test_normalized = minmax_scaler.transform(x_test_standardized)  # 使用相同的缩放器进行转换
+    x_test_normalized = torch.from_numpy(x_test_normalized).float()
     
     # 加载并处理测试标签
     y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
@@ -48,13 +60,12 @@ def load_UNSW():
     y_test = torch.from_numpy((y_test['anomaly_ratio'] > 0.15).astype(int).to_numpy())
     
     # 假设训练数据全部为正常数据
-    y_train = torch.zeros(len(x_train_standardized))
+    y_train = torch.zeros(len(x_train_normalized))
 
     # 输出训练和测试集的形状
-    print(f"Training set shape: {x_train_standardized.shape}, Labels: {y_train.unique()}")
-    print(f"Test set shape: {x_train_standardized.shape}, Labels: {y_test.unique()}")
-    return (x_train_standardized, y_train), (x_test_standardized, y_test)
-
+    print(f"Training set shape: {x_train_normalized.shape}, Labels: {y_train.unique()}")
+    print(f"Test set shape: {x_test_normalized.shape}, Labels: {y_test.unique()}")
+    return (x_train_normalized, y_train), (x_test_normalized, y_test)
 
 
 class TimeSeriesDataset(Dataset):

@@ -1,0 +1,16 @@
+Training set shape: torch.Size([69267, 139]), Labels: tensor([0.])
+Test set shape: torch.Size([69267, 139]), Labels: tensor([0, 1])
+Traceback (most recent call last):
+  File "/root/bishe/lstm-ae/lstm_ae_UNSW.py", line 8, in <module>
+    from visual import visual
+  File "/root/bishe/lstm-ae/visual.py", line 153, in <module>
+    mse_losses = np.loadtxt("UNSW.txt")
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/_npyio_impl.py", line 1397, in loadtxt
+    arr = _read(fname, dtype=dtype, comment=comment, delimiter=delimiter,
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/_npyio_impl.py", line 1012, in _read
+    fh = np.lib._datasource.open(fname, 'rt', encoding=encoding)
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/_datasource.py", line 192, in open
+    return ds.open(path, mode, encoding=encoding, newline=newline)
+  File "/usr/local/lib/python3.10/dist-packages/numpy/lib/_datasource.py", line 529, in open
+    raise FileNotFoundError(f"{path} not found.")
+FileNotFoundError: UNSW.txt not found.
