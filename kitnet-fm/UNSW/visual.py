@@ -84,7 +84,7 @@ y_test['is_anomalous'] = (y_test['anomaly_ratio'] >= 0.11).astype(int)
 
 print(y_test['is_anomalous'].value_counts())
 label = y_test['is_anomalous'].to_numpy()
-anomaly_score = pd.read_csv("RMSEs10-1e.csv")["remse"].values
+anomaly_score = pd.read_csv("/root/bishe/kitnet-fm/UNSW/RMSEs10-1e.csv")["remse"].values
 
 plt.clf()
 plt.plot([0, 1], [0, 1], linestyle="--")

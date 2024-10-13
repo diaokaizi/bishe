@@ -1,14 +1,37 @@
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
-from sklearn.linear_model import Lasso
-from sklearn.preprocessing import StandardScaler    
+import pandas as pd
+import random
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
+# df = pd.read_csv("results/score.csv")
+
+
+# trainig_label = 0
+# labels = np.where(df["label"].values == trainig_label, 0, 1)
+
+# anomaly_score = df["anomaly_score"].values
+# img_distance = df["img_distance"].values
+# z_distance = df["z_distance"].values
+# img_distance = anomaly_score
+
 
 def visual(name, labels, anomaly_score):
     print("XXXXXXXXXXXXX")
     print(name)
     ########################################
+    # # 计算 ROC 曲线
+    # fpr, tpr, thresholds = roc_curve(labels, anomaly_score)
+    # # 找到最优阈值
+    # optimal_idx = np.argmax(tpr - fpr)
+    # optimal_threshold = thresholds[optimal_idx]
+    # print(optimal_threshold)
+
+    # # 使用最优阈值来生成预测标签
+    # predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
+    # print("roc_curve")
+    # print(classification_report(labels, predicted_labels))
+
+
     precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
     f1_scores = np.where((precision + recall) == 0, 0, 2 * (precision * recall) / (precision + recall))
     optimal_idx = np.argmax(f1_scores)
@@ -62,29 +85,11 @@ def txt(path, name):
     anomaly_score = np.loadtxt(path)
     visual(name, labels, anomaly_score)
 
-
-
-y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
-y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
-
-# 计算每个样本的异常比例
-y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
-
-# # 查看结果
-# print(y_test[['binary_label_normal', 'binary_label_attack', 'total_records', 'anomaly_ratio']])
-# print(y_test)
-# plt.figure(figsize=(10, 6))
-# plt.hist(y_test['anomaly_ratio'], bins=30, edgecolor='k', alpha=0.7)
-# plt.title('Distribution of Anomaly Ratio')
-# plt.xlabel('Anomaly Ratio')
-# plt.ylabel('Frequency')
-# plt.savefig("Ratio.png")
-
-y_test['is_anomalous'] = (y_test['anomaly_ratio'] >= 0.11).astype(int)
-
-print(y_test['is_anomalous'].value_counts())
-label = y_test['is_anomalous'].to_numpy()
-anomaly_score = pd.read_csv("RMSEs10-1e.csv")["remse"].values
+def mymodel(path, name):
+    df = pd.read_csv(path, header=None)
+    labels = df[0]
+    anomaly_score = df[1]
+    visual(name, labels, anomaly_score)
 
 plt.clf()
 plt.plot([0, 1], [0, 1], linestyle="--")
@@ -92,8 +97,7 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
-
-visual("kitnet", label, anomaly_score)
+mymodel("/root/bishe/mymodel/results/score.csv", "MAE-ANOGAN")
 
 plt.legend()
 plt.savefig(f"ROC-AUC.png")

@@ -47,12 +47,15 @@ class corClust:
             maxClust = 1
         if maxClust > self.n:
             maxClust = self.n
+        # # 初始自上而下的聚类
+        # initial_clusters = self.__breakClust__(to_tree(Z), maxClust)
+        # # 自下而上地补充特征
+        # final_clusters = self.expand_clusters_bottom_up(initial_clusters, D, 5)
+        # return final_clusters
         # 初始自上而下的聚类
         initial_clusters = self.__breakClust__(to_tree(Z), maxClust)
-        # 自下而上地补充特征
-        final_clusters = self.expand_clusters_bottom_up(initial_clusters, D, 5)
-        return final_clusters
-
+        return initial_clusters
+    
     # a recursive helper function which breaks down the dendrogram branches until all clusters have no more than maxClust elements
     def __breakClust__(self,dendro,maxClust):
         if dendro.count <= maxClust: #base case: we found a minimal cluster, so mark it
