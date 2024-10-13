@@ -108,7 +108,7 @@ def load_UNSW():
     # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
     train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
     train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
-    train = train[train['anomaly_ratio'] < 0.1]  # 只保留 anomaly_ratio < 0.15 的样本
+    train = train[train['anomaly_ratio'] < 0.11]  # 只保留 anomaly_ratio < 0.15 的样本
 
     # 删除不需要的列
     raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
@@ -141,7 +141,7 @@ def load_UNSW():
     y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
     
     # 根据 anomaly_ratio 生成测试标签
-    y_test = torch.from_numpy((y_test['anomaly_ratio'] > 0.1).astype(int).to_numpy())
+    y_test = torch.from_numpy((y_test['anomaly_ratio'] >= 0.11).astype(int).to_numpy())
     
     # 假设训练数据全部为正常数据
     y_train = torch.zeros(len(x_train_normalized))
@@ -168,7 +168,7 @@ model = Autoencoder(input_dim=feature_count, hidden_dim=int(feature_count/2))
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-num_epochs = 100
+num_epochs = 30
 for epoch in range(num_epochs):
     for data in dataloader:
         inputs, _ = data
