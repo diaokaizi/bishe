@@ -80,11 +80,11 @@ y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records'
 # plt.ylabel('Frequency')
 # plt.savefig("Ratio.png")
 
-y_test['is_anomalous'] = (y_test['anomaly_ratio'] >= 0.11).astype(int)
+y_test['is_anomalous'] = (y_test['anomaly_ratio'] >= 0.12).astype(int)
 
 print(y_test['is_anomalous'].value_counts())
 label = y_test['is_anomalous'].to_numpy()
-anomaly_score = pd.read_csv("RMSEs10-1e.csv")["remse"].values
+anomaly_score = pd.read_csv("RMSEs10.csv")["remse"].values
 
 plt.clf()
 plt.plot([0, 1], [0, 1], linestyle="--")

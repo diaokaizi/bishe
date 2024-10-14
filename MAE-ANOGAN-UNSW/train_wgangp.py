@@ -71,16 +71,18 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
     
 #     return (x_train_normalized, y_train), (x_test_normalized, y_test)
 
-def load_UNSW():
+
+
+def load_UNSW(cn = 1000, ratio = 0.13):
     # 先进行标准化
     
     # 加载训练数据
     train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
-    
+    train = train[~((train['binary_label_normal'] + train['binary_label_attack']) < cn)]
     # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
     train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
     train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
-    train = train[train['anomaly_ratio'] < 0.11]  # 只保留 anomaly_ratio < 0.15 的样本
+    train = train[train['anomaly_ratio'] < ratio]  # 只保留 anomaly_ratio < 0.15 的样本
 
     # 删除不需要的列
     raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
@@ -91,12 +93,13 @@ def load_UNSW():
 
 
     # 加载测试数据
-    raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv").drop(columns=['timestamp', 
+    raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
+
+    raw_x_test = raw_x_test[~((raw_x_test['binary_label_normal'] + raw_x_test['binary_label_attack']) < cn)].drop(columns=['timestamp', 
                                        'label_background', 'label_exploits', 'label_fuzzers', 
                                        'label_reconnaissance', 'label_dos', 'label_analysis', 
                                        'label_backdoor', 'label_shellcode', 'label_worms', 
                                        'label_other', 'binary_label_normal', 'binary_label_attack'], axis=1)
-
 
     # 接下来进行归一化
     minmax_scaler = MinMaxScaler()
@@ -109,11 +112,12 @@ def load_UNSW():
     
     # 加载并处理测试标签
     y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
+    y_test = y_test[~((y_test['binary_label_normal'] + y_test['binary_label_attack']) < cn)]
     y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
     y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
     
     # 根据 anomaly_ratio 生成测试标签
-    y_test = (y_test['anomaly_ratio'] >= 0.11).astype(int).to_numpy()
+    y_test = (y_test['anomaly_ratio'] >= ratio).astype(int).to_numpy()
     
     # 假设训练数据全部为正常数据
     y_train = np.zeros(len(x_train_normalized))
@@ -124,33 +128,67 @@ def load_UNSW():
     
     return (x_train_normalized, y_train), (x_test_normalized, y_test)
 
-def load_f():
-    # 读取训练集和测试集
-    raw_x_train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
+def fix_name():
+    return ["state_int", "out_nbytes_verylow", "in_npackets_verylow", "out_npackets_verylow", "dport_reserved", "in_nbytes_low",
+            "dst_ip_public", "src_ip_public", "dport_zero", "sport_reserved", "protocol_udp", "protocol_other", "sport_register",
+            "dport_dns"]
+
+def load_f(cn = 1000, ratio = 0.13):
+    # 先进行标准化
+    
+    # 加载训练数据
+    train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
+    
+    train = train[~((train['binary_label_normal'] + train['binary_label_attack']) < cn)]
+    # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
+    train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
+    train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
+    train = train[train['anomaly_ratio'] < ratio]  # 只保留 anomaly_ratio < 0.15 的样本
+
+    # 删除不需要的列
+    raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
+                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
+                                       'label_backdoor', 'label_shellcode', 'label_worms', 
+                                       'label_other', 'binary_label_normal', 'binary_label_attack', 
+                                       'total_records', 'anomaly_ratio'], axis=1)
+
+    # 加载测试数据
     raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
-    raw_x_train['total_records'] = raw_x_train['binary_label_normal'] + raw_x_train['binary_label_attack']
-    raw_x_train['anomaly_ratio'] = raw_x_train['binary_label_attack'] / raw_x_train['total_records']
-    raw_x_train = raw_x_train[raw_x_train['anomaly_ratio'] < 0.11]
-    # 提取指定的列 'XXX'
-    train_xxx = raw_x_train['binary_label_attack'].values.reshape(-1, 1)  # 转换为二维数组
-    test_xxx = raw_x_test['binary_label_attack'].values.reshape(-1, 1)
-    
-    # 选择归一化方法
-    scaler = MinMaxScaler()  # 或者使用 StandardScaler()
-    
-    # 拟合训练数据并转换
-    train_xxx_normalized = scaler.fit_transform(train_xxx)
-    
-    # 使用相同的缩放器转换测试数据
-    test_xxx_normalized = scaler.transform(test_xxx)
-    
-    # 将结果转换为 NumPy 格式
-    train_xxx_normalized = torch.from_numpy(train_xxx_normalized).float()
-    test_xxx_normalized = torch.from_numpy(test_xxx_normalized).float()
-    
-    return train_xxx_normalized, test_xxx_normalized
+    raw_x_test = raw_x_test[~((raw_x_test['binary_label_normal'] + raw_x_test['binary_label_attack']) < cn)].drop(columns=['timestamp', 
+                                       'label_background', 'label_exploits', 'label_fuzzers', 
+                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
+                                       'label_backdoor', 'label_shellcode', 'label_worms', 
+                                       'label_other', 'binary_label_normal', 'binary_label_attack'], axis=1)
 
+    raw_x_train = raw_x_train[fix_name()]
+    raw_x_test = raw_x_test[fix_name()]
 
+    # 接下来进行归一化
+    minmax_scaler = MinMaxScaler()
+    
+    # 对标准化后的训练数据进行归一化
+    x_train_normalized = minmax_scaler.fit_transform(raw_x_train.values)  # 仅在训练数据上拟合
+    
+    # 对标准化后的测试数据进行归一化
+    x_test_normalized = minmax_scaler.transform(raw_x_test.values)  # 使用相同的缩放器进行转换
+    
+    # 加载并处理测试标签
+    y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
+    y_test = y_test[~((y_test['binary_label_normal'] + y_test['binary_label_attack']) < cn)]
+    y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
+    y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
+    
+    # 根据 anomaly_ratio 生成测试标签
+    y_test = (y_test['anomaly_ratio'] >= ratio).astype(int).to_numpy()
+    
+    # 输出训练和测试集的形状
+    x_train = torch.from_numpy(x_train_normalized).float()
+    y_train = torch.zeros(len(x_train_normalized))
+    x_test = torch.from_numpy(x_test_normalized).float()
+    y_test = torch.from_numpy(y_test)
+    
+    
+    return (x_train, y_train), (x_test, y_test)
 
 def main(opt):
     if type(opt.seed) is int:
@@ -178,13 +216,11 @@ def main(opt):
             gsa[i] = K.train(x_train[i,]) #will train during the grace periods, then execute on all the rest.
         pd.DataFrame(gsa).to_csv("gsa.csv", index=False)
 
-    f_train_normalized, f_test_normalized = load_f()
-    print(f_train_normalized, f_test_normalized)
-    print(f_train_normalized.shape, f_test_normalized.shape)
+    (a, b), (c, _) = load_f()
 
     print("Running fanogan:")
     gsa = torch.from_numpy(gsa).float()
-    gsa = torch.cat([gsa, f_train_normalized], dim=1)
+    gsa = torch.cat([gsa, a], dim=1)
     print(gsa)
     print(gsa.shape)
     mean = gsa.mean(axis=0)  # Mean of each feature
@@ -209,7 +245,7 @@ def main(opt):
             print(i)
         gsa[i] = K.execute(x_test[i,]) #will train during the grace periods, then execute on all the rest.
     gsa = torch.from_numpy(gsa).float()
-    gsa = torch.cat([gsa, f_test_normalized], dim=1)
+    gsa = torch.cat([gsa, c], dim=1)
     y_test = torch.from_numpy(y_test)
     # mean = gsa.mean(axis=0)  # Mean of each feature
     # std = gsa.std(axis=0)
@@ -233,7 +269,7 @@ Licensed under MIT
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n_epochs", type=int, default=80,
+    parser.add_argument("--n_epochs", type=int, default=30,
                         help="number of epochs of training")
     parser.add_argument("--batch_size", type=int, default=64,
                         help="size of the batches")

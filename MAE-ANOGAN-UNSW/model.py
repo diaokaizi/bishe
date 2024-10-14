@@ -23,12 +23,15 @@ class Generator(nn.Module):
             return layers
 
         self.model = nn.Sequential(
-            *block(self.latent_dim, 55, normalize=False),
-            *block(55, 60),
+            *block(self.latent_dim, 60, normalize=False),
             *block(60, 65),
             *block(65, 70),
             *block(70, 75),
-            nn.Linear(75, self.input_dim),
+            *block(75, 80),
+            *block(80, 85),
+            *block(85, 90),
+            *block(90, 95),
+            nn.Linear(95, self.input_dim),
             nn.Tanh()
             )
 
@@ -43,7 +46,11 @@ class Discriminator(nn.Module):
         self.input_dim = input_dim
 
         self.features = nn.Sequential(
-            nn.Linear(self.input_dim, 16),
+            nn.Linear(self.input_dim, 64),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(64, 32),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(32, 16),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(16, 8),
             nn.LeakyReLU(0.2, inplace=True)
@@ -70,7 +77,15 @@ class Encoder(nn.Module):
         self.latent_dim = latent_dim
 
         self.model = nn.Sequential(
-            nn.Linear(self.input_dim, 75),
+            nn.Linear(self.input_dim, 95),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(95, 90),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(90, 85),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(85, 80),
+            nn.LeakyReLU(0.2, inplace=True),
+            nn.Linear(80, 75),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(75, 70),
             nn.LeakyReLU(0.2, inplace=True),
@@ -78,9 +93,7 @@ class Encoder(nn.Module):
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(65, 60),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(60, 55),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(55, self.latent_dim),
+            nn.Linear(60, self.latent_dim),
             nn.Tanh()
         )
 
