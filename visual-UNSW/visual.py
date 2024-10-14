@@ -13,17 +13,17 @@ from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, ac
 # img_distance = df["img_distance"].values
 # z_distance = df["z_distance"].values
 # img_distance = anomaly_score
-def load_UNSW():
+def load_UNSW(ratio = 0.11):
     # 加载并处理测试标签
     y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
     y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
     y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
     
     # 根据 anomaly_ratio 生成测试标签
-    y_test = (y_test['anomaly_ratio'] >= 0.11).astype(int).to_numpy()
+    y_test = (y_test['anomaly_ratio'] >= ratio).astype(int).to_numpy()
     return y_test
 
-y_test = load_UNSW()
+
 
 
 def visual(name, labels, anomaly_score):
@@ -72,16 +72,30 @@ def visual(name, labels, anomaly_score):
 def fgan(path, name):
     df = pd.read_csv(path)
     anomaly_score = df["anomaly_score"].values
+    y_test = load_UNSW()
     visual(name, y_test, anomaly_score)
 
 def kitnet(path, name):
     anomaly_score = pd.read_csv(path)["remse"].values
+    y_test = load_UNSW(0.12)
     visual(name, y_test, anomaly_score)
 
 def txt(path, name):
     anomaly_score = np.loadtxt(path)
+    y_test = load_UNSW()
     visual(name, y_test, anomaly_score)
 
+def maegan(path, name):
+    # tt = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
+    # tt['total_records'] = tt['binary_label_normal'] + tt['binary_label_attack']
+    # tt['anomaly_ratio'] = tt['binary_label_attack'] / tt['total_records']
+    # tt = tt[~((tt['binary_label_normal'] + tt['binary_label_attack']) < 1000)]
+    # tt = (tt['anomaly_ratio'] >= 0.11).astype(int).to_numpy()
+    # print(len(tt))
+    df = pd.read_csv(path)
+    label = df["label"].values
+    anomaly_score = df["anomaly_score"].values
+    visual(name, label, anomaly_score)
 
 
 plt.clf()
@@ -90,12 +104,12 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
-txt("/root/bishe/ae2/UNSW-1.txt", "ae")
+fgan("/root/bishe/MAE-ANOGAN-UNSW/results/score-ok.csv", "ae")
 txt("/root/bishe/ocsvm/UNSW_best_params_fin.txt", "ocsvm")
 txt("/root/bishe/iForest/UNSW_best_params-11.txt", "iForest")
-fgan("/root/bishe/f-anogan-UNSW/results/score-11.csv", "f-anogan")
-kitnet("/root/bishe/kitnet-fm/UNSW/RMSEs10-1e.csv", "kitnet")
-fgan("/root/bishe/MAE-ANOGAN-UNSW/results/score.csv", "MAE-ANOGAN")
+fgan("/root/bishe/f-anogan-UNSW/results/score.csv", "f-anogan")
+kitnet("/root/bishe/kitnet/UNSW/RMSEs10.csv", "kitnet")
+maegan("/root/bishe/MAE-ANOGAN-UNSW/results/score-ok.csv", "MAE-ANOGAN")
 
 # txt("DeepSVDD_config6_run1.txt", "DeepSVDD")
 # txt("SLAD_config12_run1_fake.txt", "SLAD")

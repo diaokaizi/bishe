@@ -43,32 +43,14 @@ class Autoencoder(nn.Module):
             layers.append(nn.LeakyReLU(0.2, inplace=True))
             return layers
         self.encoder = nn.Sequential(
-            nn.Linear(input_dim, 130),
+            nn.Linear(input_dim, 90),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(130, 120),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(120, 110),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(110, 100),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(100, 90),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(90, 80),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(80, 70),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(70, hidden_dim),
+            nn.Linear(90, hidden_dim),
             nn.Tanh()
         )
         self.decoder = nn.Sequential(
-            *block(hidden_dim, 70, normalize=False),
-            *block(70, 80),
-            *block(80, 90),
-            *block(90, 100),
-            *block(100, 110),
-            *block(110, 120),
-            *block(120, 130),
-            nn.Linear(130, input_dim),
+            *block(hidden_dim, 90, normalize=False),
+            nn.Linear(90, input_dim),
             nn.Tanh()
         )
 
@@ -108,7 +90,7 @@ def load_UNSW():
     # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
     train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
     train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
-    train = train[train['anomaly_ratio'] < 0.9]  # 只保留 anomaly_ratio < 0.15 的样本
+    train = train[train['anomaly_ratio'] < 0.11]  # 只保留 anomaly_ratio < 0.15 的样本
 
     # 删除不需要的列
     raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',

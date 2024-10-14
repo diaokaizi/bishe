@@ -89,5 +89,5 @@ y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
 y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
 y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
 label = (y_test['anomaly_ratio'] >= 0.11).astype(int).to_numpy()
-t = np.loadtxt("UNSW-2.txt")
+t = np.loadtxt("UNSW.txt")
 visual("UNSW", label, t)
