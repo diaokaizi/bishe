@@ -90,12 +90,13 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
-txt("/root/bishe/ocsvm/UNSW_best_params-11.txt", "ocsvm")
-fgan("/root/bishe/MAE-ANOGAN-UNSW/results/score.csv", "MAE-ANOGAN")
-kitnet("/root/bishe/kitnet/UNSW/RMSEs.csv", "kitnet")
-fgan("/root/bishe/f-anogan-UNSW/results/score-11.csv", "f-anogan")
-txt("/root/bishe/ae2/15/UNSW-0.15.txt", "ae") ###########需要调整
+txt("/root/bishe/ae2/UNSW-1.txt", "ae")
+txt("/root/bishe/ocsvm/UNSW_best_params_fin.txt", "ocsvm")
 txt("/root/bishe/iForest/UNSW_best_params-11.txt", "iForest")
+fgan("/root/bishe/f-anogan-UNSW/results/score-11.csv", "f-anogan")
+kitnet("/root/bishe/kitnet-fm/UNSW/RMSEs10-1e.csv", "kitnet")
+fgan("/root/bishe/MAE-ANOGAN-UNSW/results/score.csv", "MAE-ANOGAN")
+
 # txt("DeepSVDD_config6_run1.txt", "DeepSVDD")
 # txt("SLAD_config12_run1_fake.txt", "SLAD")
 

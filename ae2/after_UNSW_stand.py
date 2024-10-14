@@ -108,7 +108,7 @@ def load_UNSW():
     # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
     train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
     train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
-    train = train[train['anomaly_ratio'] < 0.11]  # 只保留 anomaly_ratio < 0.15 的样本
+    train = train[train['anomaly_ratio'] < 0.9]  # 只保留 anomaly_ratio < 0.15 的样本
 
     # 删除不需要的列
     raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',

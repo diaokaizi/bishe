@@ -93,18 +93,16 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
-# fgan("/root/bishe/MAE-ANOGAN/results/score.csv", "MAE-ANOGAN")
-fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAE-ANOGAN")
-# fgan("/root/bishe/f-anogan/results/score.csv", "f-anogan")
-kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
-fgan("/root/bishe/f-anogan_16/results/score_UGR16_old.csv", "f-anogan-16")
 txt("/root/bishe/ae/after_UGR16.txt", "ae") ###########需要调整
-# txt("/root/bishe/vae/after.txt", "vae")
 txt("/root/bishe/ocsvm/after_best_params.txt", "ocsvm")
 txt("/root/bishe/iForest/after_best_params.txt", "iForest")
-# txt("RCA_config6_run1.txt", "RCA")
+fgan("/root/bishe/f-anogan_16/results/score_UGR16_old.csv", "f-anogan")
+kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
 txt("DeepSVDD_config10_run1.txt", "DeepSVDD")
 txt("SLAD_config12_run1_fake.txt", "SLAD")
+fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAE-ANOGAN")
+
+# txt("/root/bishe/ocsvm/after_best_params.txt", "ocsvm")
 
 
 # kitnet("/root/bishe/kitnet-fm/RMSEs_raw.csv", "RMSEs_raw")
