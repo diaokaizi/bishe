@@ -73,7 +73,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
 
-def load_UNSW(cn = 1000, ratio = 0.13):
+def load_UNSW(cn = 1000, ratio = 0.12):
     # 先进行标准化
     
     # 加载训练数据
@@ -133,7 +133,7 @@ def fix_name():
             "dst_ip_public", "src_ip_public", "dport_zero", "sport_reserved", "protocol_udp", "protocol_other", "sport_register",
             "dport_dns"]
 
-def load_f(cn = 1000, ratio = 0.13):
+def load_f(cn = 1000, ratio = 0.12):
     # 先进行标准化
     
     # 加载训练数据
