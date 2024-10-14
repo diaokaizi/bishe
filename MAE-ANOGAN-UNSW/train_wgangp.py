@@ -80,7 +80,7 @@ def load_UNSW():
     # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
     train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
     train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
-    train = train[train['anomaly_ratio'] < 0.15]  # 只保留 anomaly_ratio < 0.15 的样本
+    train = train[train['anomaly_ratio'] < 0.11]  # 只保留 anomaly_ratio < 0.15 的样本
 
     # 删除不需要的列
     raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
@@ -113,7 +113,7 @@ def load_UNSW():
     y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
     
     # 根据 anomaly_ratio 生成测试标签
-    y_test = (y_test['anomaly_ratio'] > 0.15).astype(int).to_numpy()
+    y_test = (y_test['anomaly_ratio'] >= 0.11).astype(int).to_numpy()
     
     # 假设训练数据全部为正常数据
     y_train = np.zeros(len(x_train_normalized))
@@ -123,6 +123,33 @@ def load_UNSW():
     print(f"Test set shape: {x_test_normalized.shape}, Labels: {np.unique(y_test)}")
     
     return (x_train_normalized, y_train), (x_test_normalized, y_test)
+
+def load_f():
+    # 读取训练集和测试集
+    raw_x_train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
+    raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
+    raw_x_train['total_records'] = raw_x_train['binary_label_normal'] + raw_x_train['binary_label_attack']
+    raw_x_train['anomaly_ratio'] = raw_x_train['binary_label_attack'] / raw_x_train['total_records']
+    raw_x_train = raw_x_train[raw_x_train['anomaly_ratio'] < 0.11]
+    # 提取指定的列 'XXX'
+    train_xxx = raw_x_train['binary_label_attack'].values.reshape(-1, 1)  # 转换为二维数组
+    test_xxx = raw_x_test['binary_label_attack'].values.reshape(-1, 1)
+    
+    # 选择归一化方法
+    scaler = MinMaxScaler()  # 或者使用 StandardScaler()
+    
+    # 拟合训练数据并转换
+    train_xxx_normalized = scaler.fit_transform(train_xxx)
+    
+    # 使用相同的缩放器转换测试数据
+    test_xxx_normalized = scaler.transform(test_xxx)
+    
+    # 将结果转换为 NumPy 格式
+    train_xxx_normalized = torch.from_numpy(train_xxx_normalized).float()
+    test_xxx_normalized = torch.from_numpy(test_xxx_normalized).float()
+    
+    return train_xxx_normalized, test_xxx_normalized
+
 
 
 def main(opt):
@@ -144,15 +171,21 @@ def main(opt):
 
 
     gsa = np.zeros([x_train.shape[0], len(feature_map)]) # a place to save the scores
-    for epo in range(30):
+    for epo in range(1):
         for i in range(x_train.shape[0]):
             if i % 1000 == 0:
                 print(epo, i)
             gsa[i] = K.train(x_train[i,]) #will train during the grace periods, then execute on all the rest.
         pd.DataFrame(gsa).to_csv("gsa.csv", index=False)
-    
+
+    f_train_normalized, f_test_normalized = load_f()
+    print(f_train_normalized, f_test_normalized)
+    print(f_train_normalized.shape, f_test_normalized.shape)
+
     print("Running fanogan:")
     gsa = torch.from_numpy(gsa).float()
+    gsa = torch.cat([gsa, f_train_normalized], dim=1)
+    print(gsa)
     print(gsa.shape)
     mean = gsa.mean(axis=0)  # Mean of each feature
     std = gsa.std(axis=0)
@@ -176,6 +209,7 @@ def main(opt):
             print(i)
         gsa[i] = K.execute(x_test[i,]) #will train during the grace periods, then execute on all the rest.
     gsa = torch.from_numpy(gsa).float()
+    gsa = torch.cat([gsa, f_test_normalized], dim=1)
     y_test = torch.from_numpy(y_test)
     # mean = gsa.mean(axis=0)  # Mean of each feature
     # std = gsa.std(axis=0)
@@ -203,11 +237,11 @@ if __name__ == "__main__":
                         help="number of epochs of training")
     parser.add_argument("--batch_size", type=int, default=64,
                         help="size of the batches")
-    parser.add_argument("--lr", type=float, default=0.0002,
+    parser.add_argument("--lr", type=float, default=0.0001,
                         help="adam: learning rate")
     parser.add_argument("--b1", type=float, default=0.5,
                         help="adam: decay of first order momentum of gradient")
-    parser.add_argument("--b2", type=float, default=0.999,
+    parser.add_argument("--b2", type=float, default=0.9,
                         help="adam: decay of first order momentum of gradient")
     parser.add_argument("--latent_dim", type=int, default=8,
                         help="dimensionality of the latent space")
