@@ -76,7 +76,7 @@ from torch.utils.model_zoo import tqdm
 
 
 
-def load_UNSW(cn = 1000, ratio = 0.12):
+def load_UNSW(cn = 1000, ratio = 0.115):
     # 先进行标准化
     
     # 加载训练数据
@@ -136,7 +136,7 @@ def fix_name():
             "dst_ip_public", "src_ip_public", "dport_zero", "sport_reserved", "protocol_udp", "protocol_other", "sport_register",
             "dport_dns"]
 
-def load_f(cn = 1000, ratio = 0.12):
+def load_f(cn = 1000, ratio = 0.115):
     # 先进行标准化
     
     # 加载训练数据
@@ -219,11 +219,11 @@ def main(opt):
             gsa[i] = K.train(x_train[i,]) #will train during the grace periods, then execute on all the rest.
         pd.DataFrame(gsa).to_csv("gsa.csv", index=False)
 
-    # (a, b), (c, _) = load_f()
+    (a, b), (c, _) = load_f()
 
     print("Running fanogan:")
     gsa = torch.from_numpy(gsa).float()
-    # gsa = torch.cat([gsa, a], dim=1)
+    gsa = torch.cat([gsa, a], dim=1)
     print(gsa)
     print(gsa.shape)
     mean = gsa.mean(axis=0)  # Mean of each feature
@@ -232,13 +232,13 @@ def main(opt):
     train_mnist = SimpleDataset(gsa, y_train,transform=normalize)
     train_dataloader = DataLoader(train_mnist, batch_size=opt.batch_size,shuffle=False)
     gan_input_dim = gsa.shape[1]
-    latent_dim = int(gan_input_dim * 0.5)
+    latent_dim = 1
 
     model = Autoencoder(gan_input_dim, latent_dim)
     criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-    num_epochs = 1
+    num_epochs = 30
     for epoch in range(num_epochs):
         for data in train_dataloader:
             inputs, _ = data
@@ -257,7 +257,7 @@ def main(opt):
             print(i)
         gsa[i] = K.execute(x_test[i,]) #will train during the grace periods, then execute on all the rest.
     gsa = torch.from_numpy(gsa).float()
-    # gsa = torch.cat([gsa, c], dim=1)
+    gsa = torch.cat([gsa, c], dim=1)
     y_test = torch.from_numpy(y_test)
     # mean = gsa.mean(axis=0)  # Mean of each feature
     # std = gsa.std(axis=0)
