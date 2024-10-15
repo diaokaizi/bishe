@@ -220,6 +220,7 @@ def main(opt):
 
     print("Running fanogan:")
     gsa = torch.from_numpy(gsa).float()
+    gsa = torch.cat([gsa, a], dim=1)
     print(gsa)
     print(gsa.shape)
     mean = gsa.mean(axis=0)  # Mean of each feature
@@ -244,6 +245,7 @@ def main(opt):
             print(i)
         gsa[i] = K.execute(x_test[i,]) #will train during the grace periods, then execute on all the rest.
     gsa = torch.from_numpy(gsa).float()
+    gsa = torch.cat([gsa, c], dim=1)
     y_test = torch.from_numpy(y_test)
     # mean = gsa.mean(axis=0)  # Mean of each feature
     # std = gsa.std(axis=0)
