@@ -93,12 +93,13 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
+txt("/root/bishe/visual/RCA_config6_run1.txt", "RCA")
 txt("/root/bishe/ae/after_UGR16.txt", "ae") ###########需要调整
 txt("/root/bishe/ocsvm/after_best_params.txt", "ocsvm")
 txt("/root/bishe/iForest/after_best_params.txt", "iForest")
 fgan("/root/bishe/f-anogan_16/results/score_UGR16_old.csv", "f-anogan")
-kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
 txt("DeepSVDD_config10_run1.txt", "DeepSVDD")
+kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
 txt("SLAD_config12_run1_fake.txt", "SLAD")
 fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAE-ANOGAN")
 
