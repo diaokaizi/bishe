@@ -236,9 +236,9 @@ def main(opt):
 
     model = Autoencoder(gan_input_dim, latent_dim)
     criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
-    num_epochs = 30
+    num_epochs = 1
     for epoch in range(num_epochs):
         for data in train_dataloader:
             inputs, _ = data
