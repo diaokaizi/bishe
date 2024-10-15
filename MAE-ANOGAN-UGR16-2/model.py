@@ -100,26 +100,11 @@ class Autoencoder(nn.Module):
             layers.append(nn.LeakyReLU(0.2, inplace=True))
             return layers
         self.encoder = nn.Sequential(
-            nn.Linear(self.input_dim, 75),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(75, 70),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(70, 65),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(65, 60),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(60, 55),
-            nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(55, self.latent_dim),
+            nn.Linear(self.input_dim, self.latent_dim),
             nn.Tanh()
         )
         self.decoder = nn.Sequential(
-            *block(self.latent_dim, 55, normalize=False),
-            *block(55, 60),
-            *block(60, 65),
-            *block(65, 70),
-            *block(70, 75),
-            nn.Linear(75, self.input_dim),
+            nn.Linear(self.latent_dim, self.input_dim),
             nn.Tanh()
             )
     def forward(self, x):
