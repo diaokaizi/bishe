@@ -104,14 +104,9 @@ plt.title("ROC-AUC")
 plt.xlabel("False Positive Rate")
 plt.ylabel("True Positive Rate")
 
-txt("/root/bishe/ae/after_UGR16_stand.txt", "ae") ###########需要调整
-txt("/root/bishe/ocsvm/after_best_params.txt", "ocsvm")
-txt("/root/bishe/iForest/after_best_params.txt", "iForest")
-txt("/root/bishe/visual/RCA_config6_run1.txt", "RCA")
-txt("DeepSVDD_config10_run1.txt", "DeepSVDD")
-txt("SLAD_config12_run1_fake.txt", "SLAD")
-fgan("/root/bishe/f-anogan_16/results/score_UGR16_old.csv", "f-anogan")
-kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet")
+
+fgan("/root/bishe/MAE-ANOGAN-UGR16-1/results/score.csv", "MAEGAN-HC")
+fgan("/root/bishe/MAE-ANOGAN-UGR16-2/results/score.csv", "MAEGAN-AE")
 fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAEGAN")
 
 # txt("/root/bishe/ocsvm/after_best_params.txt", "ocsvm")
@@ -121,8 +116,3 @@ fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAEGAN")
 # kitnet("/root/bishe/kitnet-fm/RMSEs10.csv", "RMSEs10")
 # kitnet("/root/bishe/kitnet-fm/RMSEs.csv", "kitnet")
 # kitnet("/root/bishe/kitnet-fm/RMSEs copy.csv", "copy")
-
-
-
-plt.legend()
-plt.savefig(f"ROC-AUC.png")

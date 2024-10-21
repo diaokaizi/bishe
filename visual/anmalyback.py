@@ -44,7 +44,7 @@ def plot_augmented_anomaly_score(name, labels, anomaly_score, anomaly_columns, y
 
     # 使用 Seaborn 绘制平滑的 KDE 曲线
     sns.kdeplot(normal_scores, label="Normal", color='blue', linewidth=2)
-    sns.kdeplot(anomaly_scores, label="Augmented Anomaly", color='red', linewidth=2)
+    sns.kdeplot(anomaly_scores, label="Anomaly", color='red', linewidth=2)
     print(anomaly_columns)
     # 对每个异常类型分别绘制KDE曲线
     # for anomaly_type in anomaly_columns:
@@ -52,7 +52,7 @@ def plot_augmented_anomaly_score(name, labels, anomaly_score, anomaly_columns, y
     #     sns.kdeplot(anomaly_type_scores, label=anomaly_type, linewidth=2)
 
     # 设置图形标题和标签
-    plt.title(f'Augmented Anomaly Score Distribution with Specific Anomalies for {name}')
+    plt.title(f'Anomaly Score Distribution')
     plt.xlabel("Anomaly Score")
     plt.ylabel("Density")
     plt.legend()

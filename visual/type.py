@@ -49,9 +49,13 @@ def fgan(path, name):
 results = []
 
 # 调用各个模型的函数并收集结果
+# results.append(fgan("/root/bishe/f-anogan_16/results/score_UGR16_old.csv", "f-anogan"))
+# results.append(kitnet("/root/bishe/kitnet/RMSEs.csv", "KitNet"))
+# results.append(fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAE-ANOGAN2"))
+
 results.append(fgan("/root/bishe/f-anogan_16/results/score_UGR16_old.csv", "f-anogan"))
-results.append(kitnet("/root/bishe/kitnet/RMSEs.csv", "KitNet"))
-results.append(fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAE-ANOGAN2"))
+results.append(kitnet("/root/bishe/kitnet/RMSEs.csv", "kitnet"))
+results.append(fgan("/root/bishe/MAE-ANOGAN2/results/score.csv", "MAEGAN"))
 # results.append(fgan("/root/bishe/MAE-ANOGAN/results/score.csv", "MAE-ANOGAN1"))
 
 # 将结果整理成 DataFrame，便于绘图

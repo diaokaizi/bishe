@@ -42,7 +42,6 @@ def visual(name, labels, anomaly_score, fun="pr"):
     # 根据最优阈值生成预测标签
     predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
     print("precision_recall_curve")
-    # print(classification_report(labels, predicted_labels))
     report_dict = classification_report(labels, predicted_labels, output_dict=True)
 
     # 手动格式化输出，保留4位小数
@@ -60,26 +59,20 @@ def visual(name, labels, anomaly_score, fun="pr"):
     print(roc_auc)
     plt.plot(fpr, tpr, label=f"{name} = {roc_auc:3f}")
 
-def fgan(path, name, fun="pr"):
-    df = pd.read_csv(path)
-    anomaly_score = df["anomaly_score"].values
-    y_test = load_UNSW(0.12)
-    visual(name, y_test, anomaly_score, fun)
-
-def UNSW_txt(path, name, fun="pr"):
+def fgan(path, name):
     df = pd.read_csv(path)
     anomaly_score = df["anomaly_score"].values
     y_test = load_UNSW()
-    visual(name, y_test, anomaly_score, fun)
+    visual(name, y_test, anomaly_score)
 
 def kitnet(path, name):
     anomaly_score = pd.read_csv(path)["remse"].values
     y_test = load_UNSW(0.12)
     visual(name, y_test, anomaly_score)
 
-def txt(path, name, fun="pr", ratio = 0.11):
+def txt(path, name, fun="pr"):
     anomaly_score = np.loadtxt(path)
-    y_test = load_UNSW(ratio)
+    y_test = load_UNSW()
     visual(name, y_test, anomaly_score, fun)
 
 def maegan(path, name):
@@ -95,20 +88,17 @@ def maegan(path, name):
     visual(name, label, anomaly_score)
 
 
-plt.clf()
-plt.plot([0, 1], [0, 1], linestyle="--")
-plt.title("ROC-AUC")
-plt.xlabel("False Positive Rate")
-plt.ylabel("True Positive Rate")
-UNSW_txt("/root/bishe/MAE-ANOGAN-UNSW/results/score-ok.csv", "ae")
-UNSW_txt("/root/bishe/f-anogan-UNSW/results/score-11.csv", "ocsvm")
-txt("/root/bishe/iForest/UNSW_best_params-11.txt", "iForest")
-txt("/root/bishe/visual-UNSW/RCA_config8_run1.txt", "RCA", "roc")
-txt("/root/bishe/visual-UNSW/DeepSVDD_config1_run1.txt", "DeepSVDD", "roc")
-txt("/root/bishe/visual-UNSW/SLAD_config12_run1.txt", "SLAD")
-fgan("/root/bishe/f-anogan-UNSW/results/score.csv", "f-anogan")
-kitnet("/root/bishe/kitnet/UNSW/RMSEs10.csv", "kitnet")
+
+maegan("/root/bishe/MAE-ANOGAN-UNSW-1/results/score.csv", "MAEGAN-1")
+maegan("/root/bishe/MAE-ANOGAN-UNSW-2/results/score.csv", "MAEGAN-2")
 maegan("/root/bishe/MAE-ANOGAN-UNSW/results/score-12.csv", "MAEGAN")
+# fgan("/root/bishe/MAE-ANOGAN-UNSW/results/score-ok.csv", "ae")
+# fgan("/root/bishe/f-anogan-UNSW/results/score-11.csv", "ocsvm")
+# # txt("/root/bishe/ocsvm/UNSW_best_params_fin.txt", "ocsvm")
+# txt("/root/bishe/iForest/UNSW_best_params-11.txt", "iForest")
+# fgan("/root/bishe/f-anogan-UNSW/results/score.csv", "f-anogan")
+# kitnet("/root/bishe/kitnet/UNSW/RMSEs10.csv", "kitnet")
+# maegan("/root/bishe/MAE-ANOGAN-UNSW/results/score.csv", "MAE-ANOGAN")
 
 # txt("DeepSVDD_config6_run1.txt", "DeepSVDD")
 # txt("SLAD_config12_run1_fake.txt", "SLAD")
@@ -118,8 +108,3 @@ maegan("/root/bishe/MAE-ANOGAN-UNSW/results/score-12.csv", "MAEGAN")
 # kitnet("/root/bishe/kitnet-fm/RMSEs10.csv", "RMSEs10")
 # kitnet("/root/bishe/kitnet-fm/RMSEs.csv", "kitnet")
 # kitnet("/root/bishe/kitnet-fm/RMSEs copy.csv", "copy")
-
-
-
-plt.legend()
-plt.savefig(f"ROC-AUC.png")
