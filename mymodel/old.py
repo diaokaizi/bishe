@@ -80,7 +80,7 @@ class UnsupervisedAnomalyDetectionModel(nn.Module):
         # 为每个特征簇创建一个自编码器
         for cluster in feature_map:
             input_dim = len(cluster)
-            ae = AutoEncoder(input_dim)
+            ae = AutoEncoder(input_dim, hidden_dim=int(input_dim * 0.5))
             self.autoencoders.append(ae)
             self.feature_indices.append(cluster)
         
