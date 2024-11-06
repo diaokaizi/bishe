@@ -1,6 +1,6 @@
 import numpy as np
-from scipy.cluster.hierarchy import linkage, fcluster, to_tree
-
+from scipy.cluster.hierarchy import linkage, fcluster, to_tree, dendrogram
+import matplotlib.pyplot as plt
 # A helper class for KitNET which performs a correlation-based incremental clustering of the dimensions in X
 # n: the number of dimensions in the dataset
 # For more information and citation, please see our NDSS'18 paper: Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection
@@ -37,18 +37,71 @@ class corClust:
     def cluster(self,maxClust):
         D = self.corrDist()
         Z = linkage(D[np.triu_indices(self.n, 1)])  # create a linkage matrix based on the distance matrix
+        plt.figure(figsize=(10, 7))
+        dendrogram(Z)
+        plt.title("Dendrogram of Feature Clustering")
+        plt.xlabel("Feature Index")
+        plt.ylabel("Distance")
+        plt.savefig("tree.png")
         if maxClust < 1:
             maxClust = 1
         if maxClust > self.n:
             maxClust = self.n
-        map = self.__breakClust__(to_tree(Z),maxClust)
-        return map
-
+        # 初始自上而下的聚类
+        initial_clusters = self.__breakClust__(to_tree(Z), maxClust)
+        # 自下而上地补充特征
+        final_clusters = self.expand_clusters_bottom_up(initial_clusters, D, 5)
+        return final_clusters
+        # 初始自上而下的聚类
+        # initial_clusters = self.__breakClust__(to_tree(Z), maxClust)
+        return initial_clusters
+    
     # a recursive helper function which breaks down the dendrogram branches until all clusters have no more than maxClust elements
     def __breakClust__(self,dendro,maxClust):
         if dendro.count <= maxClust: #base case: we found a minimal cluster, so mark it
             return [dendro.pre_order()] #return the origional ids of the features in this cluster
         return self.__breakClust__(dendro.get_left(),maxClust) + self.__breakClust__(dendro.get_right(),maxClust)
+
+    def expand_clusters_bottom_up(self, clusters, D, minClust):
+        # clusters: 初始聚类结果，列表的列表，每个列表包含特征索引
+        # D: 相关性距离矩阵
+        # minClust: 最小特征数量
+        # 返回满足最小特征数量要求的簇列表
+
+        feature_indices = set(range(self.n))
+        # 创建特征到簇的映射，允许特征被分配到多个簇
+        feature_to_clusters = {i: set() for i in feature_indices}
+        for idx, cluster in enumerate(clusters):
+            for feature in cluster:
+                feature_to_clusters[feature].add(idx)
+
+        # 转换簇为集合以便操作
+        cluster_sets = [set(cluster) for cluster in clusters]
+
+        # 自下而上地补充特征
+        for idx, cluster in enumerate(cluster_sets):
+            while len(cluster) < minClust:
+                # 计算未在当前簇中的特征与簇的平均相关性距离
+                remaining_features = feature_indices - cluster
+                avg_distances = []
+                for feature in remaining_features:
+                    distances = [D[feature, c] for c in cluster]
+                    avg_distance = np.mean(distances)
+                    avg_distances.append((avg_distance, feature))
+                # 按照平均距离从小到大排序（相关性从高到低）
+                avg_distances.sort()
+                if not avg_distances:
+                    # 没有剩余特征可供选择，退出循环
+                    break
+                # 选择相关性最高的特征
+                _, best_feature = avg_distances[0]
+                # 将特征添加到簇中
+                cluster.add(best_feature)
+                # 更新特征到簇的映射
+                feature_to_clusters[best_feature].add(idx)
+        # 将集合转换回列表
+        final_clusters = [list(cluster) for cluster in cluster_sets]
+        return final_clusters
 
 # Copyright (c) 2017 Yisroel Mirsky
 #

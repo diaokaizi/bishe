@@ -25,8 +25,7 @@
 
 import sys
 import numpy
-from utils import *
-import json
+from .utils import *
 import numpy as np
 
 class dA_params:

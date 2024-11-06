@@ -4,7 +4,8 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import Lasso
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
+import matplotlib.pyplot as plt
 class NormalizeTransform:
     """ Normalize features with mean and standard deviation. """
     def __init__(self, mean, std):
@@ -57,3 +58,37 @@ def load_UGR16_gas():
     x_train = torch.from_numpy(raw_x_train.values).float()
     y_train = torch.zeros(len(x_train))
     return (x_train, y_train), (0, 0)
+
+def report_result(name, labels, anomaly_score, fun="pr"):
+    print("XXXXXXXXXXXXX")
+    print(name)
+    if fun == "roc":
+        fpr, tpr, thresholds = roc_curve(labels, anomaly_score)
+        # 找到最优阈值
+        optimal_idx = np.argmax(tpr - fpr)
+        optimal_threshold = thresholds[optimal_idx]
+    else:
+        precision, recall, thresholds = precision_recall_curve(labels, anomaly_score)
+        f1_scores = np.where((precision + recall) == 0, 0, 2 * (precision * recall) / (precision + recall))
+        optimal_idx = np.argmax(f1_scores)
+        optimal_threshold = thresholds[optimal_idx]
+    # 根据最优阈值生成预测标签
+    predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
+    print("precision_recall_curve")
+    # print(classification_report(labels, predicted_labels))
+    report_dict = classification_report(labels, predicted_labels, output_dict=True)
+
+    # 手动格式化输出，保留4位小数
+    for label, metrics in report_dict.items():
+        if label == "1":
+            if isinstance(metrics, dict):  # 这是每个标签的指标部分
+                print(f"Label: {label}")
+                for metric, score in metrics.items():
+                    print(f"  {metric}: {score:.4f}")
+            else:  # 这是整体的指标部分，如 'accuracy'
+                print(f"{label}: {metrics:.4f}")
+    fpr, tpr, _ = roc_curve(labels, anomaly_score)
+    precision, recall, _ = precision_recall_curve(labels, anomaly_score)
+    roc_auc = auc(fpr, tpr)
+    print(roc_auc)
+    plt.plot(fpr, tpr, label=f"{name} = {roc_auc:3f}")

@@ -1,14 +1,14 @@
 import numpy as np
-import dA as AE
-import corClust as CC
+from . import dA as AE
+from . import corClust as CC
 import pickle
-
+import os
 # This class represents a KitNET machine learner.
 # KitNET is a lightweight online anomaly detection algorithm based on an ensemble of autoencoders.
 # For more information and citation, please see our NDSS'18 paper: Kitsune: An Ensemble of Autoencoders for Online Network Intrusion Detection
 # For licensing information, see the end of this document
 
-class KitNET:
+class MAE:
     #n: the number of features in your input dataset (i.e., x \in R^n)
     #m: the maximum size of any autoencoder in the ensemble layer
     #AD_grace_period: the number of instances the network will learn from before producing anomaly scores
@@ -50,12 +50,15 @@ class KitNET:
     #If FM_grace_period+AM_grace_period has passed, then this function executes KitNET on x. Otherwise, this function learns from x.
     #x: a numpy array of length n
     #Note: KitNET automatically performs 0-1 normalization on all attributes.
-    def process(self,x):
-        if self.n_trained > self.FM_grace_period + self.AD_grace_period: #If both the FM and AD are in execute-mode
-            return self.execute(x)
-        else:
-            self.train(x)
-            return 0.0
+    def trainfm(self,x):
+        self.FM.update(x)
+    
+    def cluster(self):
+        self.v = self.FM.cluster(self.m)
+        print("The Feature-Mapper found a mapping: "+str(self.n)+" features to "+str(len(self.v))+" autoencoders.")
+        print("Feature-Mapper: execute-mode, Anomaly-Detector: train-mode")
+        self.__createAD__()
+        return self.v
 
     #force train KitNET on x
     #returns the anomaly score of x during training (do not use for alerting)
@@ -109,26 +112,30 @@ class KitNET:
         print(self.v)
 
     # 保存 KitNET 模型，包括所有 dA 实例的权重
-    def save_kitnet(self, filepath):
+    def save(self, filepath):
+        mae_dir = os.path.join(filepath, "mae")
+        os.makedirs(mae_dir, exist_ok=True)
         # 保存 KitNET 的结构和超参数
-        with open(filepath + "_model.pkl", "wb") as f:
+        with open(os.path.join(mae_dir, "model.pkl"), "wb") as f:
             pickle.dump(self, f)
 
         # 保存所有 dA 实例的权重
         for i, ae in enumerate(self.ensembleLayer):
-            ae.save_weights(f"{filepath}_ensembleLayer_{i}.npz")
+            ae.save_weights(os.path.join(mae_dir, f"ensembleLayer_{i}.npz"))
         self.outputLayer.save_weights(filepath + "_outputLayer.npz")
 
     # 加载 KitNET 模型，包括所有 dA 实例的权重
     @staticmethod
-    def load_kitnet(filepath):
+    def load(filepath):
+        mae_dir = os.path.join(filepath, "mae")
+        os.makedirs(mae_dir, exist_ok=True)
         # 加载 KitNET 的结构和超参数
-        with open(filepath + "_model.pkl", "rb") as f:
+        with open(os.path.join(mae_dir, "model.pkl"), "rb") as f:
             model = pickle.load(f)
 
         # 加载所有 dA 实例的权重
         for i, ae in enumerate(model.ensembleLayer):
-            ae.load_weights(f"{filepath}_ensembleLayer_{i}.npz")
+            ae.load_weights(os.path.join(mae_dir, f"ensembleLayer_{i}.npz"))
         model.outputLayer.load_weights(filepath + "_outputLayer.npz")
         
         return model

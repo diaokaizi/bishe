@@ -5,12 +5,14 @@ import torchvision.transforms as transforms
 
 from fanogan_muti.train_wgangp import train_wgangp
 from fanogan_muti.train_encoder_izif import train_encoder_izif
-from bishe.MAEGAN.model.model import Generator, Discriminator, Encoder
-from tools import SimpleDataset, load_UGR16, NormalizeTransform
-import bishe.MAEGAN.model.MAE as kit
+from model.gan import Generator, Discriminator, Encoder
+from tools import SimpleDataset, load_UGR16, NormalizeTransform, report_result
+import model.MAE as mae
 import numpy as np
 import pandas as pd
 from fanogan_muti.test_anomaly_detection import test_anomaly_detection
+from model.MAEGAN import MAEGAN
+
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 def load_UNSW(cn = 1000, ratio = 0.12):
@@ -74,32 +76,24 @@ def main(opt):
         torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     (x_train, y_train), (x_test, y_test) = load_UNSW()
-    feature_map = [[0, 3, 75, 110, 88], [0, 3, 75, 110, 87], [0, 3, 72, 75, 110], [0, 3, 71, 75, 110], [64, 0, 3, 75, 110], [0, 3, 75, 110, 63], [0, 3, 75, 110, 62], [0, 3, 75, 110, 61], [0, 3, 75, 110, 60], [0, 3, 75, 110, 59], [0, 3, 75, 110, 58], [0, 3, 39, 75, 110], [0, 3, 38, 75, 110], [0, 3, 37, 75, 110], [0, 3, 36, 75, 110], [0, 3, 35, 75, 110], [0, 34, 3, 75, 110], [0, 3, 75, 110, 31], [0, 3, 75, 110, 30], [0, 3, 75, 110, 29], [0, 3, 75, 110, 25], [0, 3, 75, 110, 23], [0, 3, 75, 110, 21], [0, 3, 75, 110, 20], [0, 3, 75, 110, 16], [0, 3, 75, 13, 110], [0, 3, 75, 12, 110], [0, 3, 75, 11, 110], [0, 3, 10, 75, 110], [0, 3, 9, 75, 110], [0, 3, 8, 75, 110], [0, 3, 7, 75, 110], [129, 135, 79, 49, 115], [132, 138, 43, 122, 127], [96, 97, 50, 82, 94], [98, 67, 130, 75, 111], [4, 108, 44, 45, 114], [130, 100, 133, 83, 24], [102, 6, 113, 51, 57], [130, 41, 105, 75, 124], [97, 133, 82, 123, 94], [101, 137, 107, 121, 126], [134, 118, 90, 91, 93], [32, 128, 40, 137, 107], [1, 4, 73, 42, 55], [74, 77, 47, 116, 26], [134, 53, 118, 90, 124], [134, 44, 118, 90, 124], [96, 130, 133, 105, 82], [130, 82, 85, 89, 92], [134, 116, 118, 90, 93], [70, 6, 19, 54, 57], [130, 67, 105, 109, 95], [130, 75, 76, 117, 123], [33, 130, 105, 75, 84], [130, 133, 105, 82, 124], [0, 3, 99, 110, 81], [130, 109, 119, 89, 124], [134, 74, 77, 116, 26], [130, 74, 75, 78, 27], [128, 137, 107, 121, 126], [130, 134, 75, 80, 116], [130, 67, 134, 75, 111], [14, 15, 17, 18, 52, 22, 28], [66, 137, 107, 121, 126], [130, 133, 105, 83, 124], [134, 118, 119, 90, 124], [130, 6, 113, 54, 57], [130, 134, 75, 78, 27], [130, 133, 134, 116, 123], [134, 116, 86, 119, 124], [130, 104, 105, 75, 124], [0, 3, 75, 110, 111], [0, 130, 3, 75, 110], [68, 5, 73, 105, 112], [130, 105, 75, 119, 124], [65, 130, 105, 109, 119], [129, 135, 105, 79, 115], [131, 103, 136, 106, 125], [130, 105, 109, 119, 124], [132, 68, 138, 122, 127], [134, 109, 116, 119, 124], [1, 4, 73, 108, 55], [1, 4, 135, 115, 55], [129, 69, 105, 109, 119, 124], [136, 108, 114, 120, 125], [1, 131, 4, 135, 106, 108, 114, 55, 56], [137, 107, 114, 121, 126], [2, 46, 48, 122, 127]]
-    K = kit.KitNET.load_kitnet("results/kitnet_model")
-    normalize_params = torch.load('results/normalize_params.pt')
-    mean = normalize_params['mean']
-    std = normalize_params['std']
 
-    # 创建 NormalizeTransform 对象
-    normalize = NormalizeTransform(mean, std)
-    gan_input_dim = len(feature_map)
-    latent_dim = int(gan_input_dim * 0.5)
-
-    generator = Generator(gan_input_dim, latent_dim)
-    discriminator = Discriminator(gan_input_dim)
-    encoder = Encoder(gan_input_dim, latent_dim)
-    gsa = np.zeros([x_test.shape[0], len(feature_map)])
-    for i in range(x_test.shape[0]):
-        if i % 1000 == 0:
-            print(i)
-        gsa[i] = K.execute(x_test[i,]) #will train during the grace periods, then execute on all the rest.
-    gsa = torch.from_numpy(gsa).float()
-    y_test = torch.from_numpy(y_test)
-    test_mnist = SimpleDataset(gsa, y_test,transform=normalize)
-    test_dataloader = DataLoader(test_mnist, batch_size=1,shuffle=False)
-    test_anomaly_detection(opt, generator, discriminator, encoder,
-                        test_dataloader, device)
+    maegan = MAEGAN(opt, input_dim = x_train.shape[1])
+    print("Running KitNET:")
+    maegan.train(x_train)
+    score = maegan.test(x_test, y_test)
+    report_result(name="MAEGAN", anomaly_score=score, labels=y_test)
     
+
+
+
+"""
+The code below is:
+Copyright (c) 2018 Erik Linder-Norén
+Licensed under MIT
+(https://github.com/eriklindernoren/PyTorch-GAN/blob/master/LICENSE)
+"""
+
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()

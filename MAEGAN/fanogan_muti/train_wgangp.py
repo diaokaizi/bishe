@@ -2,7 +2,6 @@ import os
 import torch
 import torch.autograd as autograd
 from torchvision.utils import save_image
-from KitNET import KitNET
 
 """
 These codes are:
