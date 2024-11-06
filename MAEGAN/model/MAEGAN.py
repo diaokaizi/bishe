@@ -5,21 +5,19 @@ import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import os
-from fanogan_muti.train_wgangp import train_wgangp
-from fanogan_muti.train_encoder_izif import train_encoder_izif
 from model.gan import Generator, Discriminator, Encoder
 from tools import SimpleDataset, load_UGR16, NormalizeTransform
 import model.MAE as mae
 import numpy as np
 import pandas as pd
-from fanogan_muti.test_anomaly_detection import test_anomaly_detection
 import torch.autograd as autograd
 import torch.nn as nn
 from torch.utils.model_zoo import tqdm
+import pickle
 
 class MAEGAN:
 
-    def __init__(self, opt, input_dim, maxAE=10, feature_map=None, batch_size=64):
+    def __init__(self, opt, input_dim, maxAE=10, feature_map=None, batch_size=64, filepath="result"):
         # Parameters:
         self.opt = opt
         self.mae_model = mae.MAE(input_dim,maxAE,0,0, feature_map=feature_map)
@@ -29,7 +27,10 @@ class MAEGAN:
         self.discriminator = None
         self.encoder = None
         self.gan_input_dim = None
-
+        self.filepath = filepath
+        os.makedirs(self.filepath, exist_ok=True)
+        os.makedirs(os.path.join(self.filepath, "mae"), exist_ok=True)
+        os.makedirs(os.path.join(self.filepath, "gan"), exist_ok=True)
 
     def train(self, data):
         print("Running KitNET:")
@@ -55,20 +56,22 @@ class MAEGAN:
         mae_output = torch.from_numpy(mae_output).float()
         print(mae_output)
         print(mae_output.shape)
-
+        batch_size = self.batch_size
         if is_train:
             mean = mae_output.mean(axis=0)  # Mean of each feature
             std = mae_output.std(axis=0)
             normalize = NormalizeTransform(mean, std)
-            torch.save({'mean': mean, 'std': std}, 'results/normalize_params.pt')
+            torch.save({'mean': mean, 'std': std}, os.path.join(self.filepath, "normalize_params.pt"))
         else:
-            normalize_params = torch.load('results/normalize_params.pt')
+            normalize_params = torch.load(os.path.join(self.filepath, "normalize_params.pt"))
             mean = normalize_params['mean']
             std = normalize_params['std']
             # 创建 NormalizeTransform 对象
             normalize = NormalizeTransform(mean, std)
+            batch_size = 1
         dataset = SimpleDataset(mae_output, label, transform=normalize)
-        train_dataloader = DataLoader(dataset, batch_size=self.batch_size,shuffle=False)
+
+        train_dataloader = DataLoader(dataset, batch_size=batch_size,shuffle=False)
         return train_dataloader
 
     def trainMAE(self, data):
@@ -82,10 +85,11 @@ class MAEGAN:
         output = np.zeros([data.shape[0], gan_input_dim]) # a place to save the scores
         for i in tqdm(range(data.shape[0])):
             output[i] = self.mae_model.train(data[i,]) #will train during the grace periods, then execute on all the rest.
-        self.mae_model.save("results")
+        self.mae_model.save(os.path.join(self.filepath, "mae"))
         return output
 
     def testMAE(self, data):
+        self.mae_model = mae.MAE.load(os.path.join(self.filepath, "mae"))
         output = np.zeros([data.shape[0], self.gan_input_dim])
         for i in tqdm(range(data.shape[0])):
             output[i] = self.mae_model.execute(data[i,])
@@ -118,8 +122,6 @@ class MAEGAN:
                                     lr=self.opt.lr, betas=(self.opt.b1, self.opt.b2))
         optimizer_D = torch.optim.Adam(self.discriminator.parameters(),
                                     lr=self.opt.lr, betas=(self.opt.b1, self.opt.b2))
-
-        os.makedirs("results/images", exist_ok=True)
 
         padding_epoch = len(str(self.opt.n_epochs))
         padding_i = len(str(len(dataloader)))
@@ -187,12 +189,12 @@ class MAEGAN:
 
                     batches_done += self.opt.n_critic
 
-            torch.save(self.generator.state_dict(), "results/generator")
-            torch.save(self.discriminator.state_dict(), "results/discriminator")
+            torch.save(self.generator.state_dict(), os.path.join(self.filepath, "gan", "generator"))
+            torch.save(self.discriminator.state_dict(), os.path.join(self.filepath, "gan", "discriminator"))
 
     def train_encoder_izif(self, dataloader, device, kappa=1.0):
-        self.generator.load_state_dict(torch.load("results/generator"))
-        self.discriminator.load_state_dict(torch.load("results/discriminator"))
+        self.generator.load_state_dict(torch.load(os.path.join(self.filepath, "gan", "generator")))
+        self.discriminator.load_state_dict(torch.load(os.path.join(self.filepath, "gan", "discriminator")))
 
         self.generator.to(device).eval()
         self.discriminator.to(device).eval()
@@ -202,8 +204,6 @@ class MAEGAN:
 
         optimizer_E = torch.optim.Adam(self.encoder.parameters(),
                                     lr=self.opt.lr, betas=(self.opt.b1, self.opt.b2))
-
-        os.makedirs("results/images_e", exist_ok=True)
 
         padding_epoch = len(str(self.opt.n_epochs))
         padding_i = len(str(len(dataloader)))
@@ -254,21 +254,22 @@ class MAEGAN:
                     #                nrow=5, normalize=True)
 
                     batches_done += self.opt.n_critic
-            torch.save(self.encoder.state_dict(), "results/encoder")
-
+            torch.save(self.encoder.state_dict(), os.path.join(self.filepath, "gan", "encoder"))
 
     def test_anomaly_detection(self, dataloader, device, kappa=1.0):
-        self.generator.load_state_dict(torch.load("results/generator"))
-        self.discriminator.load_state_dict(torch.load("results/discriminator"))
-        self.encoder.load_state_dict(torch.load("results/encoder"))
+        gan_dir = os.path.join(self.filepath, "gan")
+        self.generator.load_state_dict(torch.load(os.path.join(gan_dir, "generator")))
+        self.discriminator.load_state_dict(torch.load(os.path.join(gan_dir, "discriminator")))
+        self.encoder.load_state_dict(torch.load(os.path.join(gan_dir, "encoder")))
+
 
         self.generator.to(device).eval()
         self.discriminator.to(device).eval()
         self.encoder.to(device).eval()
 
         criterion = nn.MSELoss()
-
-        with open("results/score.csv", "w") as f:
+        score_path = os.path.join(self.filepath, "score.csv")
+        with open(score_path, "w") as f:
             f.write("label,img_distance,anomaly_score,z_distance\n")
         results = []
         for (img, label) in tqdm(dataloader):
@@ -289,8 +290,39 @@ class MAEGAN:
 
             z_distance = criterion(fake_z, real_z)
 
-            with open("results/score.csv", "a") as f:
+            with open(score_path, "a") as f:
                 f.write(f"{label.item()},{img_distance},"
                         f"{anomaly_score},{z_distance}\n")
-            results.append(anomaly_score)
+            results.append(anomaly_score.item())
         return results
+
+    def save(self):
+        os.makedirs(self.filepath, exist_ok=True)
+        # 保存 KitNET 的结构和超参数
+        with open(os.path.join(self.filepath, "maegan.pkl"), "wb") as f:
+            pickle.dump(self, f)
+
+        mae_dir = os.path.join(self.filepath, "mae")
+        self.mae_model.save(mae_dir)
+
+        gan_dir = os.path.join(self.filepath, "gan")
+        torch.save(self.generator.state_dict(), os.path.join(gan_dir, "generator"))
+        torch.save(self.discriminator.state_dict(), os.path.join(gan_dir, "discriminator"))
+        torch.save(self.encoder.state_dict(), os.path.join(gan_dir, "encoder"))
+
+    # 加载 KitNET 模型，包括所有 dA 实例的权重
+    @staticmethod
+    def load(filepath):
+        os.makedirs(filepath, exist_ok=True)
+        with open(os.path.join(filepath, "maegan.pkl"), "rb") as f:
+            model = pickle.load(f)
+
+        mae_dir = os.path.join(filepath, "mae")
+        model.mae_model.load(mae_dir)
+
+        gan_dir = os.path.join(filepath, "gan")
+        model.generator.load_state_dict(torch.load(os.path.join(gan_dir, "generator")))
+        model.discriminator.load_state_dict(torch.load(os.path.join(gan_dir, "discriminator")))
+        model.encoder.load_state_dict(torch.load(os.path.join(gan_dir, "encoder")))
+        
+        return model

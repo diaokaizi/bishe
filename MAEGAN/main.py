@@ -3,14 +3,11 @@ import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 
-from fanogan_muti.train_wgangp import train_wgangp
-from fanogan_muti.train_encoder_izif import train_encoder_izif
 from model.gan import Generator, Discriminator, Encoder
 from tools import SimpleDataset, load_UGR16, NormalizeTransform, report_result
 import model.MAE as mae
 import numpy as np
 import pandas as pd
-from fanogan_muti.test_anomaly_detection import test_anomaly_detection
 from model.MAEGAN import MAEGAN
 
 
@@ -70,18 +67,38 @@ def load_UNSW(cn = 1000, ratio = 0.12):
     
     return (x_train_normalized, y_train), (x_test_normalized, y_test)
 
+def load_UGR16():
+    raw_x_train = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
+    x_train = raw_x_train
+    x_train = torch.from_numpy(x_train.values).float()
+    y_train = torch.zeros(len(x_train))
+
+
+    raw_x_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtest.csv").drop(columns=["Row"], axis=1)
+    x_test = raw_x_test
+    x_test = torch.from_numpy(x_test.values).float()
+    y_test = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Ytest.csv").drop(columns=["Row", "labelanomalyidpscan", "labelanomalysshscan", "labelanomalyidpscan", "labelblacklist"], axis=1)
+    y_test = torch.from_numpy(y_test.apply(lambda row: 1 if row.sum() > 0 else 0, axis=1).values)
+
+    # 接下来进行归一化
+    (x_train, y_train), (x_test, y_test) = (x_train.numpy(), y_train.numpy()), (x_test.numpy(), y_test.numpy())
+    minmax_scaler = MinMaxScaler()
+    x_train = minmax_scaler.fit_transform(x_train)  # 仅在训练数据上拟合
+    x_test = minmax_scaler.transform(x_test)  # 使用相同的缩放器进行转换
+    return (x_train, y_train), (x_test, y_test)
 
 def main(opt):
     if type(opt.seed) is int:
         torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    (x_train, y_train), (x_test, y_test) = load_UNSW()
+    # (x_train, y_train), (x_test, y_test) = load_UNSW()
+    (x_train, y_train), (x_test, y_test) = load_UGR16()
 
-    maegan = MAEGAN(opt, input_dim = x_train.shape[1])
+    maegan = MAEGAN(opt, input_dim = x_train.shape[1], filepath="ugr16")
     print("Running KitNET:")
     maegan.train(x_train)
     score = maegan.test(x_test, y_test)
-    report_result(name="MAEGAN", anomaly_score=score, labels=y_test)
+    report_result(name="ugr16", anomaly_score=score, labels=y_test)
     
 
 
@@ -107,15 +124,9 @@ if __name__ == "__main__":
                         help="adam: decay of first order momentum of gradient")
     parser.add_argument("--b2", type=float, default=0.9,
                         help="adam: decay of first order momentum of gradient")
-    parser.add_argument("--latent_dim", type=int, default=8,
-                        help="dimensionality of the latent space")
     parser.add_argument("--n_critic", type=int, default=5,
                         help="number of training steps for "
                              "discriminator per iter")
-    parser.add_argument("--sample_interval", type=int, default=3000,
-                        help="interval betwen image samples")
-    parser.add_argument("--split_rate", type=float, default=0.8,
-                        help="rate of split for normal training data")
     parser.add_argument("--seed", type=int, default=42,
                         help="value of a random seed")
     opt = parser.parse_args()

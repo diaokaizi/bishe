@@ -112,8 +112,7 @@ class MAE:
         print(self.v)
 
     # 保存 KitNET 模型，包括所有 dA 实例的权重
-    def save(self, filepath):
-        mae_dir = os.path.join(filepath, "mae")
+    def save(self, mae_dir):
         os.makedirs(mae_dir, exist_ok=True)
         # 保存 KitNET 的结构和超参数
         with open(os.path.join(mae_dir, "model.pkl"), "wb") as f:
@@ -122,12 +121,10 @@ class MAE:
         # 保存所有 dA 实例的权重
         for i, ae in enumerate(self.ensembleLayer):
             ae.save_weights(os.path.join(mae_dir, f"ensembleLayer_{i}.npz"))
-        self.outputLayer.save_weights(filepath + "_outputLayer.npz")
 
     # 加载 KitNET 模型，包括所有 dA 实例的权重
     @staticmethod
-    def load(filepath):
-        mae_dir = os.path.join(filepath, "mae")
+    def load(mae_dir):
         os.makedirs(mae_dir, exist_ok=True)
         # 加载 KitNET 的结构和超参数
         with open(os.path.join(mae_dir, "model.pkl"), "rb") as f:
@@ -136,8 +133,6 @@ class MAE:
         # 加载所有 dA 实例的权重
         for i, ae in enumerate(model.ensembleLayer):
             ae.load_weights(os.path.join(mae_dir, f"ensembleLayer_{i}.npz"))
-        model.outputLayer.load_weights(filepath + "_outputLayer.npz")
-        
         return model
 # Copyright (c) 2017 Yisroel Mirsky
 #

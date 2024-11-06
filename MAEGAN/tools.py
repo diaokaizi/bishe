@@ -6,6 +6,7 @@ from sklearn.linear_model import Lasso
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_curve, precision_recall_curve, auc, f1_score, accuracy_score, precision_score, recall_score, classification_report
 import matplotlib.pyplot as plt
+import os
 class NormalizeTransform:
     """ Normalize features with mean and standard deviation. """
     def __init__(self, mean, std):
@@ -92,3 +93,8 @@ def report_result(name, labels, anomaly_score, fun="pr"):
     roc_auc = auc(fpr, tpr)
     print(roc_auc)
     plt.plot(fpr, tpr, label=f"{name} = {roc_auc:3f}")
+    plt.title("ROC-AUC")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.legend()
+    plt.savefig(os.path.join(name, "ROC-AUC.png"))
