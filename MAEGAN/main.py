@@ -12,60 +12,35 @@ from model.MAEGAN import MAEGAN
 
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
-def load_UNSW(cn = 1000, ratio = 0.12):
-    # 先进行标准化
-    
-    # 加载训练数据
-    train = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_train_1s.csv")
-    train = train[~((train['binary_label_normal'] + train['binary_label_attack']) < cn)]
-    # 计算每个样本的 anomaly_ratio 并筛选出 anomaly_ratio < 0.15 的样本
-    train['total_records'] = train['binary_label_normal'] + train['binary_label_attack']
-    train['anomaly_ratio'] = train['binary_label_attack'] / train['total_records']
-    train = train[train['anomaly_ratio'] < ratio]  # 只保留 anomaly_ratio < 0.15 的样本
+def load_cic2017_g():
+    seq_len = 5
+    embs_path = "/root/GCN/DyGCN/data/data/cic2017/graph_embs.pt"
+    labels_path = "/root/GCN/DyGCN/data/data/cic2017/labels.npy"
+    train_len=[0, 527]
+    data_embs = torch.load(embs_path).detach().cpu().numpy()
+    x_train = data_embs[train_len[0]+seq_len:train_len[1]]
+    x_test=np.concatenate([data_embs[:train_len[0]],data_embs[train_len[1]:]])
+    y_train = np.zeros(len(x_train))
+    labels = np.load(labels_path, allow_pickle=True)
+    labels = labels.astype(int)
+    labels=labels[seq_len:]
+    y_test=np.concatenate((labels[:train_len[0]], labels[train_len[1]:]))
+    return (x_train, y_train), (x_test, y_test)
 
-    # 删除不需要的列
-    raw_x_train = train.drop(columns=['timestamp', 'label_background', 'label_exploits', 'label_fuzzers',
-                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
-                                       'label_backdoor', 'label_shellcode', 'label_worms', 
-                                       'label_other', 'binary_label_normal', 'binary_label_attack', 
-                                       'total_records', 'anomaly_ratio'], axis=1)
-
-
-    # 加载测试数据
-    raw_x_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
-
-    raw_x_test = raw_x_test[~((raw_x_test['binary_label_normal'] + raw_x_test['binary_label_attack']) < cn)].drop(columns=['timestamp', 
-                                       'label_background', 'label_exploits', 'label_fuzzers', 
-                                       'label_reconnaissance', 'label_dos', 'label_analysis', 
-                                       'label_backdoor', 'label_shellcode', 'label_worms', 
-                                       'label_other', 'binary_label_normal', 'binary_label_attack'], axis=1)
-
-    # 接下来进行归一化
-    minmax_scaler = MinMaxScaler()
-    
-    # 对标准化后的训练数据进行归一化
-    x_train_normalized = minmax_scaler.fit_transform(raw_x_train.values)  # 仅在训练数据上拟合
-    
-    # 对标准化后的测试数据进行归一化
-    x_test_normalized = minmax_scaler.transform(raw_x_test.values)  # 使用相同的缩放器进行转换
-    
-    # 加载并处理测试标签
-    y_test = pd.read_csv("/root/bishe/dataset/UNSW/UNSW_Flow_test_1s.csv")
-    y_test = y_test[~((y_test['binary_label_normal'] + y_test['binary_label_attack']) < cn)]
-    y_test['total_records'] = y_test['binary_label_normal'] + y_test['binary_label_attack']
-    y_test['anomaly_ratio'] = y_test['binary_label_attack'] / y_test['total_records']
-    
-    # 根据 anomaly_ratio 生成测试标签
-    y_test = (y_test['anomaly_ratio'] >= ratio).astype(int).to_numpy()
-    
-    # 假设训练数据全部为正常数据
-    y_train = np.zeros(len(x_train_normalized))
-
-    # 输出训练和测试集的形状
-    print(f"Training set shape: {x_train_normalized.shape}, Labels: {np.unique(y_train)}")
-    print(f"Test set shape: {x_test_normalized.shape}, Labels: {np.unique(y_test)}")
-    
-    return (x_train_normalized, y_train), (x_test_normalized, y_test)
+def load_ugr16_g():
+    seq_len = 5
+    embs_path = "/root/GCN/DyGCN/data/data/ugr16/graph_embs.pt"
+    labels_path = "/root/GCN/DyGCN/data/data/ugr16/labels.npy"
+    train_len=[0, 500]
+    data_embs = torch.load(embs_path).detach().cpu().numpy()
+    x_train = data_embs[train_len[0]+seq_len:train_len[1]]
+    x_test=np.concatenate([data_embs[:train_len[0]],data_embs[train_len[1]:]])
+    y_train = np.zeros(len(x_train))
+    labels = np.load(labels_path, allow_pickle=True)
+    labels = labels.astype(int)
+    labels=labels[seq_len:]
+    y_test=np.concatenate((labels[:train_len[0]], labels[train_len[1]:]))
+    return (x_train, y_train), (x_test, y_test)
 
 def load_UGR16():
     raw_x_train = pd.read_csv("/root/bishe/dataset/URD16/UGR16v1.Xtrain.csv").drop(columns=["Row"], axis=1)
@@ -92,13 +67,13 @@ def main(opt):
         torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # (x_train, y_train), (x_test, y_test) = load_UNSW()
-    (x_train, y_train), (x_test, y_test) = load_UGR16()
-
-    maegan = MAEGAN(opt, input_dim = x_train.shape[1], filepath="ugr16")
+    (x_train, y_train), (x_test, y_test) = load_cic2017_g()
+    filepath = "cic2017"
+    maegan = MAEGAN(opt, input_dim = x_train.shape[1], filepath=filepath, batch_size=4)
     print("Running KitNET:")
     maegan.train(x_train)
     score = maegan.test(x_test, y_test)
-    report_result(name="ugr16", anomaly_score=score, labels=y_test)
+    report_result(name=filepath, anomaly_score=score, labels=y_test)
     
 
 
@@ -114,7 +89,7 @@ Licensed under MIT
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n_epochs", type=int, default=30,
+    parser.add_argument("--n_epochs", type=int, default=40,
                         help="number of epochs of training")
     parser.add_argument("--batch_size", type=int, default=64,
                         help="size of the batches")
@@ -122,7 +97,7 @@ if __name__ == "__main__":
                         help="adam: learning rate")
     parser.add_argument("--b1", type=float, default=0.5,
                         help="adam: decay of first order momentum of gradient")
-    parser.add_argument("--b2", type=float, default=0.9,
+    parser.add_argument("--b2", type=float, default=0.99,
                         help="adam: decay of first order momentum of gradient")
     parser.add_argument("--n_critic", type=int, default=5,
                         help="number of training steps for "

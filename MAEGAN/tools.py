@@ -77,8 +77,8 @@ def report_result(name, labels, anomaly_score, fun="pr"):
     predicted_labels = np.where(anomaly_score >= optimal_threshold, 1, 0)
     print("precision_recall_curve")
     # print(classification_report(labels, predicted_labels))
+    print(classification_report(labels, predicted_labels))
     report_dict = classification_report(labels, predicted_labels, output_dict=True)
-
     # 手动格式化输出，保留4位小数
     for label, metrics in report_dict.items():
         if label == "1":
@@ -92,9 +92,28 @@ def report_result(name, labels, anomaly_score, fun="pr"):
     precision, recall, _ = precision_recall_curve(labels, anomaly_score)
     roc_auc = auc(fpr, tpr)
     print(roc_auc)
+    plt.clf()
+    plt.plot([0, 1], [0, 1], linestyle="--")
     plt.plot(fpr, tpr, label=f"{name} = {roc_auc:3f}")
     plt.title("ROC-AUC")
     plt.xlabel("False Positive Rate")
     plt.ylabel("True Positive Rate")
     plt.legend()
     plt.savefig(os.path.join(name, "ROC-AUC.png"))
+
+    t, auc_score=plot_roc(labels, anomaly_score)
+    print("auc_score ", auc_score)
+    labels = np.array(labels)
+    anomaly_score = np.array(anomaly_score)
+    pred=np.ones(len(anomaly_score))
+    pred[anomaly_score<t]=0
+    print("acc:{:.4f},pre{:.4f},rec:{:.4f}, f1:{:.4f}".format(accuracy_score(labels, pred),precision_score(labels, pred),recall_score(labels, pred), f1_score(labels, pred)))
+    
+def plot_roc(labels, scores):
+    fpr, tpr, thresholds = roc_curve(labels, scores)
+    maxindex = (tpr-fpr).tolist().index(max(tpr-fpr))
+    threshold = thresholds[maxindex]
+    print('异常阈值', threshold)
+    auc_score = auc(fpr, tpr)
+    print('auc值: {:.4f}'.format(auc_score))
+    return threshold, auc_score
