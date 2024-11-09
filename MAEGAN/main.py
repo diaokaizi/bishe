@@ -14,7 +14,7 @@ from model.MAEGAN import MAEGAN
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 def load_cic2017_g():
     seq_len = 5
-    embs_path = "/root/GCN/DyGCN/data/data/cic2017/graph_embs.pt"
+    embs_path = "/root/GCN/DyGCN/data/data/cic2017/model-DGC5-2.pt"
     labels_path = "/root/GCN/DyGCN/data/data/cic2017/labels.npy"
     train_len=[0, 527]
     data_embs = torch.load(embs_path).detach().cpu().numpy()
@@ -25,11 +25,14 @@ def load_cic2017_g():
     labels = labels.astype(int)
     labels=labels[seq_len:]
     y_test=np.concatenate((labels[:train_len[0]], labels[train_len[1]:]))
+    minmax_scaler = MinMaxScaler()
+    x_train = minmax_scaler.fit_transform(x_train)  # 仅在训练数据上拟合
+    x_test = minmax_scaler.transform(x_test)  # 使用相同的缩放器进行转换
     return (x_train, y_train), (x_test, y_test)
 
 def load_ugr16_g():
     seq_len = 5
-    embs_path = "/root/GCN/DyGCN/data/data/ugr16/graph_embs.pt"
+    embs_path = "/root/GCN/DyGCN/data/data/ugr16/model-DGC5-2.pt"
     labels_path = "/root/GCN/DyGCN/data/data/ugr16/labels.npy"
     train_len=[0, 500]
     data_embs = torch.load(embs_path).detach().cpu().numpy()
@@ -40,6 +43,9 @@ def load_ugr16_g():
     labels = labels.astype(int)
     labels=labels[seq_len:]
     y_test=np.concatenate((labels[:train_len[0]], labels[train_len[1]:]))
+    minmax_scaler = MinMaxScaler()
+    x_train = minmax_scaler.fit_transform(x_train)  # 仅在训练数据上拟合
+    x_test = minmax_scaler.fit_transform(x_test)  # 使用相同的缩放器进行转换
     return (x_train, y_train), (x_test, y_test)
 
 def load_UGR16():
@@ -68,7 +74,8 @@ def main(opt):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # (x_train, y_train), (x_test, y_test) = load_UNSW()
     (x_train, y_train), (x_test, y_test) = load_cic2017_g()
-    filepath = "cic2017"
+    print(x_train.shape)
+    filepath = "ugr16"
     maegan = MAEGAN(opt, input_dim = x_train.shape[1], filepath=filepath, batch_size=4)
     print("Running KitNET:")
     maegan.train(x_train)
@@ -91,11 +98,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--n_epochs", type=int, default=40,
                         help="number of epochs of training")
-    parser.add_argument("--batch_size", type=int, default=64,
+    parser.add_argument("--batch_size", type=int, default=4,
                         help="size of the batches")
     parser.add_argument("--lr", type=float, default=0.0001,
                         help="adam: learning rate")
-    parser.add_argument("--b1", type=float, default=0.5,
+    parser.add_argument("--b1", type=float, default=0.99,
                         help="adam: decay of first order momentum of gradient")
     parser.add_argument("--b2", type=float, default=0.99,
                         help="adam: decay of first order momentum of gradient")

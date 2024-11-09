@@ -69,7 +69,7 @@ class MAEGAN:
             # 创建 NormalizeTransform 对象
             normalize = NormalizeTransform(mean, std)
             batch_size = 1
-        dataset = SimpleDataset(mae_output, label, transform=normalize)
+        dataset = SimpleDataset(mae_output, label, transform=None)
 
         train_dataloader = DataLoader(dataset, batch_size=batch_size,shuffle=False)
         return train_dataloader

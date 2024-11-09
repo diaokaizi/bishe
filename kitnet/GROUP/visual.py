@@ -64,9 +64,9 @@ def txt(path, name):
 
 def load_group_np():
     seq_len=5
-    embs_path = "/root/bishe/ae/graph_embs_0.809.pt"
+    embs_path = "/root/GCN/DyGCN/data/data/ugr16/graph_embs333.pt"
     # embs_path='data/graph_embs.pt'
-    labels_path = "/root/bishe/ae/labels.npy"
+    labels_path ="/root/GCN/DyGCN/data/data/ugr16/labels.npy"
 
     train_len=[0, 500]
 

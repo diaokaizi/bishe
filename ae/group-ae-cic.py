@@ -102,10 +102,8 @@ def load_UGR16():
 
 def load_group():
     seq_len=5
-    embs_path = "/root/bishe/ae/graph_embs-best-cic.pt"
-    # embs_path='data/graph_embs.pt'
-    labels_path = "/root/bishe/ae/labels-cic.npy"
-
+    embs_path = "/root/GCN/DyGCN/data/data/cic2017/model-DGC5-2.pt"
+    labels_path = "/root/GCN/DyGCN/data/data/cic2017/labels.npy"
     train_len=[0, 527]
 
     data_embs = torch.load(embs_path).detach().cpu().numpy()
@@ -122,6 +120,10 @@ def load_group():
     x_test = torch.from_numpy(test_embs)
     y_test = torch.from_numpy(labels)
     y_train = torch.zeros(len(x_train))
+    (x_train, y_train), (x_test, y_test) = (x_train.numpy(), y_train.numpy()), (x_test.numpy(), y_test.numpy())
+    minmax_scaler = MinMaxScaler()
+    x_train = minmax_scaler.fit_transform(x_train)  # 仅在训练数据上拟合
+    x_test = minmax_scaler.transform(x_test)  # 使用相同的缩放器进行转换
     return (x_train, y_train), (x_test, y_test)
 
 
