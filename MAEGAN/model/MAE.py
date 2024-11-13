@@ -18,7 +18,7 @@ class MAE:
     #feature_map: One may optionally provide a feature map instead of learning one. The map must be a list,
     #           where the i-th entry contains a list of the feature indices to be assingned to the i-th autoencoder in the ensemble.
     #           For example, [[2,5,3],[4,0,1],[6,7]]
-    def __init__(self,n,max_autoencoder_size=10,FM_grace_period=None,AD_grace_period=10000,learning_rate=0.1,hidden_ratio=0.75, feature_map = None):
+    def __init__(self,n,max_autoencoder_size=10,min_autoencoder_size=5,FM_grace_period=None,AD_grace_period=10000,learning_rate=0.1,hidden_ratio=0.75, feature_map = None):
         # Parameters:
         self.AD_grace_period = AD_grace_period
         if FM_grace_period is None:
@@ -27,8 +27,10 @@ class MAE:
             self.FM_grace_period = FM_grace_period
         if max_autoencoder_size <= 0:
             self.m = 1
+            self.minClust = 1
         else:
             self.m = max_autoencoder_size
+            self.minClust = min_autoencoder_size
         self.lr = learning_rate
         self.hr = hidden_ratio
         self.n = n
@@ -54,7 +56,7 @@ class MAE:
         self.FM.update(x)
     
     def cluster(self):
-        self.v = self.FM.cluster(self.m)
+        self.v = self.FM.cluster(self.m, self.minClust)
         print("The Feature-Mapper found a mapping: "+str(self.n)+" features to "+str(len(self.v))+" autoencoders.")
         print("Feature-Mapper: execute-mode, Anomaly-Detector: train-mode")
         self.__createAD__()

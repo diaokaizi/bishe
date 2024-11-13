@@ -17,10 +17,10 @@ import pickle
 
 class MAEGAN:
 
-    def __init__(self, opt, input_dim, maxAE=10, feature_map=None, batch_size=64, filepath="result"):
+    def __init__(self, opt, input_dim, maxAE=10, minAE=10, feature_map=None, batch_size=64, filepath="result"):
         # Parameters:
         self.opt = opt
-        self.mae_model = mae.MAE(input_dim,maxAE,0,0, feature_map=feature_map)
+        self.mae_model = mae.MAE(input_dim,maxAE,minAE,0,0, feature_map=feature_map)
         self.batch_size = batch_size
         self.feature_map = feature_map
         self.generator = None
@@ -70,8 +70,7 @@ class MAEGAN:
             normalize = NormalizeTransform(mean, std)
             batch_size = 1
         dataset = SimpleDataset(mae_output, label, transform=None)
-
-        train_dataloader = DataLoader(dataset, batch_size=batch_size,shuffle=False)
+        train_dataloader = DataLoader(dataset, batch_size=batch_size,shuffle=False, drop_last=True)
         return train_dataloader
 
     def trainMAE(self, data):
