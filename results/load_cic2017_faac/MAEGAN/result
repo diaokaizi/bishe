@@ -1,0 +1,23 @@
+不设置种子
+
+maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
+precision_recall_curve
+              precision    recall  f1-score   support
+
+           0       0.74      0.88      0.81      1205
+           1       0.84      0.65      0.73      1090
+
+    accuracy                           0.78      2295
+   macro avg       0.79      0.77      0.77      2295
+weighted avg       0.79      0.78      0.77      2295
+
+Label: 1
+  precision: 0.8369
+  recall: 0.6541
+  f1-score: 0.7343
+  support: 1090.0000
+0.731394038600632
+异常阈值 0.37113597989082336
+auc值: 0.7314
+auc_score  0.731394038600632
+acc:0.7791,pre0.8639,rec:0.6349, f1:0.7319

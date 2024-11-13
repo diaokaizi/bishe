@@ -14,7 +14,8 @@ sys.path.append(root_dir)
 from sklearn.ensemble import IsolationForest
 import report_result
 import read_data
-
+import itertools
+import os
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 # def load_cic2017_g():
 #     seq_len = 5
@@ -153,43 +154,40 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 #     x_test = minmax_scaler.transform(x_test)  # 使用相同的缩放器进行转换
 #     return (x_train, y_train), (x_test, y_test)
 
-# def main(opt):
-#     if type(opt.seed) is int:
-#         torch.manual_seed(opt.seed)
-#     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-#     # (x_train, y_train), (x_test, y_test) = load_UNSW()
-#     model = "MAEGAN"
-#     # (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
-#     # filepath = "load_UGR16_faac"
-#     (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
-#     filepath = "load_cic2017_faac"
-    
-#     # from sklearn.svm import OneClassSVM
-#     # iof = OneClassSVM()
-#     # iof=iof.fit(x_train)
-#     # score=-iof.decision_function(x_test) #值越低越不正常
-#     maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=5, minAE=3, filepath=filepath, batch_size=4)
-#     #4 3 acc:0.7969,pre0.8421,rec:0.7046, f1:0.7672
-#     #4 1 acc:0.7978,pre0.8565,rec:0.6899, f1:0.7642
-#     print("Running KitNET:")
-#     maegan.train(x_train)
-#     score = maegan.test(x_test, y_test)
-#     report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
-import itertools
-import os
-
 def main(opt):
+
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # (x_train, y_train), (x_test, y_test) = load_UNSW()
+    model = "MAEGAN"
+    # (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+    # filepath = "load_UGR16_faac"
+    (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+    filepath = "load_cic2017_faac"
+    
+    # from sklearn.svm import OneClassSVM
+    # iof = OneClassSVM()
+    # iof=iof.fit(x_train)
+    # score=-iof.decision_function(x_test) #值越低越不正常
+    maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
+
+    print("Running KitNET:")
+    maegan.train(x_train)
+    score = maegan.test(x_test, y_test)
+    report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
+
+
+def main_itertools(opt):
     if type(opt.seed) is int:
         torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     
     # 加载数据
-    (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
-    filepath = "load_cic2018_faac"
+    (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+    filepath = "load_cic2017_faac"
     model = "MAEGAN"
     
     # 定义输出文件夹和文件路径
-    output_dir = "/root/bishe/results/load_cic2018_faac/MAEGAN/"
+    output_dir = "/root/bishe/results/load_cic2017_faac/MAEGAN/"
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, "itertoolsresults.txt")
     
@@ -197,7 +195,6 @@ def main(opt):
     maxAE_values = [3, 5, 10, 15]
     minAE_values = [1, 3, 5, 10]
     batch_sizes = [4, 8, 16]
-    
     # 初始化结果存储
     best_params = None
     best_score = 0
@@ -207,6 +204,8 @@ def main(opt):
     with open(output_file, "w") as f:
         # 遍历所有参数组合
         for maxAE, minAE, batch_size in itertools.product(maxAE_values, minAE_values, batch_sizes):
+            if type(opt.seed) is int:
+                torch.manual_seed(opt.seed)
             print(f"Testing with maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}")
             if minAE > maxAE:
                 continue
@@ -221,17 +220,18 @@ def main(opt):
             score = maegan.test(x_test, y_test)
             
             # 计算评估指标
-            accuracy = report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
+            f1, result_str = report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
             
             # 存储结果
-            results.append((maxAE, minAE, batch_size, accuracy))
+            results.append((maxAE, minAE, batch_size, f1))
             
             # 写入当前组合结果到文件
-            f.write(f"maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}, accuracy={accuracy:.4f}\n")
+            f.write(f"maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}, f1={f1:.4f}\n")
+            f.write(f"{result_str}\n")
             
             # 更新最佳参数
-            if accuracy > best_score:
-                best_score = accuracy
+            if f1 > best_score:
+                best_score = f1
                 best_params = (maxAE, minAE, batch_size)
         
         # 写入最佳参数到文件
@@ -274,4 +274,4 @@ if __name__ == "__main__":
                         help="value of a random seed")
     opt = parser.parse_args()
 
-    main(opt)
+    main_itertools(opt)

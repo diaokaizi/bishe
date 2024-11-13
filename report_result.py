@@ -68,7 +68,7 @@ def report_result(model, name, labels, anomaly_score, fun="pr"):
         f.write(f"auc_score: {auc_score}\n")
         f.write("acc:{:.4f},pre{:.4f},rec:{:.4f}, f1:{:.4f}".format(accuracy_score(labels, pred),precision_score(labels, pred),recall_score(labels, pred), f1_score(labels, pred)))
     
-    return f1_score(labels, pred)
+    return f1_score(labels, pred), "auc_score:{:.4f},acc:{:.4f},pre{:.4f},rec:{:.4f}, f1:{:.4f}".format(auc_score, accuracy_score(labels, pred),precision_score(labels, pred),recall_score(labels, pred), f1_score(labels, pred))
 
 def plot_roc(labels, scores):
     fpr, tpr, thresholds = roc_curve(labels, scores)

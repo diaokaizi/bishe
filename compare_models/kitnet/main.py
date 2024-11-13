@@ -29,12 +29,12 @@ import read_data
 
 model_name = "kitnet"
 
-# (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
-# filepath = "load_cic2018_faac"
+(x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+filepath = "load_cic2018_faac"
 # (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
 # filepath = "load_UGR16_faac"
-(x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
-filepath = "load_cic2017_faac"
+# (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+# filepath = "load_cic2017_faac"
 
 maxAE = 10 #maximum size for any autoencoder in the ensemble layer
 # Build KitNET
