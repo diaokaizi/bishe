@@ -40,8 +40,10 @@ def load_UGR16_faac():
 
 def load_cic2017_faac():
     df = pd.read_csv("data/cic2017.csv")
+    # label_background,label_DoS_Hulk,label_DDoS,label_PortScan,label_other
     label_columns = ['label_DoS_Hulk', 'label_DDoS', 'label_PortScan', 'label_other']
-    label = (df[label_columns].sum(axis=1) > 0).astype(int)
+    # label = (df[label_columns].sum(axis=1) != 1000).astype(int)
+    label = df['label_background'].apply(lambda x: 0 if x == 1000 else 1)
     features_to_drop = [
         'timestamp', 'label_background', 'label_DoS_Hulk', 'label_DDoS', 'label_PortScan', 'label_other'
     ]
@@ -77,6 +79,17 @@ def load_cic2018_faac():
     ]
     print(label.value_counts())
     df = df.drop(columns=features_to_drop)
+
+    # f2 = ['npackets_b_verylow', 'npackets_b_low', 'npackets_b_medium', 'npackets_b_high', 'npackets_b_veryhigh',
+    #       'nbytes_b_verylow', 'nbytes_b_low','nbytes_b_medium','nbytes_b_high','nbytes_b_veryhigh']
+
+    # f3 = ['npackets_verylow', 'npackets_low', 'npackets_medium', 'npackets_high', 'npackets_veryhigh',
+    #       'nbytes_verylow', 'nbytes_low','nbytes_medium','nbytes_high','nbytes_veryhigh']
+    f4 = ['dst_ip_private', 'dst_ip_public', 'dport_https', 'protocol_6', 'protocol_17', 'dport_dns', 'nbytes_b_medium', 'nbytes_b_low', 'src_ip_public', 'src_ip_private', 'dport_http', 'sport_https', 'nbytes_b_high', 'nbytes_medium', 'npackets_medium', 'npackets_b_medium', 'npackets_b_low', 'sport_register', 'nbytes_b_veryhigh', 'npackets_low', 'src_ip_default', 'sport_daytime', 'sport_bootp', 'dport_bootp']
+# npackets_verylow,npackets_low,npackets_medium,npackets_high,npackets_veryhigh,npackets_b_verylow,npackets_b_low,npackets_b_medium,npackets_b_high,npackets_b_veryhigh,nbytes_verylow,nbytes_low,nbytes_medium,nbytes_high,nbytes_veryhigh,nbytes_b_verylow,nbytes_b_low,nbytes_b_medium,nbytes_b_high,nbytes_b_veryhigh,label_background,label_other
+# ,,,,,label_background,label_other
+    df = df.drop(columns=f4)
+
     train_len=4600
     x_train = df.iloc[:train_len, :].to_numpy().astype('float32')      # 前500行为训练集特征
     y_train = label.iloc[:train_len].to_numpy()       # 前500行为训练集标签

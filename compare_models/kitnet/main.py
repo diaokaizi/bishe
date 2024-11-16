@@ -29,10 +29,10 @@ import read_data
 
 model_name = "kitnet"
 
-(x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
-filepath = "load_cic2018_faac"
-# (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
-# filepath = "load_UGR16_faac"
+# (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+# filepath = "load_cic2018_faac"
+(x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+filepath = "load_UGR16_faac"
 # (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
 # filepath = "load_cic2017_faac"
 
@@ -54,10 +54,13 @@ for i in range(x_train.shape[0]):
     K.process(x_train[i,]) #will train during the grace periods, then execute on all the rest.
 
 RMSEs = np.zeros(x_test.shape[0]) # a place to save the scores
+start_time = time.time()
 for i in range(x_test.shape[0]):
-    if i % 1000 == 0:
-        print("test", i)
     RMSEs[i] = K.process(x_test[i,]) #will train during the grace periods, then execute on all the rest.
 stop = time.time()
+end_time = time.time()
+testing_time_cost = end_time - start_time
+print(f"Testing Time Cost: {testing_time_cost * 1000} seconds")
+
 print("Complete. Time elapsed: "+ str(stop - start))
 report_result.report_result(model=model_name, name=filepath, anomaly_score=RMSEs, labels=y_test)

@@ -44,8 +44,8 @@ class Autoencoder(nn.Module):
         super(Autoencoder, self).__init__()
         def block(in_feat, out_feat, normalize=True):
             layers = [nn.Linear(in_feat, out_feat)]
-            if normalize:
-                layers.append(nn.BatchNorm1d(out_feat, 0.8))
+            # if normalize:
+            #     layers.append(nn.BatchNorm1d(out_feat, 0.8))
             layers.append(nn.LeakyReLU(0.2, inplace=True))
             return layers
         self.encoder = nn.Sequential(
@@ -88,24 +88,31 @@ np.random.seed(42)
 
 
 model_name = "AutoEncoder"
-# (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
-# filepath = "load_UGR16_faac"
-(x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
-filepath = "load_cic2017_faac"
+(x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+filepath = "load_UGR16_faac"
+# (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+# filepath = "load_cic2017_faac"
+# (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+# filepath = "load_cic2018_faac"
 
+mean = x_train.mean(axis=0)  # Mean of each feature
+std = x_train.std(axis=0)
+normalize = NormalizeTransform(mean, std)
 y_train = torch.zeros(len(x_train))
-train_mnist = SimpleDataset(x_train, y_train)
-dataloader = DataLoader(train_mnist, batch_size=10,
-                                shuffle=True)
+train_mnist = SimpleDataset(x_train, y_train, normalize)
+dataloader = DataLoader(train_mnist, batch_size=1,
+                                shuffle=False)
 
 feature_count = x_train.shape[1]
 
 # 模型训练
-model = Autoencoder(input_dim=feature_count, hidden_dim=int(feature_count/2))
+model = Autoencoder(input_dim=feature_count, hidden_dim=int(feature_count*0.5))
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-num_epochs = 100
+num_epochs = 10
+import time
+start_time = time.time()  # 记录结束时间
 for epoch in range(num_epochs):
     for data in dataloader:
         inputs, _ = data
@@ -116,11 +123,17 @@ for epoch in range(num_epochs):
         optimizer.step()
     
     print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+end_time = time.time()  # 记录结束时间
+epoch_duration = (end_time - start_time) * 1000  # 计算该 epoch 的时间并转换为毫秒
+print(f'Average Training Time per Epoch: {epoch_duration/num_epochs:.2f} ms')
 
 
+start_time = time.time()  # 记录结束时间
 criterion = nn.MSELoss()
-
-test_mnist = SimpleDataset(x_test, y_test)
+mean = x_test.mean(axis=0)  # Mean of each feature
+std = x_test.std(axis=0)
+normalize = NormalizeTransform(mean, std)
+test_mnist = SimpleDataset(x_test, y_test, normalize)
 test_dataloader = DataLoader(test_mnist, batch_size=1,
                                 shuffle=False)
 model.eval()
@@ -130,4 +143,7 @@ for idx, data in enumerate(test_dataloader):
     outputs = model(inputs)
     loss = criterion(outputs, inputs)
     RMSEs[idx] = loss.item()
+end_time = time.time()  # 记录结束时间
+epoch_duration = (end_time - start_time) * 1000  # 计算该 epoch 的时间并转换为毫秒
+print(f'test time: {epoch_duration:.2f} ms')
 report_result.report_result(model=model_name, name=filepath, anomaly_score=RMSEs, labels=y_test)

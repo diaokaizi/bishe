@@ -32,7 +32,11 @@ class MAEGAN:
         os.makedirs(os.path.join(self.filepath, "mae"), exist_ok=True)
         os.makedirs(os.path.join(self.filepath, "gan"), exist_ok=True)
 
+    
+
     def train(self, data):
+        import time
+        start_time = time.time()  # 记录开始时间
         print("Running KitNET:")
         mae_output = self.trainMAE(data)
         print("Running fanogan:")
@@ -46,11 +50,22 @@ class MAEGAN:
 
         self.encoder = Encoder(self.gan_input_dim, latent_dim)
         self.train_encoder_izif(train_dataloader, "cpu")
+        end_time = time.time()  # 记录结束时间
+        epoch_duration = (end_time - start_time) * 1000  # 计算该 epoch 的时间并转换为毫秒
+        print(f'Average Training Time per Epoch: {epoch_duration/self.opt.n_epochs:.2f} ms')
+        return f"{epoch_duration/self.opt.n_epochs:.2f}"
+
 
     def test(self, data, label):
+        import time
+        start_time = time.time()
         mae_output = self.testMAE(data)
         test_dataloader = self.load_gan_input(mae_output, label = label, is_train=False)
-        return self.test_anomaly_detection(test_dataloader, "cpu")
+        res = self.test_anomaly_detection(test_dataloader, "cpu")
+        end_time = time.time()
+        testing_time_cost = end_time - start_time
+        print(f"Testing Time Cost: {testing_time_cost * 1000} seconds")
+        return res, f"{testing_time_cost * 1000:.2f}"
 
     def load_gan_input(self, mae_output, label, is_train):
         mae_output = torch.from_numpy(mae_output).float()

@@ -29,7 +29,7 @@ class KitNET:
             self.minClust = 1
         else:
             self.m = max_autoencoder_size
-            self.minClust = max_autoencoder_size
+            self.minClust = min_autoencoder_size
         self.lr = learning_rate
         self.hr = hidden_ratio
         self.n = n

@@ -1,1 +1,10 @@
 dataset/
+load_UGR16_faac/
+load_cic2017_faac/
+load_cic2018_faac/
+MAEGAN/load_UGR16_faac/
+MAEGAN/load_cic2017_faac/
+MAEGAN/load_cic2018_faac/
+MAEGAN-AE/load_UGR16_faac/
+MAEGAN-AE/load_cic2017_faac/
+MAEGAN-AE/load_cic2018_faac/

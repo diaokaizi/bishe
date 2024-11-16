@@ -155,24 +155,31 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 #     return (x_train, y_train), (x_test, y_test)
 
 def main(opt):
-
+    if type(opt.seed) is int:
+        torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # (x_train, y_train), (x_test, y_test) = load_UNSW()
-    model = "MAEGAN"
-    # (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
-    # filepath = "load_UGR16_faac"
-    (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
-    filepath = "load_cic2017_faac"
-    
-    # from sklearn.svm import OneClassSVM
-    # iof = OneClassSVM()
-    # iof=iof.fit(x_train)
-    # score=-iof.decision_function(x_test) #值越低越不正常
-    maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
+    if opt.dataset == "ugr16":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+        filepath = "load_UGR16_faac"
+        # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+    elif opt.dataset == "cic2017":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+        filepath = "load_cic2017_faac"
+        # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
+    elif opt.dataset == "cic2018":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+        filepath = "load_cic2018_faac"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
 
     print("Running KitNET:")
     maegan.train(x_train)
-    score = maegan.test(x_test, y_test)
+    score, _ = maegan.test(x_test, y_test)
     report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
 
 
@@ -182,18 +189,22 @@ def main_itertools(opt):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     
     # 加载数据
-    (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
-    filepath = "load_cic2017_faac"
+    # (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+    # filepath = "load_cic2017_faac"
+    # (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+    # filepath = "load_cic2018_faac"
+    (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+    filepath = "load_UGR16_faac"
     model = "MAEGAN"
     
     # 定义输出文件夹和文件路径
-    output_dir = "/root/bishe/results/load_cic2017_faac/MAEGAN/"
+    output_dir = f"/root/bishe/results/{filepath}/MAEGAN/"
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, "itertoolsresults.txt")
     
     # 定义参数范围
-    maxAE_values = [3, 5, 10, 15]
-    minAE_values = [1, 3, 5, 10]
+    maxAE_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+    minAE_values = [1]
     batch_sizes = [4, 8, 16]
     # 初始化结果存储
     best_params = None
@@ -203,7 +214,7 @@ def main_itertools(opt):
     # 打开文件准备写入
     with open(output_file, "w") as f:
         # 遍历所有参数组合
-        for maxAE, minAE, batch_size in itertools.product(maxAE_values, minAE_values, batch_sizes):
+        for batch_size, maxAE, minAE in itertools.product(batch_sizes, maxAE_values, minAE_values):
             if type(opt.seed) is int:
                 torch.manual_seed(opt.seed)
             print(f"Testing with maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}")
@@ -214,10 +225,10 @@ def main_itertools(opt):
             maegan = MAEGAN(opt, input_dim=x_train.shape[1], maxAE=maxAE, minAE=minAE, filepath=filepath, batch_size=batch_size)
             
             # 训练模型
-            maegan.train(x_train)
+            train_time = maegan.train(x_train)
             
             # 测试模型
-            score = maegan.test(x_test, y_test)
+            score, test_time = maegan.test(x_test, y_test)
             
             # 计算评估指标
             f1, result_str = report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
@@ -228,6 +239,7 @@ def main_itertools(opt):
             # 写入当前组合结果到文件
             f.write(f"maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}, f1={f1:.4f}\n")
             f.write(f"{result_str}\n")
+            f.write(f"train_time={train_time}, test_time={test_time}\n")
             
             # 更新最佳参数
             if f1 > best_score:
@@ -257,13 +269,13 @@ Licensed under MIT
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--n_epochs", type=int, default=30,
+    parser.add_argument("--n_epochs", type=int, default=10,
                         help="number of epochs of training")
-    parser.add_argument("--batch_size", type=int, default=4,
+    parser.add_argument("--batch_size", type=int, default=64,
                         help="size of the batches")
     parser.add_argument("--lr", type=float, default=0.0001,
                         help="adam: learning rate")
-    parser.add_argument("--b1", type=float, default=0.99,
+    parser.add_argument("--b1", type=float, default=0.5,
                         help="adam: decay of first order momentum of gradient")
     parser.add_argument("--b2", type=float, default=0.99,
                         help="adam: decay of first order momentum of gradient")
@@ -272,6 +284,10 @@ if __name__ == "__main__":
                              "discriminator per iter")
     parser.add_argument("--seed", type=int, default=42,
                         help="value of a random seed")
+    parser.add_argument("--dataset", type=str, default="ugr16",
+                        help="value of a random seed")
     opt = parser.parse_args()
 
-    main_itertools(opt)
+    # main_itertools(opt)
+    main(opt)
+
