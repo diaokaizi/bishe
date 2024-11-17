@@ -160,11 +160,13 @@ def main(opt):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     # (x_train, y_train), (x_test, y_test) = load_UNSW()
     if opt.dataset == "ugr16":
-        model = "MAEGAN"
         (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
         filepath = "load_UGR16_faac"
-        # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
         maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+        # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=1, minAE=1, filepath=filepath, batch_size=4)
+        # model = "f-anogan"
+        # opt.n_epochs = 14
+        # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=1, minAE=1, filepath=filepath, batch_size=3)
     elif opt.dataset == "cic2017":
         model = "MAEGAN"
         (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
@@ -176,6 +178,11 @@ def main(opt):
         (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
         filepath = "load_cic2018_faac"
         maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
+    elif opt.dataset == "ugr16-2":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT()
+        filepath = "load_UGR16_DyGAT"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
 
     print("Running KitNET:")
     maegan.train(x_train)
@@ -275,7 +282,7 @@ if __name__ == "__main__":
                         help="size of the batches")
     parser.add_argument("--lr", type=float, default=0.0001,
                         help="adam: learning rate")
-    parser.add_argument("--b1", type=float, default=0.5,
+    parser.add_argument("--b1", type=float, default=0.99,
                         help="adam: decay of first order momentum of gradient")
     parser.add_argument("--b2", type=float, default=0.99,
                         help="adam: decay of first order momentum of gradient")

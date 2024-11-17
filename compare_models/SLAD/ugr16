@@ -1,0 +1,4 @@
+config: 0.6957831325301205
+f1: 0.6957831325301205, traintime: 8.74, testtime:8.74  str: auc_score:0.8667,acc:0.8315,pre0.7804,rec:0.6277, f1:0.6958
+config: 0.6896551724137931
+f1: 0.6896551724137931, traintime: 17.04, testtime:17.04  str: auc_score:0.8648,acc:0.8198,pre0.7317,rec:0.6522, f1:0.6897

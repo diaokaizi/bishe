@@ -11,7 +11,7 @@ Licensed under MIT
 
 
 class Generator(nn.Module):
-    def __init__(self, input_dim, latent_dim, num_blocks=2):
+    def __init__(self, input_dim, latent_dim, num_blocks=3):
         super().__init__()
         self.input_dim = input_dim
         self.latent_dim = latent_dim
@@ -57,7 +57,7 @@ class Generator(nn.Module):
 
 
 class Discriminator(nn.Module):
-    def __init__(self, input_dim, num_blocks=2, min_dim=1):
+    def __init__(self, input_dim, num_blocks=3, min_dim=1):
         super().__init__()
         self.input_dim = input_dim
         

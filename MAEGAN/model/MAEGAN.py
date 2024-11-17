@@ -52,8 +52,8 @@ class MAEGAN:
         self.train_encoder_izif(train_dataloader, "cpu")
         end_time = time.time()  # 记录结束时间
         epoch_duration = (end_time - start_time) * 1000  # 计算该 epoch 的时间并转换为毫秒
-        print(f'Average Training Time per Epoch: {epoch_duration/self.opt.n_epochs:.2f} ms')
-        return f"{epoch_duration/self.opt.n_epochs:.2f}"
+        print(f'Average Training Time per Epoch: {epoch_duration:.2f} ms')
+        return f"{epoch_duration:.2f}"
 
 
     def test(self, data, label):

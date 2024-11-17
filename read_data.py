@@ -38,6 +38,20 @@ def load_UGR16_faac():
     x_test = minmax_scaler.transform(x_test)  # 使用相同的缩放器进行转换
     return (x_train, y_train), (x_test, y_test)
 
+
+def load_UGR16_DyGAT():
+    seq_len = 5
+    data = torch.load("/root/GCN/DyGCN/data/data/ugr16/model-DGC5-withoutFA.pt").detach().cpu().numpy()
+    labels = np.load("/root/GCN/DyGCN/data/data/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+
+
 def load_cic2017_faac():
     df = pd.read_csv("data/cic2017.csv")
     # label_background,label_DoS_Hulk,label_DDoS,label_PortScan,label_other
