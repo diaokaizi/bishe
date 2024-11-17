@@ -1,0 +1,182 @@
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.717249218527991, traintime: 9.22, testtime:9.22  str: auc_score:0.7392,acc:0.6975,pre0.6232,rec:0.8447, f1:0.7172
+config: {'lr': 0.0005, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.9847581179589132, traintime: 9.63, testtime:9.63  str: auc_score:0.9902,acc:0.9860,pre0.9751,rec:0.9946, f1:0.9848
+config: {'lr': 0.0005, 'hidden_dims': 100, 'epochs': 150}
+f1: 0.9325357261548687, traintime: 12.46, testtime:12.46  str: auc_score:0.9673,acc:0.9383,pre0.9261,rec:0.9391, f1:0.9325
+config: {'lr': 0.005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.6269986893840105, traintime: 9.07, testtime:9.07  str: auc_score:0.5774,acc:0.5673,pre0.5153,rec:0.8005, f1:0.6270
+config: {'lr': 0.005, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.6420631391729658, traintime: 9.44, testtime:9.44  str: auc_score:0.3485,acc:0.5105,pre0.4807,rec:0.9665, f1:0.6421
+config: {'lr': 0.005, 'hidden_dims': 100, 'epochs': 150}
+f1: 0.6868857062622858, traintime: 13.21, testtime:13.21  str: auc_score:0.6886,acc:0.6610,pre0.5917,rec:0.8186, f1:0.6869
+config: {'lr': 0.05, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.6258009397693294, traintime: 9.22, testtime:9.22  str: auc_score:0.3498,acc:0.4673,pre0.4595,rec:0.9806, f1:0.6258
+config: {'lr': 0.05, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.7596710325921413, traintime: 9.42, testtime:9.42  str: auc_score:0.8028,acc:0.7601,pre0.6970,rec:0.8347, f1:0.7597
+config: {'lr': 0.05, 'hidden_dims': 100, 'epochs': 150}
+f1: 0.6089902868759882, traintime: 13.79, testtime:13.79  str: auc_score:0.3067,acc:0.4737,pre0.4596,rec:0.9023, f1:0.6090
+config: {'lr': 5, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.0, traintime: 9.28, testtime:9.28  str: auc_score:0.5000,acc:0.5458,pre0.0000,rec:0.0000, f1:0.0000
+config: {'lr': 5, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.0, traintime: 9.57, testtime:9.57  str: auc_score:0.5000,acc:0.5458,pre0.0000,rec:0.0000, f1:0.0000
+config: {'lr': 5, 'hidden_dims': 100, 'epochs': 150}
+f1: 0.0, traintime: 14.80, testtime:14.80  str: auc_score:0.4994,acc:0.5458,pre0.0000,rec:0.0000, f1:0.0000
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.717249218527991, traintime: 9.26, testtime:9.26  str: auc_score:0.7392,acc:0.6975,pre0.6232,rec:0.8447, f1:0.7172
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.717249218527991, traintime: 9.10, testtime:9.10  str: auc_score:0.7392,acc:0.6975,pre0.6232,rec:0.8447, f1:0.7172
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.717249218527991, traintime: 9.25, testtime:9.25  str: auc_score:0.7392,acc:0.6975,pre0.6232,rec:0.8447, f1:0.7172
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.6563467492260062, traintime: 1.01, testtime:1.01  str: auc_score:0.7838,acc:0.8148,pre0.7626,rec:0.5761, f1:0.6563
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 250}
+f1: 0.5756240822320118, traintime: 1.80, testtime:1.80  str: auc_score:0.7358,acc:0.7590,pre0.6262,rec:0.5326, f1:0.5756
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 200}
+f1: 0.6011904761904762, traintime: 1.33, testtime:1.33  str: auc_score:0.7541,acc:0.7765,pre0.6645,rec:0.5489, f1:0.6012
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.6563467492260062, traintime: 1.11, testtime:1.11  str: auc_score:0.7838,acc:0.8148,pre0.7626,rec:0.5761, f1:0.6563
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.717249218527991, traintime: 9.04, testtime:9.04  str: auc_score:0.7392,acc:0.6975,pre0.6232,rec:0.8447, f1:0.7172
+config: {'lr': 0.001, 'hidden_dims': 3, 'epochs': 150}
+f1: 0.6099099099099099, traintime: 9.34, testtime:9.34  str: auc_score:0.4373,acc:0.4734,pre0.4596,rec:0.9063, f1:0.6099
+config: {'lr': 0.001, 'hidden_dims': 30, 'epochs': 150}
+f1: 0.9046679815910585, traintime: 10.32, testtime:10.32  str: auc_score:0.9504,acc:0.9118,pre0.8889,rec:0.9210, f1:0.9047
+config: {'lr': 0.001, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.8808757244043787, traintime: 9.67, testtime:9.67  str: auc_score:0.9265,acc:0.8875,pre0.8486,rec:0.9157, f1:0.8809
+config: {'lr': 0.001, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.6436681222707423, traintime: 9.37, testtime:9.37  str: auc_score:0.3739,acc:0.5038,pre0.4776,rec:0.9866, f1:0.6437
+config: {'lr': 0.001, 'hidden_dims': 13, 'epochs': 150}
+f1: 0.9653579676674365, traintime: 9.30, testtime:9.30  str: auc_score:0.9803,acc:0.9681,pre0.9519,rec:0.9793, f1:0.9654
+config: {'lr': 0.001, 'hidden_dims': 14, 'epochs': 150}
+f1: 0.8067436778020606, traintime: 9.42, testtime:9.42  str: auc_score:0.8657,acc:0.8118,pre0.7560,rec:0.8648, f1:0.8067
+config: {'lr': 0.01, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.6270549553781118, traintime: 9.69, testtime:9.69  str: auc_score:0.5033,acc:0.5172,pre0.4830,rec:0.8936, f1:0.6271
+config: {'lr': 0.01, 'hidden_dims': 20, 'epochs': 150}
+f1: 0.528488111260655, traintime: 10.35, testtime:10.35  str: auc_score:0.6792,acc:0.6804,pre0.8014,rec:0.3942, f1:0.5285
+config: {'lr': 0.01, 'hidden_dims': 30, 'epochs': 150}
+f1: 0.6001644286105783, traintime: 10.61, testtime:10.61  str: auc_score:0.5641,acc:0.5564,pre0.5081,rec:0.7329, f1:0.6002
+config: {'lr': 0.001, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.6436681222707423, traintime: 9.69, testtime:9.69  str: auc_score:0.3739,acc:0.5038,pre0.4776,rec:0.9866, f1:0.6437
+config: {'lr': 0.001, 'hidden_dims': 20, 'epochs': 150}
+f1: 0.9284558109420524, traintime: 10.55, testtime:10.55  str: auc_score:0.9603,acc:0.9328,pre0.8991,rec:0.9598, f1:0.9285
+config: {'lr': 0.001, 'hidden_dims': 30, 'epochs': 150}
+f1: 0.9046679815910585, traintime: 10.41, testtime:10.41  str: auc_score:0.9504,acc:0.9118,pre0.8889,rec:0.9210, f1:0.9047
+config: {'lr': 0.0001, 'hidden_dims': 10, 'epochs': 150}
+f1: 0.9789368104312939, traintime: 9.47, testtime:9.47  str: auc_score:0.9955,acc:0.9808,pre0.9780,rec:0.9799, f1:0.9789
+config: {'lr': 0.0001, 'hidden_dims': 20, 'epochs': 150}
+f1: 0.9953271028037384, traintime: 9.90, testtime:9.90  str: auc_score:0.9982,acc:0.9957,pre0.9927,rec:0.9980, f1:0.9953
+config: {'lr': 0.0001, 'hidden_dims': 30, 'epochs': 150}
+f1: 0.9896907216494846, traintime: 9.95, testtime:9.95  str: auc_score:0.9949,acc:0.9906,pre0.9835,rec:0.9960, f1:0.9897
+config: {'lr': 0.01, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.7668353444920203, traintime: 9.74, testtime:9.74  str: auc_score:0.8149,acc:0.8179,pre0.9163,rec:0.6593, f1:0.7668
+config: {'lr': 0.01, 'hidden_dims': 25, 'epochs': 150}
+f1: 0.7850585628363406, traintime: 10.25, testtime:10.25  str: auc_score:0.8338,acc:0.7936,pre0.7447,rec:0.8300, f1:0.7851
+config: {'lr': 0.01, 'hidden_dims': 35, 'epochs': 150}
+f1: 0.5846881466154301, traintime: 10.82, testtime:10.82  str: auc_score:0.5905,acc:0.5728,pre0.5236,rec:0.6620, f1:0.5847
+config: {'lr': 0.001, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.8808757244043787, traintime: 9.77, testtime:9.77  str: auc_score:0.9265,acc:0.8875,pre0.8486,rec:0.9157, f1:0.8809
+config: {'lr': 0.001, 'hidden_dims': 25, 'epochs': 150}
+f1: 0.9379310344827586, traintime: 10.32, testtime:10.32  str: auc_score:0.9679,acc:0.9425,pre0.9207,rec:0.9558, f1:0.9379
+config: {'lr': 0.001, 'hidden_dims': 35, 'epochs': 150}
+f1: 0.9345558014543155, traintime: 10.91, testtime:10.91  str: auc_score:0.9401,acc:0.9371,pre0.8856,rec:0.9893, f1:0.9346
+config: {'lr': 0.0001, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.994988306047444, traintime: 9.56, testtime:9.56  str: auc_score:0.9963,acc:0.9954,pre0.9933,rec:0.9967, f1:0.9950
+config: {'lr': 0.0001, 'hidden_dims': 25, 'epochs': 150}
+f1: 0.9913448735019973, traintime: 10.02, testtime:10.02  str: auc_score:0.9971,acc:0.9921,pre0.9861,rec:0.9967, f1:0.9913
+config: {'lr': 0.0001, 'hidden_dims': 35, 'epochs': 150}
+f1: 0.9893687707641196, traintime: 10.62, testtime:10.62  str: auc_score:0.9957,acc:0.9903,pre0.9822,rec:0.9967, f1:0.9894
+config: {'lr': 0.05, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.6267650158061117, traintime: 9.57, testtime:9.57  str: auc_score:0.2650,acc:0.4615,pre0.4574,rec:0.9953, f1:0.6268
+config: {'lr': 0.05, 'hidden_dims': 25, 'epochs': 150}
+f1: 0.0, traintime: 10.55, testtime:10.55  str: auc_score:0.5000,acc:0.5458,pre0.0000,rec:0.0000, f1:0.0000
+config: {'lr': 0.05, 'hidden_dims': 35, 'epochs': 150}
+f1: 0.004002668445630421, traintime: 11.03, testtime:11.03  str: auc_score:0.1082,acc:0.5461,pre0.6000,rec:0.0020, f1:0.0040
+config: {'lr': 0.005, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.6327193932827736, traintime: 9.60, testtime:9.60  str: auc_score:0.2856,acc:0.4846,pre0.4678,rec:0.9772, f1:0.6327
+config: {'lr': 0.005, 'hidden_dims': 25, 'epochs': 150}
+f1: 0.9008234872896527, traintime: 10.41, testtime:10.41  str: auc_score:0.9115,acc:0.9158,pre0.9684,rec:0.8420, f1:0.9008
+config: {'lr': 0.005, 'hidden_dims': 35, 'epochs': 150}
+f1: 0.8181818181818182, traintime: 10.79, testtime:10.79  str: auc_score:0.8889,acc:0.8468,pre0.8873,rec:0.7590, f1:0.8182
+config: {'lr': 0.0005, 'hidden_dims': 15, 'epochs': 150}
+f1: 0.978905735003296, traintime: 9.57, testtime:9.57  str: auc_score:0.9840,acc:0.9805,pre0.9643,rec:0.9940, f1:0.9789
+config: {'lr': 0.0005, 'hidden_dims': 25, 'epochs': 150}
+f1: 0.9735799207397622, traintime: 10.51, testtime:10.51  str: auc_score:0.9813,acc:0.9757,pre0.9609,rec:0.9866, f1:0.9736
+config: {'lr': 0.0005, 'hidden_dims': 35, 'epochs': 150}
+f1: 0.9763313609467456, traintime: 11.49, testtime:11.49  str: auc_score:0.9814,acc:0.9781,pre0.9593,rec:0.9940, f1:0.9763
+config: {'lr': 0.01, 'hidden_dims': 45, 'epochs': 150}
+f1: 0.7231287231287231, traintime: 11.29, testtime:11.29  str: auc_score:0.7813,acc:0.6750,pre0.5898,rec:0.9344, f1:0.7231
+config: {'lr': 0.01, 'hidden_dims': 50, 'epochs': 150}
+f1: 0.4993197278911565, traintime: 11.62, testtime:11.62  str: auc_score:0.5552,acc:0.5524,pre0.5076,rec:0.4913, f1:0.4993
+config: {'lr': 0.01, 'hidden_dims': 55, 'epochs': 150}
+f1: 0.5802506878630388, traintime: 11.81, testtime:11.81  str: auc_score:0.5957,acc:0.5825,pre0.5340,rec:0.6352, f1:0.5803
+config: {'lr': 0.01, 'hidden_dims': 60, 'epochs': 150}
+f1: 0.624816907302783, traintime: 11.81, testtime:11.81  str: auc_score:0.1203,acc:0.4548,pre0.4545,rec:0.9993, f1:0.6248
+config: {'lr': 0.01, 'hidden_dims': 65, 'epochs': 150}
+f1: 0.6254728877679697, traintime: 12.09, testtime:12.09  str: auc_score:0.2737,acc:0.4582,pre0.4559,rec:0.9960, f1:0.6255
+config: {'lr': 0.01, 'hidden_dims': 75, 'epochs': 150}
+f1: 0.7362385321100917, traintime: 12.61, testtime:12.61  str: auc_score:0.7590,acc:0.7203,pre0.6439,rec:0.8594, f1:0.7362
+config: {'lr': 0.001, 'hidden_dims': 45, 'epochs': 150}
+f1: 0.9818061528283163, traintime: 11.31, testtime:11.31  str: auc_score:0.9932,acc:0.9833,pre0.9706,rec:0.9933, f1:0.9818
+config: {'lr': 0.001, 'hidden_dims': 50, 'epochs': 150}
+f1: 0.9706378670266622, traintime: 11.39, testtime:11.39  str: auc_score:0.9920,acc:0.9735,pre0.9789,rec:0.9625, f1:0.9706
+config: {'lr': 0.001, 'hidden_dims': 55, 'epochs': 150}
+f1: 0.8972081218274112, traintime: 11.58, testtime:11.58  str: auc_score:0.9549,acc:0.9015,pre0.8528,rec:0.9465, f1:0.8972
+config: {'lr': 0.001, 'hidden_dims': 60, 'epochs': 150}
+f1: 0.9854208084824387, traintime: 11.31, testtime:11.31  str: auc_score:0.9957,acc:0.9866,pre0.9757,rec:0.9953, f1:0.9854
+config: {'lr': 0.001, 'hidden_dims': 65, 'epochs': 150}
+f1: 0.7785932721712538, traintime: 11.99, testtime:11.99  str: auc_score:0.8637,acc:0.7799,pre0.7168,rec:0.8521, f1:0.7786
+config: {'lr': 0.001, 'hidden_dims': 75, 'epochs': 150}
+f1: 0.9856809856809857, traintime: 12.02, testtime:12.02  str: auc_score:0.9958,acc:0.9869,pre0.9808,rec:0.9906, f1:0.9857
+config: {'lr': 0.0001, 'hidden_dims': 45, 'epochs': 150}
+f1: 0.9859906604402935, traintime: 10.57, testtime:10.57  str: auc_score:0.9926,acc:0.9872,pre0.9827,rec:0.9893, f1:0.9860
+config: {'lr': 0.0001, 'hidden_dims': 50, 'epochs': 150}
+f1: 0.9837587006960556, traintime: 10.79, testtime:10.79  str: auc_score:0.9923,acc:0.9851,pre0.9744,rec:0.9933, f1:0.9838
+config: {'lr': 0.0001, 'hidden_dims': 55, 'epochs': 150}
+f1: 0.9870818151705862, traintime: 11.37, testtime:11.37  str: auc_score:0.9939,acc:0.9881,pre0.9770,rec:0.9973, f1:0.9871
+config: {'lr': 0.0001, 'hidden_dims': 60, 'epochs': 150}
+f1: 0.9863742107012297, traintime: 10.79, testtime:10.79  str: auc_score:0.9916,acc:0.9875,pre0.9795,rec:0.9933, f1:0.9864
+config: {'lr': 0.0001, 'hidden_dims': 65, 'epochs': 150}
+f1: 0.9844422376696458, traintime: 10.65, testtime:10.65  str: auc_score:0.9892,acc:0.9857,pre0.9738,rec:0.9953, f1:0.9844
+config: {'lr': 0.0001, 'hidden_dims': 75, 'epochs': 150}
+f1: 0.9773399014778326, traintime: 11.28, testtime:11.28  str: auc_score:0.9856,acc:0.9790,pre0.9594,rec:0.9960, f1:0.9773
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 20}
+f1: 0.8131032465633226, traintime: 1.54, testtime:1.54  str: auc_score:0.8247,acc:0.8057,pre0.7221,rec:0.9304, f1:0.8131
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 40}
+f1: 0.8227699530516432, traintime: 2.98, testtime:2.98  str: auc_score:0.8467,acc:0.8164,pre0.7325,rec:0.9384, f1:0.8228
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 50}
+f1: 0.8384819064430715, traintime: 3.76, testtime:3.76  str: auc_score:0.8712,acc:0.8331,pre0.7480,rec:0.9538, f1:0.8385
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 80}
+f1: 0.8970727101038716, traintime: 6.07, testtime:6.07  str: auc_score:0.9303,acc:0.9006,pre0.8467,rec:0.9538, f1:0.8971
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 60}
+f1: 0.856353591160221, traintime: 4.47, testtime:4.47  str: auc_score:0.8952,acc:0.8577,pre0.7908,rec:0.9337, f1:0.8564
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 60}
+f1: 0.856353591160221, traintime: 4.40, testtime:4.40  str: auc_score:0.8952,acc:0.8577,pre0.7908,rec:0.9337, f1:0.8564
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 65}
+f1: 0.8699661850599447, traintime: 4.81, testtime:4.81  str: auc_score:0.9059,acc:0.8714,pre0.8044,rec:0.9471, f1:0.8700
+config: {'lr': 1e-05, 'hidden_dims': 80, 'epochs': 70}
+f1: 0.8804755944931164, traintime: 5.05, testtime:5.05  str: auc_score:0.9157,acc:0.8839,pre0.8267,rec:0.9418, f1:0.8805
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 60}
+f1: 0.8679475449832266, traintime: 4.55, testtime:4.55  str: auc_score:0.9012,acc:0.8683,pre0.7972,rec:0.9525, f1:0.8679
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 65}
+f1: 0.8791072535647861, traintime: 4.88, testtime:4.88  str: auc_score:0.9104,acc:0.8814,pre0.8187,rec:0.9491, f1:0.8791
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 70}
+f1: 0.8875739644970414, traintime: 5.27, testtime:5.27  str: auc_score:0.9175,acc:0.8902,pre0.8299,rec:0.9538, f1:0.8876
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 60}
+f1: 0.8679475449832266, traintime: 4.43, testtime:4.43  str: auc_score:0.9012,acc:0.8683,pre0.7972,rec:0.9525, f1:0.8679
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 160}
+f1: 0.6448598130841121, traintime: 1.06, testtime:1.06  str: auc_score:0.7767,acc:0.8098,pre0.7555,rec:0.5625, f1:0.6449
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 100}
+f1: 0.6929824561403509, traintime: 0.69, testtime:0.69  str: auc_score:0.8264,acc:0.8249,pre0.7500,rec:0.6440, f1:0.6930
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 140}
+f1: 0.6646153846153846, traintime: 0.95, testtime:0.95  str: auc_score:0.7922,acc:0.8182,pre0.7660,rec:0.5870, f1:0.6646
+config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 135}
+f1: 0.6716867469879518, traintime: 0.89, testtime:0.89  str: auc_score:0.7954,acc:0.8182,pre0.7534,rec:0.6060, f1:0.6717
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 70}
+f1: 0.8875739644970414, traintime: 5.18, testtime:5.18  str: auc_score:0.9175,acc:0.8902,pre0.8299,rec:0.9538, f1:0.8876
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 65}
+f1: 0.8791072535647861, traintime: 4.63, testtime:4.63  str: auc_score:0.9104,acc:0.8814,pre0.8187,rec:0.9491, f1:0.8791
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 64}
+f1: 0.8760589896454346, traintime: 4.91, testtime:4.91  str: auc_score:0.9087,acc:0.8799,pre0.8246,rec:0.9344, f1:0.8761
+config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 64}
+f1: 0.8760589896454346, traintime: 4.83, testtime:4.83  str: auc_score:0.9087,acc:0.8799,pre0.8246,rec:0.9344, f1:0.8761

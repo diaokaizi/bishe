@@ -19,8 +19,10 @@ from itertools import product
 
 # 准备数据
 
-model_name = "SLAD"
+model_name = "DeepSVDD"
 
+# config: {'lr': 0.0005, 'hidden_dims': 3, 'epochs': 150}
+# f1: 0.6563467492260062, traintime: 1.02, testtime:1.02  str: auc_score:0.7838,acc:0.8148,pre0.7626,rec:0.5761, f1:0.6563
 # (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
 # filepath = "load_cic2017_faac"
 # (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
@@ -28,31 +30,25 @@ model_name = "SLAD"
 
 
 module = imp.import_module('deepod.models.tabular')
-model_class = getattr(module, "SLAD")
+model_class = getattr(module, "DeepSVDD")
 # (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
 # filepath = "load_UGR16_faac"
-# lr_values = [0.0001]
-# hidden_dims_values = [80]
-# epochs_values = [100]
-# ugr16
-# config: {'lr': 0.0001, 'hidden_dims': 60, 'epochs': 100}
-# f1: 0.6799007444168734, traintime: 18.31, testtime:18.31  str: auc_score:0.8641,acc:0.7848,pre0.6256,rec:0.7446, f1:0.6799
-# cic2018
-
+# lr_values = [0.0005]
+# hidden_dims_values = [3]
+# epochs_values = [135]
 (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
 filepath = "load_cic2018_faac"
-lr_values = [0.0001]
-hidden_dims_values = [40]
-epochs_values = [60]
-# config: {'lr': 0.0001, 'hidden_dims': 40, 'epochs': 50}
-# f1: 0.8632218844984804, traintime: 19.37, testtime:19.37  str: auc_score:0.8992,acc:0.8632,pre0.7906,rec:0.9505, f1:0.8632
+lr_values = [1e-05]
+hidden_dims_values = [100]
+epochs_values = [64]
+# config: {'lr': 1e-05, 'hidden_dims': 100, 'epochs': 60}
+# f1: 0.8679475449832266, traintime: 4.55, testtime:4.55  str: auc_score:0.9012,acc:0.8683,pre0.7972,rec:0.9525, f1:0.8679
 hyperparameter_grid = list(product(lr_values, hidden_dims_values, epochs_values))
 for config_idx, (lr, hidden_dims, epochs) in enumerate(hyperparameter_grid):
     model_configs = {
         'lr': lr,
         'hidden_dims': hidden_dims,
-        'epochs': epochs,
-        "n_unified_features":3
+        'epochs': epochs
     }
     clf = model_class(**model_configs, random_state=42, device="cpu")
 
@@ -66,7 +62,7 @@ for config_idx, (lr, hidden_dims, epochs) in enumerate(hyperparameter_grid):
     testing_time_cost = end_time - start_time
     print(f"Testing Time Cost: {testing_time_cost:.2f} seconds")
     f1, str = report_result.report_result(model=model_name, name=filepath, anomaly_score=score, labels=y_test)
-    with open("/root/bishe/compare_models/SLAD/ugr16", 'a') as f:
+    with open("/root/bishe/compare_models/DeepSVDD/cic2018", 'a') as f:
         f.write(f"config: {model_configs}\n")
         f.write(f"f1: {f1}, traintime: {epoch_duration:.2f}, testtime:{testing_time_cost:.2f}  str: {str}\n")
     

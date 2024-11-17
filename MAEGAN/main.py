@@ -177,7 +177,9 @@ def main(opt):
         model = "MAEGAN"
         (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
         filepath = "load_cic2018_faac"
-        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=8)
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+        # model = "f-anogan"
+        # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=1, minAE=1, filepath=filepath, batch_size=4)
     elif opt.dataset == "ugr16-2":
         model = "MAEGAN"
         (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT()
