@@ -180,19 +180,54 @@ def main(opt):
         maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
         # model = "f-anogan"
         # maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=1, minAE=1, filepath=filepath, batch_size=4)
-    elif opt.dataset == "ugr16-2":
-        model = "MAEGAN"
-        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT()
-        filepath = "load_UGR16_DyGAT"
-        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
 
     print("Running KitNET:")
     maegan.train(x_train)
     score, _ = maegan.test(x_test, y_test)
     report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
 
+def main_for_gcn(opt):
+    if type(opt.seed) is int:
+        torch.manual_seed(opt.seed)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # (x_train, y_train), (x_test, y_test) = load_UNSW()
+    if opt.dataset == "ugr16v2":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT()
+        filepath = "load_UGR16_DyGAT"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+    elif opt.dataset == "ugr16v2-1":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT_withoutFA()
+        filepath = "load_UGR16_DyGAT_withoutFA"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+    elif opt.dataset == "ugr16v2-2":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT_withoutDY()
+        filepath = "load_UGR16_DyGAT_withoutDY"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=10, minAE=1, filepath=filepath, batch_size=4)
+    elif opt.dataset == "cic2018v2":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_CIC2018_DyGAT()
+        filepath = "load_cic2018_DyGAT"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=8, minAE=1, filepath=filepath, batch_size=16)
+    elif opt.dataset == "cic2018v2-1":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_DyGAT_withoutFA()
+        filepath = "load_cic2018_DyGAT_withoutFA"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=4, minAE=1, filepath=filepath, batch_size=16)
+    elif opt.dataset == "cic2018v2-2":
+        model = "MAEGAN"
+        (x_train, y_train), (x_test, y_test) = read_data.load_CIC2018_DyGAT_withoutDY()
+        filepath = "load_cic2018_DyGAT_withoutDY"
+        maegan = MAEGAN(opt, input_dim = x_train.shape[1], maxAE=8, minAE=1, filepath=filepath, batch_size=16)
 
-def main_itertools(opt):
+    print("Running KitNET:")
+    maegan.train(x_train)
+    score, _ = maegan.test(x_test, y_test)
+    report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
+
+def main_itertools_for_gcn(opt):
     if type(opt.seed) is int:
         torch.manual_seed(opt.seed)
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -202,8 +237,8 @@ def main_itertools(opt):
     # filepath = "load_cic2017_faac"
     # (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
     # filepath = "load_cic2018_faac"
-    (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
-    filepath = "load_UGR16_faac"
+    (x_train, y_train), (x_test, y_test) = read_data.load_CIC2018_DyGAT()
+    filepath = "load_cic2018_DyGAT"
     model = "MAEGAN"
     
     # 定义输出文件夹和文件路径
@@ -212,7 +247,7 @@ def main_itertools(opt):
     output_file = os.path.join(output_dir, "itertoolsresults.txt")
     
     # 定义参数范围
-    maxAE_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+    maxAE_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     minAE_values = [1]
     batch_sizes = [4, 8, 16]
     # 初始化结果存储
@@ -265,6 +300,79 @@ def main_itertools(opt):
 
     return results, best_params, best_score
 
+# def main_itertools(opt):
+#     if type(opt.seed) is int:
+#         torch.manual_seed(opt.seed)
+#     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    
+#     # 加载数据
+#     # (x_train, y_train), (x_test, y_test) = read_data.load_cic2017_faac()
+#     # filepath = "load_cic2017_faac"
+#     # (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+#     # filepath = "load_cic2018_faac"
+#     (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+#     filepath = "load_UGR16_faac"
+#     model = "MAEGAN"
+    
+#     # 定义输出文件夹和文件路径
+#     output_dir = f"/root/bishe/results/{filepath}/MAEGAN/"
+#     os.makedirs(output_dir, exist_ok=True)
+#     output_file = os.path.join(output_dir, "itertoolsresults.txt")
+    
+#     # 定义参数范围
+#     maxAE_values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+#     minAE_values = [1]
+#     batch_sizes = [4, 8, 16]
+#     # 初始化结果存储
+#     best_params = None
+#     best_score = 0
+#     results = []
+    
+#     # 打开文件准备写入
+#     with open(output_file, "w") as f:
+#         # 遍历所有参数组合
+#         for batch_size, maxAE, minAE in itertools.product(batch_sizes, maxAE_values, minAE_values):
+#             if type(opt.seed) is int:
+#                 torch.manual_seed(opt.seed)
+#             print(f"Testing with maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}")
+#             if minAE > maxAE:
+#                 continue
+            
+#             # 初始化模型
+#             maegan = MAEGAN(opt, input_dim=x_train.shape[1], maxAE=maxAE, minAE=minAE, filepath=filepath, batch_size=batch_size)
+            
+#             # 训练模型
+#             train_time = maegan.train(x_train)
+            
+#             # 测试模型
+#             score, test_time = maegan.test(x_test, y_test)
+            
+#             # 计算评估指标
+#             f1, result_str = report_result.report_result(model=model, name=filepath, anomaly_score=score, labels=y_test)
+            
+#             # 存储结果
+#             results.append((maxAE, minAE, batch_size, f1))
+            
+#             # 写入当前组合结果到文件
+#             f.write(f"maxAE={maxAE}, minAE={minAE}, batch_size={batch_size}, f1={f1:.4f}\n")
+#             f.write(f"{result_str}\n")
+#             f.write(f"train_time={train_time}, test_time={test_time}\n")
+            
+#             # 更新最佳参数
+#             if f1 > best_score:
+#                 best_score = f1
+#                 best_params = (maxAE, minAE, batch_size)
+        
+#         # 写入最佳参数到文件
+#         f.write("\nBest parameters found:\n")
+#         f.write(f"maxAE={best_params[0]}, minAE={best_params[1]}, batch_size={best_params[2]}, best accuracy={best_score:.4f}\n")
+    
+#     print("\nBest parameters found:")
+#     print(f"maxAE={best_params[0]}, minAE={best_params[1]}, batch_size={best_params[2]}")
+#     print(f"Best accuracy: {best_score}")
+
+#     return results, best_params, best_score
+
 
 
 """
@@ -298,5 +406,6 @@ if __name__ == "__main__":
     opt = parser.parse_args()
 
     # main_itertools(opt)
-    main(opt)
+    # main(opt)
+    main_itertools_for_gcn(opt)
 

@@ -10,6 +10,7 @@ import os
 import csv
 
 def report_result(model, name, labels, anomaly_score, fun="pr"):
+    labels=np.array(labels,dtype=np.float32)
     base_path = os.path.join("results", name, model)
     print(base_path)
     os.makedirs(base_path, exist_ok=True)

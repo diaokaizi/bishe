@@ -41,9 +41,64 @@ def load_UGR16_faac():
 
 def load_UGR16_DyGAT():
     seq_len = 5
-    data = torch.load("/root/GCN/DyGCN/data/data/ugr16/model-DGC5-withoutFA.pt").detach().cpu().numpy()
-    labels = np.load("/root/GCN/DyGCN/data/data/ugr16/labels.npy", allow_pickle=True)
+    data = torch.load("/vdb2/GCN/DyGCN/data/data/ugr16/model-DGC5.pt").detach().cpu().numpy()
+    labels = np.load("/vdb2/GCN/DyGCN/data/data/ugr16/labels.npy", allow_pickle=True)
     train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_UGR16_DyGAT_withoutFA():
+    seq_len = 5
+    data = torch.load("/vdb2/GCN/DyGCN/data/data/ugr16/model-DGC5-withoutFA.pt").detach().cpu().numpy()
+    labels = np.load("/vdb2/GCN/DyGCN/data/data/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_UGR16_DyGAT_withoutDY():
+    seq_len = 5
+    data = torch.load("/vdb2/GCN/DyGCN/data/data/ugr16/model-DGC5-withoutDY.pt").detach().cpu().numpy()
+    labels = np.load("/vdb2/GCN/DyGCN/data/data/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_DyGAT():
+    seq_len = 5
+    data = torch.load("/vdb2/GCN/DyGCN/data/data/cic2018/model-DGC5.pt").detach().cpu().numpy()
+    labels = np.load("/vdb2/GCN/DyGCN/data/data/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_DyGAT_withoutFA():
+    seq_len = 5
+    data = torch.load("/vdb2/GCN/DyGCN/data/data/cic2018/model-DGC5-withoutFA.pt").detach().cpu().numpy()
+    labels = np.load("/vdb2/GCN/DyGCN/data/data/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_DyGAT_withoutDY():
+    seq_len = 5
+    data = torch.load("/vdb2/GCN/DyGCN/data/data/cic2018/model-DGC5-withoutDY.pt").detach().cpu().numpy()
+    labels = np.load("/vdb2/GCN/DyGCN/data/data/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
     x_train = data[:train_len]     # 前500行为训练集特征
     x_test = data[train_len:]       # 前500行为训练集标签
     y_train=labels[:train_len]
