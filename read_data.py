@@ -169,3 +169,109 @@ def load_cic2018_faac():
     x_train = minmax_scaler.fit_transform(x_train)  # 仅在训练数据上拟合
     x_test = minmax_scaler.transform(x_test)  # 使用相同的缩放器进行转换
     return (x_train, y_train), (x_test, y_test)
+
+def load_UGR16_GCN_LSTM():
+    seq_len = 5
+    feat_list=np.load("/root/GCN/DyGCN/data/data/ugr16/feats.npy", allow_pickle=True)
+    feat_list_mean = feat_list.mean(axis=(1))[seq_len:]
+    data = torch.load("/root/bishe/gnn_result/GCN_LSTM/ugr16/graph_embs.pt").detach().cpu().numpy()[:,:10]
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/GCN_LSTM/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_UGR16_Evolve_GCN():
+    seq_len = 5
+    feat_list=np.load("/root/GCN/DyGCN/data/data/ugr16/feats.npy", allow_pickle=True)[seq_len:]
+    data = torch.load("/root/bishe/gnn_result/Evolve_GCN/ugr16/graph_embs.pt").detach().cpu().numpy()
+    feat_list_mean = feat_list.mean(axis=(1))
+    # data = np.concatenate([feat_list_mean, data], axis=1)
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/Evolve_GCN/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_UGR16_GCN():
+    feat_list=np.load("/root/GCN/DyGCN/data/data/ugr16/feats.npy", allow_pickle=True)
+    data = torch.load("/root/bishe/gnn_result/GCN/ugr16/graph_embs.pt").detach().cpu().numpy()[:, :10]
+    feat_list_mean = feat_list.mean(axis=(1))
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/GCN/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_UGR16_GAT():
+    data = torch.load("/root/bishe/gnn_result/GAT/ugr16/graph_embs.pt").detach().cpu().numpy()
+    labels = np.load("/root/bishe/gnn_result/GAT/ugr16/labels.npy", allow_pickle=True)
+    train_len=500
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_GCN_LSTM():
+    seq_len = 5
+    feat_list=np.load("/vdb2/GCN/DyGCN/data/data/cic2018/feats.npy", allow_pickle=True)[seq_len:]
+    feat_list_mean = feat_list.mean(axis=(1))
+    data = torch.load("/root/bishe/gnn_result/GCN_LSTM/cic2018/graph_embs.pt").detach().cpu().numpy()
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/GCN_LSTM/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_Evolve_GCN():
+    seq_len = 5
+    feat_list=np.load("/vdb2/GCN/DyGCN/data/data/cic2018/feats.npy", allow_pickle=True)[seq_len:]
+    feat_list_mean = feat_list.mean(axis=(1))
+    data = torch.load("/root/bishe/gnn_result/Evolve_GCN/cic2018/graph_embs.pt").detach().cpu().numpy()
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/Evolve_GCN/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len + seq_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_GCN():
+    feat_list=np.load("/vdb2/GCN/DyGCN/data/data/cic2018/feats.npy", allow_pickle=True)
+    feat_list_mean = feat_list.mean(axis=(1))[:, :50]
+    data = torch.load("/root/bishe/gnn_result/GCN/cic2018/graph_embs.pt").detach().cpu().numpy()
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/GCN/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len:]
+    return (x_train, y_train), (x_test, y_test)
+
+def load_CIC2018_GAT():
+    feat_list=np.load("/vdb2/GCN/DyGCN/data/data/cic2018/feats.npy", allow_pickle=True)
+    feat_list_mean = feat_list.mean(axis=(1))
+    data = torch.load("/root/bishe/gnn_result/GAT/cic2018/graph_embs.pt").detach().cpu().numpy()
+    data = np.concatenate([feat_list_mean, data], axis=1)
+    labels = np.load("/root/bishe/gnn_result/GAT/cic2018/labels.npy", allow_pickle=True)
+    train_len=4600
+    x_train = data[:train_len]     # 前500行为训练集特征
+    x_test = data[train_len:]       # 前500行为训练集标签
+    y_train=labels[:train_len]
+    y_test=labels[train_len:]
+    return (x_train, y_train), (x_test, y_test)

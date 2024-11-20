@@ -1,0 +1,33 @@
+maxAE=1, minAE=1, batch_size=16, f1=0.4119
+auc_score:0.4979,acc:0.7651,pre0.9151,rec:0.2658, f1:0.4119
+train_time=8525.62, test_time=3753.03
+maxAE=2, minAE=1, batch_size=16, f1=0.3447
+auc_score:0.4210,acc:0.7549,pre1.0000,rec:0.2082, f1:0.3447
+train_time=7130.35, test_time=2912.32
+maxAE=3, minAE=1, batch_size=16, f1=0.6470
+auc_score:0.8059,acc:0.7668,pre0.6087,rec:0.6904, f1:0.6470
+train_time=7040.57, test_time=2701.75
+maxAE=4, minAE=1, batch_size=16, f1=0.3761
+auc_score:0.4751,acc:0.7608,pre0.9770,rec:0.2329, f1:0.3761
+train_time=6572.18, test_time=2293.37
+maxAE=5, minAE=1, batch_size=16, f1=0.6469
+auc_score:0.8116,acc:0.7574,pre0.5888,rec:0.7178, f1:0.6469
+train_time=6299.58, test_time=2116.60
+maxAE=6, minAE=1, batch_size=16, f1=0.6532
+auc_score:0.7694,acc:0.7812,pre0.6412,rec:0.6658, f1:0.6532
+train_time=6109.69, test_time=1960.46
+maxAE=7, minAE=1, batch_size=16, f1=0.4970
+auc_score:0.5789,acc:0.7837,pre0.8873,rec:0.3452, f1:0.4970
+train_time=5806.94, test_time=1862.26
+maxAE=8, minAE=1, batch_size=16, f1=0.5104
+auc_score:0.5924,acc:0.7803,pre0.8232,rec:0.3699, f1:0.5104
+train_time=5926.55, test_time=1784.61
+maxAE=9, minAE=1, batch_size=16, f1=0.6562
+auc_score:0.7510,acc:0.8142,pre0.7684,rec:0.5726, f1:0.6562
+train_time=5669.05, test_time=1708.46
+maxAE=10, minAE=1, batch_size=16, f1=0.6694
+auc_score:0.8184,acc:0.7973,pre0.6760,rec:0.6630, f1:0.6694
+train_time=5593.04, test_time=1554.12
+
+Best parameters found:
+maxAE=10, minAE=1, batch_size=16, best accuracy=0.6694
