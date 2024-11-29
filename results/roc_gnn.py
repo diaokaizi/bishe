@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
 
 # 定义函数绘制ROC曲线
-def plot_roc_curve(file_paths):
-    plt.figure(figsize=(10, 8))
+def plot_roc_curve(plt, file_paths, name):
     
     for (model_name, file_path) in file_paths:
         print(file_path)
@@ -25,32 +24,36 @@ def plot_roc_curve(file_paths):
     
     # 图形美化
     plt.plot([0, 1], [0, 1], 'k--', lw=2)  # 对角线
-    plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.05])
-    plt.xlabel('False Positive Rate', fontsize=12)
-    plt.ylabel('True Positive Rate', fontsize=12)
-    plt.title('ROC Curve for Multiple Models', fontsize=14)
+    plt.set_xlim([0.0, 1.0])
+    plt.set_ylim([0.0, 1.05])
+    plt.set_xlabel('False Positive Rate', fontsize=12)
+    plt.set_ylabel('True Positive Rate', fontsize=12)
+    plt.set_title(f'ROC Curve for {name}', fontsize=14)
     plt.legend(loc='lower right', fontsize=10)
     plt.grid()
-    plt.savefig("roc.png")
 
 # 定义文件路径列表（将以下文件路径替换为实际路径）
-# file_paths = [
-#     ('FAAC', '/root/bishe/results/load_UGR16_faac/MAEGAN/labels_anomaly_scores.csv'),
-#     ('GCN', '/root/bishe/results/load_UGR16_GCN/MAEGAN/labels_anomaly_scores.csv'),
-#     ('GAT', '/root/bishe/results/load_UGR16_GAT/MAEGAN/labels_anomaly_scores.csv'),
-#     ('GCN-LSTM', '/root/bishe/results/load_UGR16_GCN_LSTM/MAEGAN/labels_anomaly_scores.csv'),
-#     ('Evolve_GCN', '/root/bishe/results/load_UGR16_Evolve_GCN/MAEGAN/labels_anomaly_scores.csv'),
-#     ('FG-DyGAT', '/root/bishe/results/load_UGR16_DyGAT/MAEGAN/labels_anomaly_scores.csv'),
-# ]
-file_paths = [
+file_paths_ugr6 = [
+    ('FAAC', '/root/bishe/results/load_UGR16_faac/MAEGAN/labels_anomaly_scores.csv'),
+    ('GCN', '/root/bishe/results/load_UGR16_GCN/MAEGAN/labels_anomaly_scores.csv'),
+    ('GAT', '/root/bishe/results/load_UGR16_GAT/MAEGAN/labels_anomaly_scores.csv'),
+    ('GCN-LSTM', '/root/bishe/results/load_UGR16_GCN_LSTM/MAEGAN/labels_anomaly_scores.csv'),
+    ('Evolve-GCN', '/root/bishe/results/load_UGR16_Evolve_GCN/MAEGAN/labels_anomaly_scores.csv'),
+    ('FG-DyGAT', '/root/bishe/results/load_UGR16_DyGAT/MAEGAN/labels_anomaly_scores.csv'),
+]
+file_paths_cic2018 = [
     ('FAAC', '/root/bishe/results/load_cic2018_faac/MAEGAN/labels_anomaly_scores.csv'),
     ('GCN', '/root/bishe/results/load_CIC2018_GCN/MAEGAN/labels_anomaly_scores.csv'),
     ('GAT', '/root/bishe/results/load_CIC2018_GAT/MAEGAN/labels_anomaly_scores.csv'),
     ('GCN-LSTM', '/root/bishe/results/load_CIC2018_GCN_LSTM/MAEGAN/labels_anomaly_scores.csv'),
-    ('Evolve_GCN', '/root/bishe/results/load_CIC2018_Evolve_GCN/MAEGAN/labels_anomaly_scores.csv'),
+    ('Evolve-GCN', '/root/bishe/results/load_CIC2018_Evolve_GCN/MAEGAN/labels_anomaly_scores.csv'),
     ('FG-DyGAT', '/root/bishe/results/load_cic2018_DyGAT/MAEGAN/labels_anomaly_scores.csv'),
 ]
 
 # 调用函数绘制ROC曲线
-plot_roc_curve(file_paths)
+fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+# 调用函数绘制ROC曲线
+plot_roc_curve(axes[0], file_paths_ugr6, "UGR16")
+plot_roc_curve(axes[1], file_paths_cic2018, "CIC2018")
+plt.tight_layout()
+plt.savefig("roc_gnn.png")

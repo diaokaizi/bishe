@@ -274,3 +274,17 @@ config: {'lr': 0.0001, 'hidden_dims': 40, 'epochs': 100, 'n_unified_features': 3
 f1: 0.8710292249047014, traintime: 32.80, testtime:32.80  str: auc_score:0.9204,acc:0.8766,pre0.8289,rec:0.9177, f1:0.8710
 config: {'lr': 0.0001, 'hidden_dims': 40, 'epochs': 60, 'n_unified_features': 3}
 f1: 0.8499845344880915, traintime: 19.80, testtime:19.80  str: auc_score:0.8993,acc:0.8525,pre0.7901,rec:0.9197, f1:0.8500
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 5, 'n_unified_features': 3}
+f1: 0.4028776978417266, traintime: 0.87, testtime:0.87  str: auc_score:0.5580,acc:0.7231,pre0.5957,rec:0.3043, f1:0.4029
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 10, 'n_unified_features': 3}
+f1: 0.48255813953488375, traintime: 1.56, testtime:1.56  str: auc_score:0.6599,acc:0.7031,pre0.5188,rec:0.4511, f1:0.4826
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 30, 'n_unified_features': 3}
+f1: 0.5511111111111111, traintime: 4.40, testtime:4.40  str: auc_score:0.7409,acc:0.7473,pre0.6059,rec:0.5054, f1:0.5511
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 50, 'n_unified_features': 3}
+f1: 0.5995525727069351, traintime: 7.10, testtime:7.10  str: auc_score:0.7824,acc:0.7014,pre0.5095,rec:0.7283, f1:0.5996
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 70, 'n_unified_features': 3}
+f1: 0.6255707762557078, traintime: 9.66, testtime:9.66  str: auc_score:0.8051,acc:0.7264,pre0.5394,rec:0.7446, f1:0.6256
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 65, 'n_unified_features': 3}
+f1: 0.6190476190476191, traintime: 9.27, testtime:9.27  str: auc_score:0.7994,acc:0.7198,pre0.5311,rec:0.7418, f1:0.6190
+config: {'lr': 0.0001, 'hidden_dims': 80, 'epochs': 67, 'n_unified_features': 3}
+f1: 0.6227272727272727, traintime: 9.59, testtime:9.59  str: auc_score:0.8022,acc:0.7231,pre0.5352,rec:0.7446, f1:0.6227

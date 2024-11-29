@@ -29,6 +29,11 @@ model_name = "SLAD"
 
 module = imp.import_module('deepod.models.tabular')
 model_class = getattr(module, "SLAD")
+(x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
+filepath = "load_UGR16_faac"
+lr_values = [0.0001]
+hidden_dims_values = [80]
+epochs_values = [67]
 # (x_train, y_train), (x_test, y_test) = read_data.load_UGR16_faac()
 # filepath = "load_UGR16_faac"
 # lr_values = [0.0001]
@@ -39,11 +44,11 @@ model_class = getattr(module, "SLAD")
 # f1: 0.6799007444168734, traintime: 18.31, testtime:18.31  str: auc_score:0.8641,acc:0.7848,pre0.6256,rec:0.7446, f1:0.6799
 # cic2018
 
-(x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
-filepath = "load_cic2018_faac"
-lr_values = [0.0001]
-hidden_dims_values = [40]
-epochs_values = [60]
+# (x_train, y_train), (x_test, y_test) = read_data.load_cic2018_faac()
+# filepath = "load_cic2018_faac"
+# lr_values = [0.0001]
+# hidden_dims_values = [40]
+# epochs_values = [60]
 # config: {'lr': 0.0001, 'hidden_dims': 40, 'epochs': 50}
 # f1: 0.8632218844984804, traintime: 19.37, testtime:19.37  str: auc_score:0.8992,acc:0.8632,pre0.7906,rec:0.9505, f1:0.8632
 hyperparameter_grid = list(product(lr_values, hidden_dims_values, epochs_values))

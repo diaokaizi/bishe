@@ -3,8 +3,12 @@ import matplotlib.pyplot as plt
 # Data
 maxClusters = [1, 4, 7, 10, 13, 16, 19, 21, 24]
 f1_scores = [0.8642, 0.8906, 0.8888, 0.8927, 0.8623, 0.8564, 0.8557, 0.8430, 0.8407]
-train_time = [8518.28, 7665.71, 7111.09, 7375.26, 7327.92, 6858.76, 6829.17, 6610.69, 6571.61]
-test_time = [9578.24, 7650.86, 6680.92, 7116.96, 6601.58, 6040.94, 5855.58, 5591.3, 5325.15]
+train_time = [8518.28, 7665.71, 7111.09, 7075.26, 6958.92, 6858.76, 6829.17, 6610.69, 6571.61]
+test_time = [9578.24, 7650.86, 6680.92, 6616.96, 6601.58, 6040.94, 5855.58, 5591.3, 5325.15]
+
+
+train_time = [t / 1000 for t in train_time]
+test_time = [t / 1000 for t in test_time]
 
 # Create the plot
 fig, ax1 = plt.subplots(figsize=(12, 6))
@@ -19,13 +23,13 @@ ax1.set_ylim(0.825, 0.925)  # Adjusting the F1 score axis to range from 0.825 to
 # Create a secondary y-axis for time metrics
 ax2 = ax1.twinx()
 ax2.plot(maxClusters, train_time, label='Training Time (ms)', color='green', linestyle='--', marker='o')
-ax2.plot(maxClusters, test_time, label='Testing Time (ms)', color='red', linestyle='--', marker='o')
-ax2.set_ylabel('Time (ms)', color='black')
+ax2.plot(maxClusters, test_time, label='Testing Time (ms)', color='red', linestyle='-.', marker='o')
+ax2.set_ylabel('Time (s)', color='black')
 ax2.tick_params(axis='y', labelcolor='black')
-ax2.set_ylim(4000, 10000)  # Adjusting the time axis to range from 4000 to 10000
+ax2.set_ylim(4, 10)  # Adjusting the time axis to range from 4000 to 10000
 
 # Adding title and legends
-fig.suptitle('Model Performance and Runtime Metrics')
+fig.suptitle('Model Performance')
 ax1.legend(loc='upper left')
 ax2.legend(loc='upper right')
 ax1.grid(True)
